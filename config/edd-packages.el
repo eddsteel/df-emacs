@@ -1,0 +1,19 @@
+(require 'package)
+(package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")
+        ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+
+;; from https://github.com/otfrom/otfrom-org-emacs/blob/master/init.el#L22
+(defun maybe-install-and-require (p)
+  (when (not (package-installed-p p))
+    (package-install p))
+  (require p))
+
+
+(provide 'edd-packages)

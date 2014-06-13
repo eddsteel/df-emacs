@@ -1,0 +1,93 @@
+(maybe-install-and-require 'jabber)
+(maybe-install-and-require 'dash)
+(maybe-install-and-require 's)
+
+; mostly taken from https://github.com/bodil/emacs.d/blob/master/bodil-chat.el
+
+(load-secrets "hipchat")
+
+(setq starttls-use-gnutls t
+      starttls-gnutls-program "gnutls-cli"
+      starttls-extra-arguments '("--starttls" "--insecure"))
+
+
+;; To join HipChat rooms easily
+(defun hipchat-join (room)
+  (interactive "sRoom name: ")
+  (jabber-groupchat-join
+   (hipchat-account)
+   (concat hipchat-gid "_" room "@conf.hipchat.com")
+   hipchat-nickname
+   t))
+
+
+(defun hipchat-joinall ()
+  (interactive)
+  (dolist (room hipchat-autojoin) (hipchat-join room)))
+
+;; Mention nicknames in a way that HipChat clients will pickup
+(defun hipchat-mention (nickname)
+  (interactive
+   (list (jabber-muc-read-nickname jabber-group "Nickname: ")))
+  (insert (concat "@\"" nickname "\" ")))
+
+(defun hipchat-connect ()
+  (interactive)
+  (setq jabber-account-list nil)
+  (add-to-list 'jabber-account-list
+        `(,(concat hipchat-gid "_" hipchat-uid "@chat.hipchat.com")
+          (:password . ,hipchat-password)))
+  (jabber-connect-all)
+  (setq jabber-account-list nil))
+
+;; find the jabber account for hipchat.
+(defun hipchat-account ()
+    (car (cl-member-if (lambda (x) (member (concat hipchat-gid "_" hipchat-uid) (plist-get x :state-data)))
+              jabber-connections)))
+
+   
+(defun hipchat-rooms ()
+  (interactive)
+  (jabber-ahc-get-list (hipchat-account) "conf.hipchat.com"))
+
+;; From https://github.com/shosti/.emacs.d/blob/master/personal/p-jabber.el p-hipchat-rooms
+(defun hipchat-open-rooms ()
+  (cons
+   '("roster" . "*-jabber-roster-*")
+   (->> (buffer-list)
+     (-map
+      (lambda (b)
+        (-if-let
+            (chat-name
+             (nth 2 (s-match
+                     "\\*-jabber-\\(groupchat-[0-9]+_\\|chat-\\)\\([^*]+\\)-\\*"
+                     (buffer-name b))))
+            (cons (->> chat-name
+                    (s-replace "_" " ")
+                    (s-chop-suffix "@conf.hipchat.com"))
+                  (buffer-name b)))))
+     (-filter 'car))))
+
+(defun hipchat-switch-to-room ()
+  (interactive)
+  (let* ((chatrooms (hipchat-open-rooms))
+         (room-names (-map 'car chatrooms))
+         (room
+          (completing-read "Room: " room-names nil nil nil nil
+                           (car room-names))))
+    (switch-to-buffer (cdr (assoc room chatrooms)))))
+
+
+(global-set-key (kbd "C-x C-j j") 'hipchat-join)
+(global-set-key (kbd "C-x C-j b") 'hipchat-switch-to-room)
+
+(defun edd-jabber-hook (conn)
+  (when
+      (string-equal
+       (concat hipchat-gid "_" hipchat-uid)
+       (plist-get (plist-get conn :state-data) :username))
+    (hipchat-joinall)))
+(add-hook 'jabber-post-connect-hooks 'edd-jabber-hook)
+
+(provide 'edd-hipchat)
+

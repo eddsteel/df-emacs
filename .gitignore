@@ -1,0 +1,15 @@
+*~
+*.elc
+elpa
+savehist
+url
+local.el
+.org-id-locations
+bookmarks
+org-gcal
+tramp
+jabber-avatar-cache
+ido.last
+secrets
+recentf
+projectile-bookmarks.eld
