@@ -2,6 +2,7 @@
 (maybe-install-and-require 'ox-reveal)
 (maybe-install-and-require 'org-gcal)
 (require 'org-protocol)
+(require 'org-notmuch)
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
@@ -45,6 +46,7 @@
 
 (setq org-link-abbrev-alist
       '(("j" . "https://jira.hootsuitemedia.com/browse/")
+        ("gh" . "https://github.com/")
         ("gr" . "https://gitlab.hootsuitemedia.com/%s/tree/master")
         ("gl" . org-link-abbrev-gitlab-line)
         ("ol" . org-link-owly)
@@ -54,6 +56,7 @@
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (string= lang "dot")))  ; don't ask for dot
 (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+(setq org-src-fontify-natively t)
 
 (setq org-log-done t)
 (setq org-directory "~/.org")

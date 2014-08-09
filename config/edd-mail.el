@@ -2,9 +2,21 @@
 
 (setq send-mail-function 'sendmail-send-it)
 (setq message-send-mail-function 'message-send-mail-with-sendmail)
+(setq mail-specify-envelope-from 't)
+(setq message-sendmail-envelope-from 'header)
+(setq mail-envelope-from 'header)
+
+;; mail with notmuch
+(defun edd-notmuch-mark-search-read ()
+  (interactive)
+  (notmuch-search-tag-all '("-unread")))
+
+;; notmuch-search-mode-map "" 'edd-notmuch-mark-search-read
+
 
 ;; mail with mu4e
 (add-to-list 'load-path "/usr/local/Cellar/mu/0.9.9.5/share/emacs/site-lisp/mu4e")
+
 (require 'mu4e)
 (setq mu4e-maildir "~/Mail")
 

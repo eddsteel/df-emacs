@@ -56,7 +56,52 @@
     (interactive)
     (let ((n (edd-fqn-containing-point)))
       (when n
-        (ensime-sbt-action (concat "test-only " n))))))
+        (setq edd-last-test-only n)
+        (ensime-sbt-switch)
+        (ensime-sbt-action (concat "test-only " n)))))
+
+  (defun edd-sbt-test-only-last ()
+    (interactive)
+    (when edd-last-test-only
+      (ensime-sbt-switch)
+      (ensime-sbt-action (concat "test-only " edd-last-test-only))))
+
+  (local-set-key (kbd "C-c C-v d") 'helm-dash)
+  (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
+  (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only))
+
+;; Thanks tjweir
+
+(maybe-install-and-require 'imenu-anywhere)
+(defun set-imenu-expression ()
+  (setq imenu-generic-expression
+        '(
+          ("var" "\\(var +\\)\\([^(): ]+\\)" 2)
+          ("val" "\\(val +\\)\\([^(): ]+\\)" 2)
+          ("override def" "^[ \\t]*\\(override\\) +\\(def +\\)\\([^(): ]+\\)" 3)
+          ("private def" "^[ \\t]*\\(private\\(\\[.*?\\]+\\)*\\) +\\(def +\\)\\([^(): ]+\\)" 4)
+          ("protected def" "^[ \\t]*\\(protected\\(\\[.*?\\]+\\)*\\) +\\(def +\\)\\([^(): ]+\\)" 4)
+          ("implicit def" "^[ \\t]*\\(implicit\\) +\\(def +\\)\\([^(): ]+\\)" 3)
+          ("def" "^[ \\t]*\\(def +\\)\\([^(): ]+\\)" 2)
+          ("trait" "\\(trait +\\)\\([^(): ]+\\)" 2)
+          ("class" "^[ \\t]*\\(class +\\)\\([^(): ]+\\)" 2)
+          ("case class" "^[ \\t]*\\(case class +\\)\\([^(): ]+\\)" 2)
+          ("abstract class" "^[ \\t]*\\(abstract class +\\)\\([^(): ]+\\)" 2)
+          ("object" "\\(object +\\)\\([^(): ]+\\)" 2))))
+ 
+;; add Control-. so you can find stuff via imenu-anywhere
+(global-set-key (kbd "C-.") 'imenu-anywhere)
+ 
+;; Puts the current imenu thing in top line of the buffer.
+(which-function-mode)
+(setq-default header-line-format
+              '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+;; We remove Which Function Mode from the mode line, because it's mostly
+;; invisible here anyway.
+(assq-delete-all 'which-func-mode mode-line-misc-info))
+ 
+(setq which-func-unknown "★")
 
   
 ; ensime
@@ -68,6 +113,10 @@
 (defun edd-scala-hook ()
   (ensime-scala-mode-hook)
   (edd-ensime-bindings)
+  (rainbow-delimiters-mode)
+  (abbrev-mode)
+  (set-imenu-expression)
+  (auto-highlight-symbol-mode 1)
   (edd-scala-prefs))
 
 (add-hook 'scala-mode-hook 'edd-scala-hook)

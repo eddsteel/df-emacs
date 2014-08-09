@@ -13,6 +13,8 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; stop the flicker when reloading
@@ -34,10 +36,16 @@
 (maybe-install-and-require 'shell-here)
 
 (setq-default 
- whitespace-style '(face trailing tabs lines-tail empty indentation)
+ whitespace-style '(face trailing tabs empty indentation)
  indent-tabs-mode nil)
 
 (column-number-mode 't)
+
+;; rainbow parens
+(maybe-install-and-require 'rainbow-delimiters)
+
+;; abbrevs
+(read-abbrev-file (emacsd "abbrev_defs"))
 
 
 (defun kill-region-or-backward-kill-word (&optional arg region)
@@ -101,10 +109,11 @@
 (eval-after-load "auto-complete" '(diminish 'auto-complete-mode " ↪"))
 (eval-after-load "whitespace" '(diminish 'whitespace-mode " ✼"))
 (eval-after-load "flyspell" '(diminish 'flyspell-mode " ⎁"))
+(eval-after-load "abbrev" '(diminish 'abbrev-mode "⇝ "))
 
 ;; potentially useful diminishments
 ;; ࿏ ࿊ ࿃ ࿎ ࿂ ࿁
-;; ‽ ⁋ ‣ ‿ ⇝ ∿
+;; ‽ ⁋ ‣ ‿  ∿
 ;; ⋌ ⊾ ⌁ ⌕ ⌚ ⌥
 ;; ⎁ ♫ ☯ 
 
@@ -116,6 +125,35 @@
 (dolist (hook '(text-mode-hook org-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1))))
 
+;; winner mode
+(winner-mode 1)
+
+;; font-lock for all (e.g. for TK)
+(global-font-lock-mode t)
+
+;; useful for goto-address-mode
+(defun edd-jump-to-next-url ()
+  (interactive)
+  (point-at-eol) ; so we don't jump to the end of current URL
+  (search-forward-regexp goto-address-url-regexp)
+  (backward-char))
+
+(defun edd-jump-to-prev-url ()
+  (interactive)
+  (point-at-bol)
+  (search-backward-regexp goto-address-url-regexp)
+  (forward-char))
+
+;; time
+(display-time-mode 1)
+
+;; This causes the current time in the mode line to be displayed in
+;; `egoge-display-time-face' to make it stand out visually.
+(setq display-time-string-forms
+      '((propertize (concat " " 24-hours ":" minutes " "))))
+
+;; auto-revert when files change
+(setq global-auto-revert-mode t)
 
 
 (provide 'edd-editor)

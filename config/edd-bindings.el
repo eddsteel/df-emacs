@@ -7,7 +7,6 @@
 
 ;; C-x C-m for M-x
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
-(global-set-key (kbd "C-c C-m") 'execute-extended-command)
 
 ;; C-c C-s for shell
 (global-set-key (kbd "C-c C-s") 'shell)
@@ -28,12 +27,17 @@
 (global-set-key (kbd "C-c j") 'ace-jump-mode)
 (global-set-key (kbd "C-c k") 'ace-jump-mode-pop-mark)
 
-
 ;; org
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 (global-set-key (kbd "C-c c") 'org-capture)
 
+;; notmuch
+(global-set-key (kbd "C-c n") 'notmuch)
+
+;; urls
+(global-set-key (kbd "C-c C-p") 'edd-jump-to-prev-url)
+(global-set-key (kbd "C-c C-n") 'edd-jump-to-next-url)
 
 (provide 'edd-bindings)
