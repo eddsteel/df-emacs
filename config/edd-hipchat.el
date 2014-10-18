@@ -89,5 +89,62 @@
     (hipchat-joinall)))
 (add-hook 'jabber-post-connect-hooks 'edd-jabber-hook)
 
+
+;; HipChat Users
+(require 'request)
+(require 'json)
+
+(defvar hipchat-users nil
+  "All users on the hipchat server, used only for mentions")
+
+(defun edd-hc-load-users ()
+  (let ((args "max-results=400"))
+    (request
+     (concat "https://api.hipchat.com/v2/user?" args)
+     :type "GET"
+     :parser 'json-read
+     :headers (list (cons "Authorization"
+                          (concat "Bearer " hipchat-api-token)))
+     :success (function* (lambda (&key data &allow-other-keys)
+                           (when data
+                             (setq hipchat-users
+                                   (edd-hc-extract-users-from-json data))))))))
+               
+(defun edd-hc-extract-users-from-json (json)
+  "Extract the user name info, JSON, returned from hipchat into
+an association list, name -> mention name"
+  (let ((items (cdr (assq 'items json))))
+    (mapcar
+     (lambda (item)
+       (let ((name (cdr (assq 'name item)))
+            (mention (cdr (assq 'mention_name item))))
+         (cons name mention)))
+     items)))
+
+(defun edd-hc-find-users (re)
+  "Searches in hipchat-users for users whose name or mention name
+  matches RE"
+  (let ((hc-results nil))
+    (mapcar
+     (lambda (pair)
+       (if (or
+            (string-match re (car pair))
+            (string-match re (cdr pair)))
+           (add-to-list 'hc-results pair)))
+     hipchat-users)
+    hc-results))
+
+
+(defun who-hipchat (re)
+  (interactive "Mwho: ")
+  (message
+   (mapconcat 'identity
+              (mapcar (lambda (pair)
+                        (concat (car pair) " is @" (cdr pair)))
+                      (edd-hc-find-users re))
+              ", ")))
+
+
+
 (provide 'edd-hipchat)
 
