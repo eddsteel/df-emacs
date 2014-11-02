@@ -41,5 +41,7 @@
 ;; urls
 (global-set-key (kbd "C-c C-p") 'edd-jump-to-prev-url)
 (global-set-key (kbd "C-c C-n") 'edd-jump-to-next-url)
+(global-set-key (kbd "C-c C-m") 'browse-url-at-point)
+(global-set-key (kbd "C-c C-i") 'edd-show-img-inline)
 
 (provide 'edd-bindings)
