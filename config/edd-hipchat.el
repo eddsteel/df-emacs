@@ -148,6 +148,7 @@ an association list, name -> mention name"
 
 (defun who-hipchat (re)
   (interactive "Mwho: ")
+  (unless hipchat-users (edd-hc-load-users))
   (message
    (mapconcat 'identity
               (mapcar (lambda (pair)

@@ -17,6 +17,16 @@
 (autoload 'erc "edd-erc")
 (defun go-erc ()
   (interactive)
+  (require 'edd-erc)
   (erc))
+
+(defun go-org ()
+  (interactive)
+  (require 'edd-org))
+
+(defun go-mail ()
+  (interactive)
+  (require 'edd-mail)
+  (nm))
 
 (provide 'edd-go)

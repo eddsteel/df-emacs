@@ -100,23 +100,30 @@
  
 (setq which-func-unknown "★")
 
+(defun edd-scala-flycheck ()
+  (unless (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt")
+    (setq flycheck-scalastyle-jar (emacsd "scalastyle/scalastyle_2.10-batch.jar"))
+    (setq flycheck-scalastylerc (emacsd "scalastyle/scalastyle-config.xml"))
+    (flycheck-mode 1)))
   
 ; ensime
-(require 'ensime)
 (defun edd-ensime-bindings ()
   "Extra bindings for ensime"
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region))
 
 (defun edd-scala-hook ()
-  (ensime-scala-mode-hook)
-  (edd-ensime-bindings)
   (rainbow-delimiters-mode)
   (abbrev-mode)
   (set-imenu-expression)
+  (edd-scala-flycheck)
   (auto-highlight-symbol-mode 1)
-  (edd-scala-prefs))
+  (edd-scala-prefs)
+  (ensime-scala-mode-hook)
+  (setq-local nyan-bar-length 16)
+  (edd-ensime-bindings))
 
 (add-hook 'scala-mode-hook 'edd-scala-hook)
+(add-hook 'scala-mode-hook 'git-gutter-mode)
 
 (defun edd-java-hook ()
   (setq compile-command "ant \-emacs compile \-find")
