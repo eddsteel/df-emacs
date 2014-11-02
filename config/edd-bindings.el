@@ -3,7 +3,9 @@
   (global-unset-key (kbd "<f11>")) ; it doesn't work
   (global-set-key (kbd "<f10>") 'toggle-frame-fullscreen)
   (global-unset-key (kbd "s-h"))
-  (global-unset-key (kbd "s-z")))
+  (global-unset-key (kbd "s-z"))
+  (global-unset-key (kbd "C-z"))
+  (global-unset-key (kbd "C-x C-z")))
 
 ;; C-x C-m for M-x
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
