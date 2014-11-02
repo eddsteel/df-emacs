@@ -13,6 +13,9 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(setq global-hl-line-mode t)
+(show-paren-mode)
+
 
 
 (defalias 'yes-or-no-p 'y-or-n-p)
