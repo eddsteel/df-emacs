@@ -1,5 +1,6 @@
 *~
 *.elc
+*.el-e
 elpa
 savehist
 url
@@ -13,3 +14,4 @@ ido.last
 secrets
 recentf
 projectile-bookmarks.eld
+
