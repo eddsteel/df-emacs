@@ -1,6 +1,6 @@
-(maybe-install-and-require 'jabber)
-(maybe-install-and-require 'dash)
-(maybe-install-and-require 's)
+(require 'jabber)
+(require 'dash)
+(require 's)
 
 ; mostly taken from https://github.com/bodil/emacs.d/blob/master/bodil-chat.el
 
@@ -89,6 +89,17 @@
     (hipchat-joinall)))
 (add-hook 'jabber-post-connect-hooks 'edd-jabber-hook)
 
+
+;; let's steal from erc-image-mode and browse-url
+(require 'erc-image)
+(defun edd-show-img-inline ()
+  (interactive)
+  (let
+      ((url (browse-url-url-at-point)))
+    (erc-image-show-url-image url)))
+
+(setq erc-image-display-func 'erc-image-insert-other-buffer)
+(setq erc-image-inline-rescale nil)
 
 ;; HipChat Users
 (require 'request)

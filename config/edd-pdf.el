@@ -22,8 +22,7 @@
                 ".pdf$" ".org" (buffer-name))))
     (progn
       (delete-other-windows)
-      (split-window-horizontally)
-      (find-file notes))))
+      (find-file-other-window notes))))
 
 (defun edd-pdf-2col ()
   "Scale the PDF suitably for 2 column reading."

@@ -36,16 +36,12 @@
 
 
 ;; shell here
-(maybe-install-and-require 'shell-here)
-
 (setq-default 
  whitespace-style '(face trailing tabs empty indentation)
  indent-tabs-mode nil)
 
 (column-number-mode 't)
-
-;; rainbow parens
-(maybe-install-and-require 'rainbow-delimiters)
+(winner-mode 't)
 
 ;; abbrevs
 (read-abbrev-file (emacsd "abbrev_defs"))
@@ -75,12 +71,10 @@
 (load custom-file 'noerror)
 
 ;; ido
-(maybe-install-and-require 'ido)
 (ido-mode t)
 (ido-vertical-mode t)
 
 ;; flx-ido
-(maybe-install-and-require 'flx-ido)
 (flx-ido-mode 1)
 (setq ido-use-faces nil)
 
@@ -89,22 +83,22 @@
 (setq uniquify-buffer-name-style 'post-forward)
 
 ;; ace-jump
-(maybe-install-and-require 'ace-jump-mode)
+(require 'ace-jump-mode)
 
 ;; guide key
-(maybe-install-and-require 'guide-key)
+(require 'guide-key)
 (setq guide-key/guide-key-sequence
       '("C-x r" "C-x 4" "C-x 8" "C-c C-x" "C-c C-v"))
 (guide-key-mode 1)
 (diminish 'guide-key-mode " ℹ")
 
 ;; hardcore mode
-(maybe-install-and-require 'hardcore-mode)
+(require 'hardcore-mode)
 (global-hardcore-mode)
 (diminish 'hardcore-mode " ☢")
 
 ;; projectile
-(maybe-install-and-require 'projectile)
+(require 'projectile)
 (projectile-global-mode)
 (diminish 'projectile-mode " ☄")
 
@@ -113,6 +107,9 @@
 (eval-after-load "whitespace" '(diminish 'whitespace-mode " ✼"))
 (eval-after-load "flyspell" '(diminish 'flyspell-mode " ⎁"))
 (eval-after-load "abbrev" '(diminish 'abbrev-mode "⇝ "))
+(eval-after-load "flycheck" '(diminish 'flycheck-mode " ⌁"))
+(eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
+(eval-after-load "auto-highlight-symbol" '(diminish 'auto-highlight-symbol-mode))
 
 ;; potentially useful diminishments
 ;; ࿏ ࿊ ࿃ ࿎ ࿂ ࿁
@@ -157,6 +154,9 @@
 
 ;; auto-revert when files change
 (setq global-auto-revert-mode t)
+
+;; nuff said
+(nyan-mode)
 
 
 (provide 'edd-editor)

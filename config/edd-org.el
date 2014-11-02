@@ -1,8 +1,14 @@
 (require 'org-install)
-(maybe-install-and-require 'ox-reveal)
-(maybe-install-and-require 'org-gcal)
+(require 'ox-reveal)
+(require 'org-gcal)
 (require 'org-protocol)
 (require 'org-notmuch)
+
+(setq weather-metno-location-name "Vancouver, Canada"
+      weather-metno-location-latitude 49
+      weather-metno-location-longitude -123)
+(setq weather-metno-get-image-props
+      '(:width 16 :height 16 :ascent center))
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
@@ -110,5 +116,30 @@
 (run-at-time 3300 3300 'org-gcal-refresh-token)
 (run-at-time 900 900 'org-gcal-fetch)
 
+;; Agenda
+;;
+;; This is great: http://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html
+;;
+(setq org-agenda-include-diary t)
+(setq org-agenda-work-files
+      (mapcar 'orgfile '("work" "cal-work")))
+
+(setq org-agenda-custom-commands
+      '(("w" "work agenda"
+         ((agenda "" ((org-agenda-ndays 1)))
+          (tags-todo "next")
+          (todo "WAIT")
+          (tags "goal"))
+         ((org-agenda-files org-agenda-work-files)
+          (org-agenda-compact-blocks t)))
+        ("s" "standup"
+         ((todo "DONE")
+          (tags-todo "next")
+          (todo "WAIT"))
+         ((org-agenda-files org-agenda-work-files)
+          (org-agenda-compact-blocks t)))))
+
+(define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
+(define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
 
 (provide 'edd-org)

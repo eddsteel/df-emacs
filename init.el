@@ -20,18 +20,19 @@
    (when (file-directory-p project)
          (add-to-list 'load-path project)))
 
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+(require 'pallet)
 
+;eager load some config
 (let ((edd-config
        '(edd-bindings
-         edd-packages
          edd-editor
          edd-secrets
          edd-go
          edd-pdf
-         edd-org ; autoload?
-         edd-erc ; autoload?
-         edd-scala ; autoload?
-         edd-mail))) ; autoload?
+         edd-scala
+         edd-haskell))) ; autoload?
   (dolist (file edd-config)
     (require file)))
 
@@ -39,13 +40,8 @@
 ;(maybe-install-and-require 'egg)
 
 ;edd-lisp
-(maybe-install-and-require 'pretty-lambdada)
 (pretty-lambda-for-modes)
 (add-hook 'geiser-hook 'pretty-lambda)
-
-;; edd-ess
-(add-to-list 'load-path (emacsd "site-lisp/ESS/lisp"))
-(load "ess-site")
 
 ; TODO load by hostname
 (let ((local-el (emacsd "local.el")))

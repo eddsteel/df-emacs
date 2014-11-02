@@ -11,7 +11,7 @@
 
 
 ;; from https://github.com/otfrom/otfrom-org-emacs/blob/master/init.el#L22
-(defun maybe-install-and-require (p)
+(defun require (p)
   (when (not (package-installed-p p))
     (package-install p))
   (require p))

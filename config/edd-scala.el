@@ -4,7 +4,6 @@
 
 (defun edd-scala-prefs ()
   (interactive)
-  (require 'whitespace)
 
   ;; clean-up whitespace at save
   (make-local-variable 'before-save-hook)
@@ -71,8 +70,6 @@
   (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only))
 
 ;; Thanks tjweir
-
-(maybe-install-and-require 'imenu-anywhere)
 (defun set-imenu-expression ()
   (setq imenu-generic-expression
         '(
