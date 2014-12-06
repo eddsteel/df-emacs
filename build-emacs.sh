@@ -1,3 +1,3 @@
 #!/bin/sh
 
-brew install emacs --cocoa --srgb --HEAD --use-git-head --with-gnutls
+brew install emacs --cocoa --srgb --HEAD --with-gnutls --with-imagemagick --with-librsvg --with-mailutils
