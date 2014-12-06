@@ -16,6 +16,10 @@
 (setq global-hl-line-mode t)
 (show-paren-mode)
 
+(when (eq system-type 'darwin) ;; If using the mac port, restore keyboard. I'll set where the keys should be.
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super))
+
 
 
 (defalias 'yes-or-no-p 'y-or-n-p)
