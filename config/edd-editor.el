@@ -78,16 +78,15 @@
 (ido-mode t)
 (ido-vertical-mode t)
 
-;; flx-ido
-(flx-ido-mode 1)
-(setq ido-use-faces nil)
-
 ;; uniquify
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
 ;; ace-jump
 (require 'ace-jump-mode)
+
+;; diminish
+(require 'diminish)
 
 ;; guide key
 (require 'guide-key)
