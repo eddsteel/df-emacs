@@ -38,7 +38,8 @@
         `(,(concat hipchat-gid "_" hipchat-uid "@chat.hipchat.com")
           (:password . ,hipchat-password)))
   (jabber-connect-all)
-  (setq jabber-account-list nil))
+  (setq jabber-account-list nil)
+  (edd-hc-load-users))
 
 ;; find the jabber account for hipchat.
 (defun hipchat-account ()
