@@ -14,4 +14,8 @@ ido.last
 secrets
 recentf
 projectile-bookmarks.eld
-
+.cask
+ac-comphist.dat
+async-bytecomp.log
+eshell
+oauth2.plstore
