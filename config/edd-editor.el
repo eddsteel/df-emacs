@@ -32,7 +32,8 @@
         (enable-theme my-theme))))
 
 (when window-system
-  (set-face-attribute 'default nil :height 140 :font "source code pro")
+  (set-face-attribute 'default nil :height 140 :font "Droid Sans Mono")
+;;  (set-face-attribute 'default nil :height 140 :font "hasklig")
   (server-start)
   ;; fade when inactive
   (set-frame-parameter (selected-frame) 'alpha '(100 80))
