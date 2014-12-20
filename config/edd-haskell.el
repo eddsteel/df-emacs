@@ -43,4 +43,20 @@
 (add-to-list 'company-backends 'company-ghc)
 (custom-set-variables '(company-ghc-show-info t))
 
+(setq prettify-haskell (lambda ()
+                         (push '("<-" . ?←) prettify-symbols-alist)
+                         (push '("->" . ?→) prettify-symbols-alist)
+                         (push '("\\" . ?λ) prettify-symbols-alist)
+                         (push '(".." . ?…) prettify-symbols-alist)
+                         (push '(" . " . ?∘) prettify-symbols-alist)
+                         (push '("++" . ?⧺) prettify-symbols-alist)
+                         (push '(">>" . ?») prettify-symbols-alist)
+                         (push '("<<" . ?«) prettify-symbols-alist)))
+
+
+(add-hook 'haskell-mode-hook prettify-haskell)
+(add-hook 'haskell-mode-hook prettify-symbols-mode)
+(add-hook 'literate-haskell-mode-hook prettify-haskell)
+(add-hook 'literate-haskell-mode-hook prettify-symbols-mode)
+
 (provide 'edd-haskell)
