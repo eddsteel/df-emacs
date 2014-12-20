@@ -2,6 +2,8 @@
 (setq scala-indent:align-forms t)
 (setq scala-indent:use-javadoc-style t)
 
+(require 'ensime)
+
 (defun edd-scala-prefs ()
   (interactive)
 
@@ -56,18 +58,17 @@
     (let ((n (edd-fqn-containing-point)))
       (when n
         (setq edd-last-test-only n)
-        (ensime-sbt-switch)
-        (ensime-sbt-action (concat "test-only " n)))))
+        (sbt-command (concat "test-only " n)))))
 
   (defun edd-sbt-test-only-last ()
     (interactive)
     (when edd-last-test-only
-      (ensime-sbt-switch)
-      (ensime-sbt-action (concat "test-only " edd-last-test-only))))
+      (sbt-command (concat "test-only " edd-last-test-only))))
 
   (local-set-key (kbd "C-c C-v d") 'helm-dash)
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
-  (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only))
+  (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
+  (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command)
 
 ;; Thanks tjweir
 (defun set-imenu-expression ()
@@ -122,8 +123,23 @@
   (setq-local nyan-bar-length 16)
   (edd-ensime-bindings))
 
-(add-hook 'scala-mode-hook 'edd-scala-hook)
 (add-hook 'scala-mode-hook 'git-gutter-mode)
+
+(add-hook 'scala-mode-hook
+          (lambda ()
+            (push '("<-" . ?←) prettify-symbols-alist)
+            (push '("->" . ?→) prettify-symbols-alist)
+            (push '("=>" . ?⇒) prettify-symbols-alist)
+            (push '(">=" . ?≥) prettify-symbols-alist)
+            (push '("<=" . ?≤) prettify-symbols-alist)
+            (push '("&&" . ?∧) prettify-symbols-alist)
+            (push '("||" . ?∨) prettify-symbols-alist)))
+
+
+
+(add-hook 'scala-mode-hook 'prettify-symbols-mode)
+(add-hook 'scala-mode-hook 'edd-scala-hook)
+
 
 (defun edd-java-hook ()
   (setq compile-command "ant \-emacs compile \-find")
