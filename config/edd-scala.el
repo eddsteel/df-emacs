@@ -87,8 +87,6 @@
           ("abstract class" "^[ \\t]*\\(abstract class +\\)\\([^(): ]+\\)" 2)
           ("object" "\\(object +\\)\\([^(): ]+\\)" 2))))
  
-;; add Control-. so you can find stuff via imenu-anywhere
-(global-set-key (kbd "C-.") 'imenu-anywhere)
  
 ;; Puts the current imenu thing in top line of the buffer.
 (which-function-mode)

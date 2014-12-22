@@ -75,10 +75,6 @@
 (setq custom-file (emacsd "custom.el"))
 (load custom-file 'noerror)
 
-;; ido
-(ido-mode t)
-(ido-vertical-mode t)
-
 ;; uniquify
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
@@ -161,6 +157,21 @@
 
 ;; nuff said
 (nyan-mode)
+
+;; helm
+
+(require 'helm-config)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-m") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+(global-set-key (kbd "C-c h o") 'helm-occur)
+
+
+(helm-mode 1)
+
 
 
 (provide 'edd-editor)
