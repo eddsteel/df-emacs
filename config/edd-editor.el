@@ -32,7 +32,8 @@
         (enable-theme my-theme))))
 
 (when window-system
-  (set-face-attribute 'default nil :height 140 :font "Droid Sans Mono")
+  (set-face-attribute 'default nil :height 140 :font "Fira Mono")
+;;  (set-face-attribute 'default nil :height 140 :font "Droid Sans Mono")
 ;;  (set-face-attribute 'default nil :height 140 :font "hasklig")
   (server-start)
   ;; fade when inactive
