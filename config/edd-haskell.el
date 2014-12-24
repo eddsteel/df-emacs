@@ -1,8 +1,6 @@
-(add-hook 'haskell-mode-hook
-          (lambda ()
-            (turn-on-haskell-decl-scan)
-            (turn-on-haskell-indentation)
-            (turn-on-haskell-doc)))
+(add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc)
 (add-hook 'haskell-mode-hook 'turn-on-hi2)
 
 ;; much of this copied from https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
@@ -36,27 +34,25 @@
 
 (autoload 'ghc-init "ghc" nil t)
 (autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+(add-hook 'haskell-mode-hook 'ghc-init)
 
 (require 'company)
 (add-hook 'haskell-mode-hook 'company-mode)
 (add-to-list 'company-backends 'company-ghc)
 (custom-set-variables '(company-ghc-show-info t))
 
-(setq prettify-haskell (lambda ()
-                         (push '("<-" . ?←) prettify-symbols-alist)
-                         (push '("->" . ?→) prettify-symbols-alist)
-                         (push '("\\" . ?λ) prettify-symbols-alist)
-                         (push '(".." . ?…) prettify-symbols-alist)
-                         (push '(" . " . ?∘) prettify-symbols-alist)
-                         (push '("++" . ?⧺) prettify-symbols-alist)
-                         (push '(">>" . ?») prettify-symbols-alist)
-                         (push '("<<" . ?«) prettify-symbols-alist)))
+(defun prettify-haskell ()
+  (push '("<-" . ?←) prettify-symbols-alist)
+  (push '("->" . ?→) prettify-symbols-alist)
+  (push '("\\" . ?λ) prettify-symbols-alist)
+  (push '(".." . ?…) prettify-symbols-alist)
+  (push '("++" . ?⧺) prettify-symbols-alist)
+  (push '(">>" . ?») prettify-symbols-alist)
+  (push '("<<" . ?«) prettify-symbols-alist))
 
-
-(add-hook 'haskell-mode-hook prettify-haskell)
-(add-hook 'haskell-mode-hook prettify-symbols-mode)
-(add-hook 'literate-haskell-mode-hook prettify-haskell)
-(add-hook 'literate-haskell-mode-hook prettify-symbols-mode)
+(add-hook 'haskell-mode-hook 'prettify-haskell)
+(add-hook 'haskell-mode-hook 'prettify-symbols-mode)
+(add-hook 'literate-haskell-mode-hook 'prettify-haskell)
+(add-hook 'literate-haskell-mode-hook 'prettify-symbols-mode)
 
 (provide 'edd-haskell)
