@@ -68,7 +68,7 @@
   (local-set-key (kbd "C-c C-v d") 'helm-dash)
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
   (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
-  (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command)
+  (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))
 
 ;; Thanks tjweir
 (defun set-imenu-expression ()
