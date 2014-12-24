@@ -101,6 +101,7 @@
 ;; projectile
 (require 'projectile)
 (projectile-global-mode)
+(setq projectile-completion-system 'helm)
 (diminish 'projectile-mode " ☄")
 
 ;; other diminishments
