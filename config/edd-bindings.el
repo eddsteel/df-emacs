@@ -38,10 +38,16 @@
 ;; notmuch
 (global-set-key (kbd "C-c n") 'nm)
 
+;; magit
+(global-set-key (kbd "C-c m") 'magit-status)
+
 ;; urls
 (global-set-key (kbd "C-c C-p") 'edd-jump-to-prev-url)
 (global-set-key (kbd "C-c C-n") 'edd-jump-to-next-url)
 (global-set-key (kbd "C-c C-m") 'browse-url-at-point)
 (global-set-key (kbd "C-c C-i") 'edd-show-img-inline)
+
+;; helm-dash for docs
+(global-set-key (kbd q"C-c h d") 'helm-dash)
 
 (provide 'edd-bindings)
