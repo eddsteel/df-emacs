@@ -161,7 +161,6 @@
 (nyan-mode)
 
 ;; helm
-
 (require 'helm-config)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
@@ -171,9 +170,10 @@
 
 (global-set-key (kbd "C-c h o") 'helm-occur)
 
-
 (helm-mode 1)
 
-
+;; RE-Builder
+(require 're-builder)
+(setq reb-re-syntax 'string)
 
 (provide 'edd-editor)
