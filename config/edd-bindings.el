@@ -36,7 +36,7 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 
 ;; notmuch
-(global-set-key (kbd "C-c n") 'notmuch)
+(global-set-key (kbd "C-c n") 'nm)
 
 ;; urls
 (global-set-key (kbd "C-c C-p") 'edd-jump-to-prev-url)
