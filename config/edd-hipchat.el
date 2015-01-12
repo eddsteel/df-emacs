@@ -2,8 +2,7 @@
 (require 'dash)
 (require 's)
 
-; mostly taken from https://github.com/bodil/emacs.d/blob/master/bodil-chat.el
-
+; some taken from https://github.com/bodil/emacs.d/blob/master/bodil-chat.el
 (load-secrets "hipchat")
 
 (setq starttls-use-gnutls t
@@ -157,7 +156,12 @@ an association list, name -> mention name"
                       (edd-hc-find-users re))
               ", ")))
 
+(defun edd-jabber-clear-activity ()
+  (interactive)
+  (setq jabber-activity-jids nil)
+  (jabber-activity-mode-line-update))
 
+(global-set-key (kbd "C-x C-j x") 'edd-jabber-clear-activity)
 
 (provide 'edd-hipchat)
 
