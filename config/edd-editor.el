@@ -91,33 +91,32 @@
 (setq guide-key/guide-key-sequence
       '("C-x r" "C-x 4" "C-x 8" "C-c C-x" "C-c C-v"))
 (guide-key-mode 1)
-(diminish 'guide-key-mode " ℹ")
+(diminish 'guide-key-mode "🐼")
 
 ;; hardcore mode
 (require 'hardcore-mode)
 (global-hardcore-mode)
-(diminish 'hardcore-mode " ☢")
+(diminish 'hardcore-mode "💀")
 
 ;; projectile
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
-(diminish 'projectile-mode " ☄")
+(diminish 'projectile-mode "💫")
 
 ;; other diminishments
-(eval-after-load "auto-complete" '(diminish 'auto-complete-mode " ↪"))
-(eval-after-load "whitespace" '(diminish 'whitespace-mode " ✼"))
-(eval-after-load "flyspell" '(diminish 'flyspell-mode " ⎁"))
-(eval-after-load "abbrev" '(diminish 'abbrev-mode "⇝ "))
-(eval-after-load "flycheck" '(diminish 'flycheck-mode " ⌁"))
+(eval-after-load "whitespace" '(diminish 'whitespace-mode "🚀"))
+(eval-after-load "flyspell" '(diminish 'flyspell-mode "💬"))
+(eval-after-load "abbrev" '(diminish 'abbrev-mode "🆘"))
+(eval-after-load "flycheck" '(diminish 'flycheck-mode "🚨"))
 (eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
+(eval-after-load "smartparens" '(diminish 'smartparens-mode))
 (eval-after-load "auto-highlight-symbol" '(diminish 'auto-highlight-symbol-mode))
 
-;; potentially useful diminishments
-;; ࿏ ࿊ ࿃ ࿎ ࿂ ࿁
-;; ‽ ⁋ ‣ ‿  ∿
-;; ⋌ ⊾ ⌁ ⌕ ⌚ ⌥
-;; ⎁ ♫ ☯ 
+(eval-after-load "company" '(diminish 'company-mode "🎩"))
+(eval-after-load "helm" '(diminish 'helm-mode "👷"))
+
+(eval-after-load "yasnippet" '(diminish 'yas-minor-mode "✂"))
 
 ;; goto-address for gtalk, hipchat
 (add-hook 'jabber-chat-mode-hook 'goto-address)
