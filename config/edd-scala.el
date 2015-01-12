@@ -108,6 +108,7 @@
 ; ensime
 (defun edd-ensime-bindings ()
   "Extra bindings for ensime"
+  (local-set-key (kbd "C-c e") 'ensime)
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region))
 
 (defun edd-scala-hook ()
@@ -133,9 +134,7 @@
             (push '("&&" . ?∧) prettify-symbols-alist)
             (push '("||" . ?∨) prettify-symbols-alist)))
 
-
-
-(add-hook 'scala-mode-hook 'prettify-symbols-mode)
+(add-hook 'scala-mode-hook (lambda () (prettify-symbols-mode 1)))
 (add-hook 'scala-mode-hook 'edd-scala-hook)
 
 
