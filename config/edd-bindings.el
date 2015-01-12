@@ -10,9 +10,6 @@
 ;; C-x C-m for M-x
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 
-;; C-c C-s for shell
-(global-set-key (kbd "C-c C-s") 'shell)
-
 ;; C-c q for auto-fill mode
 (global-set-key (kbd "C-c q") 'auto-fill-mode)
 
@@ -49,5 +46,8 @@
 
 ;; helm-dash for docs
 (global-set-key (kbd "C-c h d") 'helm-dash)
+
+;; ansi-term
+(global-set-key (kbd "C-c t") (lambda () (interactive) (ansi-term "bash")))
 
 (provide 'edd-bindings)
