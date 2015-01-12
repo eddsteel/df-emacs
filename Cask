@@ -65,7 +65,6 @@
 (depends-on "logito")
 (depends-on "magit")
 (depends-on "magit-tramp")
-(depends-on "magithub")
 (depends-on "makey")
 (depends-on "markdown-mode")
 (depends-on "markdown-mode+")
