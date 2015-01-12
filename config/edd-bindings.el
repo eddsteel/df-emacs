@@ -48,6 +48,6 @@
 (global-set-key (kbd "C-c C-i") 'edd-show-img-inline)
 
 ;; helm-dash for docs
-(global-set-key (kbd q"C-c h d") 'helm-dash)
+(global-set-key (kbd "C-c h d") 'helm-dash)
 
 (provide 'edd-bindings)
