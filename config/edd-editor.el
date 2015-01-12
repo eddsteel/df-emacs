@@ -175,4 +175,19 @@
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
+;; Smart Parens
+(require 'smartparens)
+(smartparens-global-mode)
+(sp-pair "'" nil :actions :rem) ; too annoying for scala/elisp
+
+
+;; copied shamelessly from http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.html
+(defvar edd-vc-mode-line
+  '(" " (:propertize
+         ;; Strip the backend name from the VC status information
+         (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+                  (substring vc-mode (+ (length backend) 2))))
+         face font-lock-variable-name-face))
+  "Mode line format for VC Mode.")
+(put 'edd-vc-mode-line 'risky-local-variable t)
 (provide 'edd-editor)
