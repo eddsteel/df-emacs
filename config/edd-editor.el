@@ -20,8 +20,6 @@
   (setq mac-option-modifier 'meta
         mac-command-modifier 'super))
 
-
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; stop the flicker when reloading
@@ -41,7 +39,6 @@
   (put 'default-frame-alist 'alpha '(100 80)))
 
 
-;; shell here
 (setq-default 
  whitespace-style '(face trailing tabs empty indentation)
  indent-tabs-mode nil)
@@ -67,7 +64,6 @@
                                     '(("\\<TK\\>" . 'font-lock-warning-face)))) t)
 
 
-
 ;; history saving
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode t)
@@ -91,32 +87,18 @@
 (setq guide-key/guide-key-sequence
       '("C-x r" "C-x 4" "C-x 8" "C-c C-x" "C-c C-v"))
 (guide-key-mode 1)
-(diminish 'guide-key-mode "🐼")
+
 
 ;; hardcore mode
 (require 'hardcore-mode)
 (global-hardcore-mode)
-(diminish 'hardcore-mode "💀")
+
 
 ;; projectile
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
-(diminish 'projectile-mode "💫")
 
-;; other diminishments
-(eval-after-load "whitespace" '(diminish 'whitespace-mode "🚀"))
-(eval-after-load "flyspell" '(diminish 'flyspell-mode "💬"))
-(eval-after-load "abbrev" '(diminish 'abbrev-mode "🆘"))
-(eval-after-load "flycheck" '(diminish 'flycheck-mode "🚨"))
-(eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
-(eval-after-load "smartparens" '(diminish 'smartparens-mode))
-(eval-after-load "auto-highlight-symbol" '(diminish 'auto-highlight-symbol-mode))
-
-(eval-after-load "company" '(diminish 'company-mode "🎩"))
-(eval-after-load "helm" '(diminish 'helm-mode "👷"))
-
-(eval-after-load "yasnippet" '(diminish 'yas-minor-mode "✂"))
 
 ;; goto-address for gtalk, hipchat
 (add-hook 'jabber-chat-mode-hook 'goto-address)
@@ -179,26 +161,6 @@
 (require 'smartparens)
 (smartparens-global-mode)
 (sp-pair "'" nil :actions :rem) ; too annoying for scala/elisp
-
-
-;; copied shamelessly from http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.html
-(defvar edd-vc-mode-line
-  '(" " (:propertize
-         ;; Strip the backend name from the VC status information
-         (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
-                  (substring vc-mode (+ (length backend) 2))))
-         face font-lock-variable-name-face))
-  "Mode line format for VC Mode.")
-(put 'edd-vc-mode-line 'risky-local-variable t)
-
-(setq-default mode-line-format
-              '("%e"
-               mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
-               mode-line-misc-info
-               mode-line-frame-identification mode-line-buffer-identification " "
-               mode-line-position
-               (vc-mode edd-vc-mode)
-               " " mode-line-modes mode-line-end-spaces))
 
 
 (provide 'edd-editor)
