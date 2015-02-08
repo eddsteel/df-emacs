@@ -33,7 +33,7 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 
 ;; notmuch
-(global-set-key (kbd "C-c n") 'nm)
+(global-set-key (kbd "C-c n") 'go-mail)
 
 ;; magit
 (global-set-key (kbd "C-c m") 'magit-status)
