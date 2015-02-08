@@ -19,6 +19,6 @@
 ;; mail indicator
 (setq notmuch-unread-search-term "tag:unread and tag:inbox")
 
-
+(require 'org-notmuch)
 
 (provide 'edd-mail)
