@@ -50,4 +50,10 @@
 ;; ansi-term
 (global-set-key (kbd "C-c t") (lambda () (interactive) (ansi-term "bash")))
 
+;; global haskell repl
+(global-set-key (kbd "C-c h h") 'switch-to-haskell)
+
+;; global scala repl
+(global-set-key (kbd "C-c h s") 'ensime-inf-switch)
+
 (provide 'edd-bindings)
