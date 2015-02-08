@@ -110,8 +110,9 @@
   
 ; ensime
 (defun edd-ensime-bindings ()
-  "Extra bindings for ensime"
+  "Extra bindings for ensime/SBT"
   (local-set-key (kbd "C-c e") 'ensime)
+  (local-set-key (kbd "C-c s") 'sbt-start)
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region))
 
 (defun edd-scala-hook ()
