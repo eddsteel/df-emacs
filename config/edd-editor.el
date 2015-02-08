@@ -163,4 +163,8 @@
 (sp-pair "'" nil :actions :rem) ; too annoying for scala/elisp
 
 
+;; Make scripts executable
+(add-hook 'after-save-hook
+  'executable-make-buffer-file-executable-if-script-p)
+
 (provide 'edd-editor)
