@@ -1,5 +1,11 @@
 ;; Visual
 
+;; TODO:
+;; * Use theme colours somehow
+;; * bring colours set in custom.el here
+;; * theme jabber notifications face too
+;; * theme which-func-mode face too
+
 (eval-after-load "abbrev" '(diminish 'abbrev-mode "🆘"))
 (eval-after-load "auto-highlight-symbol" '(diminish 'auto-highlight-symbol-mode))
 (eval-after-load "company" '(diminish 'company-mode "🎩"))
@@ -14,6 +20,8 @@
 (eval-after-load "smartparens" '(diminish 'smartparens-mode))
 (eval-after-load "whitespace" '(diminish 'whitespace-mode "🚀"))
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode "📎"))
+(eval-after-load "mml" '(diminish 'mml-mode "📩"))
+
 
 
 ;; copied shamelessly from http://www.lunaryorn.com/2014/07/26/make-your-emacs-mode-line-more-useful.html

@@ -32,7 +32,8 @@
          edd-go
          edd-pdf
          edd-scala
-         edd-haskell))) ; autoload?
+         edd-haskell
+         edd-visual))) ; autoload?
   (dolist (file edd-config)
     (require file)))
 
