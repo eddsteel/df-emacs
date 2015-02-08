@@ -4,6 +4,9 @@
 
 (require 'ensime)
 
+;; Preload useful docs
+(setq helm-dash-common-docsets '("Akka" "Scala"))
+
 (defun edd-scala-prefs ()
   (interactive)
 
