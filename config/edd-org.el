@@ -113,8 +113,13 @@
 (load-secrets "org-gcal")
 (appt-activate 1)
 
+(defun edd-org-gcal-fetch ()
+  (interactive)
+  (delete-file (orgfile "cal-work"))
+  (org-gcal-fetch))
+
 (run-at-time 3300 3300 'org-gcal-refresh-token)
-(run-at-time 900 900 'org-gcal-fetch)
+(run-at-time 900 900 'edd-org-gcal-fetch)
 
 ;; Agenda
 ;;
