@@ -56,4 +56,7 @@
 ;; global scala repl
 (global-set-key (kbd "C-c h s") 'ensime-inf-switch)
 
+;; ace-window
+(global-set-key (kbd "C-x o") 'ace-window)
+
 (provide 'edd-bindings)
