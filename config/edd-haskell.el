@@ -50,8 +50,8 @@
   (push '(">>" . ?») prettify-symbols-alist)
   (push '("<<" . ?«) prettify-symbols-alist))
 
-(add-hook 'haskell-mode-hook 'prettify-haskell)
-(add-hook 'haskell-mode-hook (lambda () (prettify-symbols-mode 1)))
+;(add-hook 'haskell-mode-hook 'prettify-haskell)
+;(add-hook 'haskell-mode-hook (lambda () (prettify-symbols-mode 1)))
 (add-hook 'literate-haskell-mode-hook 'prettify-haskell)
 (add-hook 'literate-haskell-mode-hook (lambda () (prettify-symbols-mode 1)))
 
