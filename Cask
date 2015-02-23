@@ -28,7 +28,6 @@
 (depends-on "erlang")
 (depends-on "evil")
 (depends-on "expand-region")
-(depends-on "f")
 (depends-on "fill-column-indicator")
 (depends-on "flx")
 (depends-on "flx-ido")
