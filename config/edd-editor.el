@@ -162,6 +162,10 @@
 ;; (smartparens-global-mode)
 ;; (sp-pair "'" nil :actions :rem) ; too annoying for scala/elisp
 
+;; Ace window mode
+(require 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(setq aw-background nil)
 
 ;; Make scripts executable
 (add-hook 'after-save-hook
