@@ -56,4 +56,15 @@
 ;; ace-window
 (global-set-key (kbd "C-x o") 'ace-window)
 
+;; vagrant
+(defun edd-vagrant-edit ()
+  (interactive)
+  (find-file (concat (vagrant-locate-vagrantfile) "Vagrantfile")))
+
+
+(global-set-key (kbd "C-c v u") 'vagrant-up)
+(global-set-key (kbd "C-c v p") 'vagrant-provision)
+(global-set-key (kbd "C-c v d") 'vagrant-destroy)
+(global-set-key (kbd "C-c v v") 'vagrant-ssh)
+(global-set-key (kbd "C-c v e") 'edd-vagrant-edit)
 (provide 'edd-bindings)
