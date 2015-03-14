@@ -167,6 +167,16 @@
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 (setq aw-background nil)
 
+;; iy-go-to-char
+
+(require 'iy-go-to-char)
+(global-set-key (kbd "C-c f") 'iy-go-to-char)
+(global-set-key (kbd "C-c F") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-c ;") 'iy-go-to-or-up-to-continue)
+(global-set-key (kbd "C-c t") 'iy-go-up-to-char)
+(global-set-key (kbd "C-c T") 'iy-go-up-to-char-backward)
+
+
 ;; Make scripts executable
 (add-hook 'after-save-hook
   'executable-make-buffer-file-executable-if-script-p)
