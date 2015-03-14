@@ -68,7 +68,11 @@
     (when edd-last-test-only
       (sbt-command (concat "test-only " edd-last-test-only))))
 
-  (local-set-key (kbd "C-c C-v d") 'helm-dash)
+  ;; These aren't really scala-specific
+  (local-set-key (kbd "C-c d d") 'helm-dash)
+  (local-set-key (kbd "C-c d a") 'helm-dash-activate-docset)
+
+  
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
   (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
   (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))
