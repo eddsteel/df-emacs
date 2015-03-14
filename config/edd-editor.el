@@ -158,9 +158,9 @@
 (setq reb-re-syntax 'string)
 
 ;; Smart Parens
-(require 'smartparens)
-(smartparens-global-mode)
-(sp-pair "'" nil :actions :rem) ; too annoying for scala/elisp
+;; (require 'smartparens)
+;; (smartparens-global-mode)
+;; (sp-pair "'" nil :actions :rem) ; too annoying for scala/elisp
 
 
 ;; Make scripts executable
