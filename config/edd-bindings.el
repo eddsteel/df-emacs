@@ -13,9 +13,6 @@
 ;; C-c q for auto-fill mode
 (global-set-key (kbd "C-c q") 'auto-fill-mode)
 
-;; C-c ! for a shell
-(global-set-key (kbd "C-c !") 'shell-here)
-
 ;; C-h for delete
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
@@ -48,7 +45,7 @@
 (global-set-key (kbd "C-c h d") 'helm-dash)
 
 ;; ansi-term
-(global-set-key (kbd "C-c t") (lambda () (interactive) (ansi-term "bash")))
+(global-set-key (kbd "C-c x") (lambda () (interactive) (ansi-term "bash")))
 
 ;; global haskell repl
 (global-set-key (kbd "C-c h h") 'switch-to-haskell)
