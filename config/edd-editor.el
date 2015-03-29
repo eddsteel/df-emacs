@@ -192,4 +192,11 @@
 (add-hook 'after-save-hook
   'executable-make-buffer-file-executable-if-script-p)
 
+
+;; Run an appropriate build shell
+(def-projectile-commander-method ?s "Run a build shell (e.g. SBT)"
+  ;; TODO: support others
+  (sbt-start))
+
+
 (provide 'edd-editor)
