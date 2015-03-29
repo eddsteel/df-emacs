@@ -91,6 +91,7 @@
 
 ;; hardcore mode
 (require 'hardcore-mode)
+(setq too-hardcore-return t)
 (global-hardcore-mode)
 
 
