@@ -99,6 +99,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
+(helm-projectile-on)
 
 
 ;; goto-address for gtalk, hipchat
