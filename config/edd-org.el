@@ -72,7 +72,7 @@
 (setq org-default-notes-file (orgfile "in"))
 (setq org-mobile-inbox-for-pull (orgfile "in"))
 (setq org-mobile-directory "/org@eddandkrista.com:mobile")
-(setq org-agenda-files (mapcar 'orgfile '("work" "home" "cal-home" "cal-work" "cal")))
+(setq org-agenda-files (mapcar 'orgfile '("work" "dorp/home" "cal-home" "cal-work")))
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
