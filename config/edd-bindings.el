@@ -19,6 +19,11 @@
 ;; C-w for backward-kill-word / kill region
 (global-set-key (kbd "C-w") 'kill-region-or-backward-kill-word)
 
+
+;; text increase
+(global-set-key (kbd "s-<up>") 'text-scale-increase)
+(global-set-key (kbd "s-<down>") 'text-scale-decrease)
+
 ;; ace jump
 (global-set-key (kbd "C-c j") 'ace-jump-mode)
 (global-set-key (kbd "C-c k") 'ace-jump-mode-pop-mark)
