@@ -68,6 +68,7 @@
 (global-set-key (kbd "C-c v v") 'vagrant-ssh)
 (global-set-key (kbd "C-c v e") 'edd-vagrant-edit)
 
-(global-set-key (kbd "C-c o") (lambda () (interactive) (find-file initial-buffer-choice)))
+
+(global-set-key (kbd "C-c o") 'edd-initial-file-or-scratch)
 
 (provide 'edd-bindings)

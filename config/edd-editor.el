@@ -141,7 +141,16 @@
 ;; nuff said
 (nyan-mode)
 
-;; helm
+(lambda () (interactive) (find-file initial-buffer-choice)))
+
+(defun edd-initial-file-or-scratch ()
+  (interactive)
+  "Finds the initial buffer choice file, or if that is nil, the scratch buffer"
+  (if initial-buffer-choice
+     (find-file initial-buffer-choice)
+    (switch-to-buffer "*scratch*")))
+
+;; HELM
 (require 'helm-config)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
