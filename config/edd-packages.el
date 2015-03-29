@@ -7,7 +7,7 @@
       '(("gnu" . "http://elpa.gnu.org/packages/")
         ("marmalade" . "http://marmalade-repo.org/packages/")
         ("org" . "http://orgmode.org/elpa/")
-        ("melpa" . "http://melpa.milkbox.net/packages/")))
+        ("melpa" . "http://melpa.org/packages/")))
 
 
 ;; from https://github.com/otfrom/otfrom-org-emacs/blob/master/init.el#L22
