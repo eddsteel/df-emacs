@@ -30,7 +30,7 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 
 ;; notmuch
-(global-set-key (kbd "C-c n") 'go-mail)
+(global-set-key (kbd "C-c n") 'mailbox)
 
 ;; magit
 (global-set-key (kbd "C-c m") 'magit-status)
@@ -59,6 +59,8 @@
 ;; vagrant
 (defun edd-vagrant-edit ()
   (interactive)
+  "edit the local Vagrantfile"
+  (require 'vagrant)
   (find-file (concat (vagrant-locate-vagrantfile) "Vagrantfile")))
 
 

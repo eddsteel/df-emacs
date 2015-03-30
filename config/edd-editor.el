@@ -98,6 +98,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
+(helm-projectile)
 
 
 ;; goto-address for gtalk, hipchat
@@ -140,8 +141,6 @@
 
 ;; nuff said
 (nyan-mode)
-
-(lambda () (interactive) (find-file initial-buffer-choice)))
 
 (defun edd-initial-file-or-scratch ()
   (interactive)

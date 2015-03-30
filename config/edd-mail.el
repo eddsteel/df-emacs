@@ -14,11 +14,15 @@
 ;; notmuch-search-mode-map "" 'edd-notmuch-mark-search-read
 
 
-;; mail with nm
-
 ;; mail indicator
 (setq notmuch-unread-search-term "tag:unread and tag:inbox")
 
 (require 'org-notmuch)
+
+
+(defun mailbox ()
+  (interactive)
+  "Open default mailbox"
+  (nm))
 
 (provide 'edd-mail)

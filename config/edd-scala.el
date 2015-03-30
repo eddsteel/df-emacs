@@ -2,7 +2,8 @@
 (setq scala-indent:align-forms t)
 (setq scala-indent:use-javadoc-style t)
 
-(require 'ensime)
+(autoload 'ensime "ensime" "Require ensime when running it" t)
+(autoload 'ensime-scala-mode-hook "ensime" "Require ensime when loading a scala file" t)
 
 ;; Preload useful docs
 (setq helm-dash-common-docsets '("Akka" "Scala"))

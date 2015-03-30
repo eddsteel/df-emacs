@@ -37,9 +37,6 @@
   (dolist (file edd-config)
     (require file)))
 
-; edd-git
-;(maybe-install-and-require 'egg)
-
 ;edd-lisp
 (pretty-lambda-for-modes)
 (add-hook 'geiser-hook 'pretty-lambda)
@@ -48,8 +45,6 @@
 (let ((local-el (emacsd "local.el")))
   (if (file-exists-p local-el)
       (load-file local-el)))
-
-
 
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
