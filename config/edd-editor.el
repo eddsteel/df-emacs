@@ -98,8 +98,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
-(helm-projectile)
-
+(helm-projectile-on)
 
 ;; goto-address for gtalk, hipchat
 (add-hook 'jabber-chat-mode-hook 'goto-address)
