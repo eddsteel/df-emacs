@@ -10,9 +10,9 @@
 
 (defun go-jabber ()
   (interactive)
-  (edd-hipchat-connect)
-  (edd-gtalk-connect)
-  (edd-gtalk-connect2))
+  (hipchat-connect)
+  (gtalk-connect)
+  (gtalk-connect2))
 
 ;; TODO This defers require edd-org because of secret loading
 ;; ideally, we should have simple settings in edd-org, require that
