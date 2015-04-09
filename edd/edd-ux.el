@@ -1,0 +1,76 @@
+;; remove distractions.
+(dolist
+    (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode blink-cursor-mode))
+  (when (fboundp mode) (funcall mode -1)))
+(mouse-avoidance-mode 'banish)
+
+;; don't yell.
+(setq visible-bell 1)
+
+;; don't distract.
+(setq inhibit-startup-message t)
+
+;; don't insist.
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; show me where I am.
+(column-number-mode t)
+(show-paren-mode t)
+(global-hl-line-mode nil)
+
+;; use that font I like.
+(when window-system
+  (set-face-attribute 'default nil :height 140 :font "Fira Mono")
+  ;; fade when inactive
+  (set-frame-parameter (selected-frame) 'alpha '(100 80))
+  (put 'default-frame-alist 'alpha '(100 80)))
+
+(defvar edd-load-theme-hook
+  '()
+  "Hook to run when theme is changed with `edd-load-theme'")
+
+;; theme loader that side-steps the load/enable distinction and has a hook.
+(defun edd-load-theme (my-theme)
+  "Load and enable a theme in one operation, then run configured hooks"
+  (interactive "Stheme: ")
+  (progn
+    (unless (eq my-theme (car custom-enabled-themes))
+      (if (not (member my-theme custom-enabled-themes))
+          (load-theme my-theme 1)
+        (enable-theme my-theme)))
+    (run-hooks 'edd-load-theme-hook)))
+
+;; Mode line I like.
+(display-time-mode t)
+(setq display-time-string-forms
+      '((propertize (concat day " " monthname " " 24-hours ":" minutes " " load))))
+(display-battery-mode t)
+(setq battery-mode-line-format " %b%p%%")
+
+;; Slightly quieter modeline.
+(defvar edd-vc-mode-line
+  '(" " (:propertize
+         ;; Strip the backend name from the VC status information
+         (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+                  (substring vc-mode (+ (length backend) 2))))
+         face font-lock-variable-name-face))
+  "Mode line format for VC Mode.")
+
+(put 'edd-vc-mode-line 'risky-local-variable t)
+
+(setq-default mode-line-format
+              '("%e"
+                mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
+                " "
+                mode-line-misc-info
+                mode-line-frame-identification mode-line-buffer-identification " "
+                mode-line-position
+                (vc-mode edd-vc-mode)
+                " " mode-line-modes mode-line-end-spaces))
+
+;; comfortable bindings
+;; C-h for delete
+(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+
+
+(provide 'edd-ux)
