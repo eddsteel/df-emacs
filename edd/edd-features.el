@@ -10,6 +10,10 @@
 (when window-system
   (add-hook 'after-init-hook 'server-start t))
 
+;; text increase
+(global-set-key (kbd "s-<up>") 'text-scale-increase)
+(global-set-key (kbd "s-<down>") 'text-scale-decrease)
+
 ;; abbrevs
 ;;
 (read-abbrev-file

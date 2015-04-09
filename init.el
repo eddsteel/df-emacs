@@ -168,6 +168,9 @@
   (setq projectile-mode-line
         '(:eval (format " ☄{%s}" (projectile-project-name))))
   (setq projectile-completion-system 'helm)
+  (def-projectile-commander-method ?s "Run a build shell (e.g. SBT)"
+    ;; TODO: support others
+    (sbt-start))
   (helm-projectile-on))
 
 ;; RE-Builder
