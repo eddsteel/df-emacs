@@ -1,0 +1,8 @@
+*
+!.gitignore
+!edd
+!edd/*
+!init.el
+!abbreviations
+!resources
+!resources/*
