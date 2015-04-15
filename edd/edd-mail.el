@@ -30,6 +30,6 @@
     "Update the mode line."
     (require 'notmuch)
     (setq notmuch-unread-mode-line-string
-          (format "M %d" (notmuch-unread-count)))))
+          (format " M %d" (notmuch-unread-count)))))
 
 (provide 'edd-mail)
