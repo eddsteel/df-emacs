@@ -215,7 +215,7 @@
 ;; secret config -- used below.
 (use-package edd-secrets
   :load-path "edd"
-  :commands edd-load-secrets)
+  :commands edd-with-secrets)
 
 (use-package edd-erc
   :load-path "edd"

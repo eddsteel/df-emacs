@@ -3,11 +3,19 @@
 (setq mac-option-modifier 'meta
       mac-command-modifier 'super)
 
-;; Need these on mac
+;; Mac OS requires messing with the path
 ;;
-(dolist (dir '("/usr/local/bin" "~/bin" "/usr/local/MacGPG2/bin"))
-  (setenv "PATH" (concat dir ":" (getenv "PATH")))
-  (add-to-list 'exec-path dir))
+(dolist (dir '("/usr/local/bin" "~/bin" "/usr/local/MacGPG2/bin" "~/.nix-profile/bin"))
+  (when (file-directory-p dir)
+    (setenv "PATH" (concat (expand-file-name dir) ":" (getenv "PATH")))
+    (add-to-list 'exec-path (expand-file-name dir))))
+
+
+;; Use the mac gpg2 equiv
+;;
+(when (executable-find "gpg2")
+  (setq epg-gpg-program "gpg2"))
+
 
 ;; unbind some annoying defaults
 ;;
