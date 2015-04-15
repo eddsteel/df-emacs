@@ -322,6 +322,23 @@
   (when (file-readable-p localel)
     (load-file localel)))
 
+(use-package ledger-mode
+  :ensure t
+  :mode ("\\.ledger$" "ledger\\.dat$")
+  :config
+  (setq ledger-post-auto-adjust-amounts t))
+
+(use-package tea-time
+  :ensure t)
+
+(use-package bbdb
+  :ensure t
+  :config (bbdb-initialize)
+  :commands bbdb)
+
+(use-package git-timemachine
+  :ensure t)
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
