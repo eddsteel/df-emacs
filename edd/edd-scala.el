@@ -11,6 +11,9 @@
   :init
   (add-hook 'scala-mode-hook #'ensime-scala-mode-hook)
   :config
+  (setq ensime-goto-test-config-defaults
+        (plist-put ensime-goto-test-config-defaults
+                   :test-template-fn 'edd-ensime-test-template))
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
   (defun ensime-modeline-string ()
     "Return the string to display in the modeline.
@@ -56,6 +59,17 @@
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
   (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
   (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))
+
+
+(defun edd-ensime-test-template ()
+  ""
+  "package %TESTPACKAGE%
+
+import org.scalatest._
+
+class %TESTCLASS% extends FlatSpec with Matchers {
+
+}")
 
 
 (defun edd-scala-package-containing-point ()
