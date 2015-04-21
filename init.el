@@ -225,10 +225,8 @@
   :load-path "edd")
 
 (use-package edd-haskell
-  :load-path "edd"
-  :config
-  :bind
-  ("C-c h h" . switch-to-haskell))
+  :load-path "edd")
+
 
 (use-package "company"
   :ensure t

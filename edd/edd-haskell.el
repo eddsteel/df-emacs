@@ -2,10 +2,9 @@
   :ensure t
   :mode "\\.hs\\'"
   :init
-  (dolist (hook '(turn-on-haskell-indentation
-                  turn-on-haskell-doc
-                  turn-on-hi2
-                  turn-on-haskell-decl-scan))
+  (dolist (hook '(haskell-indentation-mode
+                  haskell-doc-mode
+                  haskell-decl-scan-mode))
     (add-hook 'haskell-mode-hook hook))
   (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
@@ -26,11 +25,8 @@
     (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
     (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
     (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space))
-  (progn
-    (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-    (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-    (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-    (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+  :bind
+  ("C-c h h" . switch-to-haskell))
 
 (use-package "ghc"
   :ensure t
