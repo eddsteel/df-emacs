@@ -1,5 +1,13 @@
 (use-package nm
-  :ensure t)
+  :ensure t
+  :config
+  (defun edd-theme-nm ()
+    (set-face-attribute 'nm-authors-face nil :inherit font-lock-function-name-face)
+    (set-face-attribute 'nm-header-face nil :inherit font-lock-function-name-face :underline t :weight 'bold)
+ (set-face-attribute 'nm-read-face nil :inherit font-lock-function-name-face)
+ (set-face-attribute 'nm-unread-face  nil :inherit font-lock-keyword-face :weight 'bold))
+  (add-hook 'edd-load-theme-hook 'edd-theme-nm)
+  (edd-theme-nm))
 
 (edd-with-secrets "mail"
                   (setq mail-specify-envelope-from t
