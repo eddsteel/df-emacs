@@ -18,10 +18,6 @@
   (require 'diminish)
   (require 'bind-key))
 
-;; TODO: remove
-(setq use-package-verbose t)
-
-
 ;; System-specific stuff.
 ;;
 (use-package edd-mac
