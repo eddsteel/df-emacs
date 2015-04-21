@@ -3,37 +3,37 @@
 ;; GTALK
 
 (use-package jabber
-  :ensure t)
-
-;; use-package init/config is not working here.
-(require 'jabber)
-(add-hook 'jabber-post-connect-hooks 'edd-jabber-hook)
-(add-hook 'jabber-chat-mode-hook (lambda () (local-set-key (kbd "@") 'edd-hipchat-mention)))
-(setq starttls-use-gnutls t
-      starttls-gnutls-program "gnutls-cli"
-      starttls-extra-arguments '("--starttls" "--insecure"))
-(setq jabber-chat-buffer-show-avatar nil)
-(setq jabber-alert-presence-hooks nil)
-
-(edd-with-secrets "gtalk" (progn
-                            (add-to-list 'jabber-account-list
-                                         `(,gchat-uid
-                                           (:network-server . "talk.google.com")
-                                           (:port . 5223)
-                                           (:connection-type . ssl)
-                                           (:password . ,gchat-password)) t)
-
-                            (add-to-list 'jabber-account-list
-                                         `(,gchat-uid2
-                                           (:network-server . "talk.google.com")
-                                           (:port . 5223)
-                                           (:connection-type . ssl)
-                                           (:password . ,gchat-password2)) t)))
-
-(edd-with-secrets "hipchat"
-                  (add-to-list 'jabber-account-list
-                               `(,(concat hipchat-gid "_" hipchat-uid "@chat.hipchat.com")
-                                 (:password . ,hipchat-password)) t))
+  :ensure t
+  :init
+  (setq starttls-use-gnutls t
+        starttls-gnutls-program "gnutls-cli"
+        starttls-extra-arguments '("--starttls" "--insecure"))
+  (setq jabber-chat-buffer-show-avatar nil)
+  (setq jabber-alert-presence-hooks nil)
+  (bind-key "C-c" 'jabber-connect-all jabber-global-keymap)
+  :config
+  (add-hook 'jabber-post-connect-hooks 'edd-jabber-hook)
+  (add-hook 'jabber-chat-mode-hook (lambda () (local-set-key (kbd "@") 'edd-hipchat-mention)))
+  (bind-key "x" 'edd-jabber-clear-activity jabber-global-keymap)
+  (bind-key "j" 'edd-hipchat-join jabber-global-keymap)
+  (bind-key "b" 'hipchat-switch-to-room jabber-global-keymap)
+  (edd-with-secrets "gtalk" (progn
+                              (add-to-list 'jabber-account-list
+                                           `(,gchat-uid
+                                             (:network-server . "talk.google.com")
+                                             (:port . 5223)
+                                             (:connection-type . ssl)
+                                             (:password . ,gchat-password)) t)
+                              (add-to-list 'jabber-account-list
+                                           `(,gchat-uid2
+                                             (:network-server . "talk.google.com")
+                                             (:port . 5223)
+                                             (:connection-type . ssl)
+                                             (:password . ,gchat-password2)) t)))
+  (edd-with-secrets "hipchat"
+                    (add-to-list 'jabber-account-list
+                                 `(,(concat hipchat-gid "_" hipchat-uid "@chat.hipchat.com")
+                                   (:password . ,hipchat-password)) t)))
 
 (defun edd-jabber-clear-activity ()
   (interactive)
@@ -167,6 +167,4 @@ an association list, name -> mention name"
                 (completing-read "" (mapcar 'cdr hipchat-users) nil nil nil nil nil nil)
               ""))))
 
-(defun edd-jabber ()
-  (interactive)
-  (call-interactively 'jabber-connect-all))
+(provide 'edd-jabber)

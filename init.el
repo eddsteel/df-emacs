@@ -222,19 +222,7 @@
   :commands edd-erc)
 
 (use-package edd-jabber
-  :load-path "edd"
-  :commands (edd-jabber)
-  :init
-  (global-unset-key (kbd "C-x C-j"))
-  :config
-  (eval-after-load "jabber"
-    '(progn
-      (bind-key "x" 'edd-jabber-clear-activity jabber-global-keymap)
-      (bind-key "j" 'edd-hipchat-join jabber-global-keymap)
-      (bind-key "b" 'hipchat-switch-to-room jabber-global-keymap)))
-
-  :bind
-  ("C-x C-j C-c" . edd-jabber))
+  :load-path "edd")
 
 (use-package edd-haskell
   :load-path "edd"
