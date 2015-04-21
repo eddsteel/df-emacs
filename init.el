@@ -267,8 +267,7 @@
     (custom-set-variables '(company-ghc-show-info t))))
 
 (use-package edd-mail
-  :load-path "edd"
-  :bind ("C-c n" . edd-mailbox))
+  :load-path "edd")
 
 (use-package edd-org
   :load-path "edd")

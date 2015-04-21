@@ -9,16 +9,7 @@
   (add-hook 'edd-load-theme-hook 'edd-theme-nm)
   (edd-theme-nm))
 
-(edd-with-secrets "mail"
-                  (setq mail-specify-envelope-from t
-                        mail-envelope-from 'header
-                        send-mail-function 'sendmail-send-it
-                        message-sendmail-envelope-from 'header
-                        message-send-mail-function 'message-send-mail-with-sendmail))
 
-;; mail with notmuch
-
-(require 'org-notmuch)
 
 (defun edd-mailbox ()
   (interactive)
@@ -27,7 +18,16 @@
 
 (use-package notmuch
   :ensure t
+  :commands notmuch
+  :init
+  (edd-with-secrets "mail"
+                    (setq mail-specify-envelope-from t
+                          mail-envelope-from 'header
+                          send-mail-function 'sendmail-send-it
+                          message-sendmail-envelope-from 'header
+                          message-send-mail-function 'message-send-mail-with-sendmail))
   :config
+  (require 'org-notmuch)
   (setq notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i")
           (:name "home-in" :query "folder:gmail/INBOX and tag:inbox")
@@ -42,8 +42,9 @@
   (defun edd-notmuch-mark-search-read ()
     (interactive)
     (notmuch-search-tag-all '("-unread")))
-  (bind-key "M" 'edd-notmuch-mark-search-read 'notmuch-search-mode-map));;))
-
+  (bind-key "M" 'edd-notmuch-mark-search-read 'notmuch-search-mode-map)
+  :bind
+  ("C-c n" . notmuch))
 
 (use-package notmuch-unread
   :ensure t
@@ -52,7 +53,6 @@
 
   (defun notmuch-unread-update-handler ()
     "Update the mode line."
-    (require 'notmuch)
     (setq notmuch-unread-mode-line-string
           (format " M %d" (notmuch-unread-count)))))
 
