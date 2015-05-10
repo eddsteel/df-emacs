@@ -54,6 +54,6 @@
   (defun notmuch-unread-update-handler ()
     "Update the mode line."
     (setq notmuch-unread-mode-line-string
-          (format " M %d" (notmuch-unread-count)))))
+          (format " ✉%d" (notmuch-unread-count)))))
 
 (provide 'edd-mail)
