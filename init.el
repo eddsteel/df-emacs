@@ -35,7 +35,7 @@
   :ensure t
   :config
   (edd-load-theme 'spolsky)
-  (set-face-attribute 'hl-line nil :background "#222222" :underline nil))
+  (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
 
 ;; nyan nyan
 ;;
@@ -125,6 +125,7 @@
           (variable (face-foreground 'font-lock-variable-name-face))
           (keyword (face-foreground 'font-lock-keyword-face))
           (background (face-background 'default))
+          (highlight (face-background 'highlight))
           (mode-bg (face-background 'mode-line))
           (imode-fg (face-foreground 'mode-line-inactive)))
       (set-face-attribute 'helm-candidate-number nil :background string :foreground background)
@@ -134,7 +135,7 @@
       (set-face-attribute 'helm-grep-match nil :foreground string)
       (set-face-attribute 'helm-grep-running nil :foreground variable)
       (set-face-attribute 'helm-prefarg nil :foreground function)
-      (set-face-attribute 'helm-selection nil :background mode-bg :foreground keyword :underline t)
+      (set-face-attribute 'helm-selection nil :background highlight :foreground keyword :underline t)
       (set-face-attribute 'helm-source-header nil :background background :foreground imode-fg :weight 'bold :height 1.3 :family "Sans Serif")
       (set-face-attribute 'helm-visible-mark nil :background imode-fg)))
   (add-hook 'edd-load-theme-hook 'edd-theme-helm)
@@ -222,7 +223,6 @@
 
 (use-package edd-haskell
   :load-path "edd")
-
 
 (use-package "company"
   :ensure t
