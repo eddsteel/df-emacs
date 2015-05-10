@@ -323,6 +323,9 @@
 (use-package git-timemachine
   :ensure t)
 
+(use-package markdown-mode+
+  :ensure t)
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
