@@ -58,7 +58,8 @@
    ("C-c M-p" . edd-jump-to-prev-url)
    ("C-c M-n" . edd-jump-to-next-url)
    ("C-c x" . edd-term)
-   ("C-c o" . edd-initial-file-or-scratch)))
+   ("C-c o" . edd-initial-file-or-scratch)
+   ("C-c u" . edd-hex-encode)))
 
 ;; whitespace
 ;;

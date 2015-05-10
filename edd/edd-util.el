@@ -31,4 +31,12 @@
   "Open my currently favourite kind of terminal"
   (ansi-term "bash"))
 
+(defun edd-hex-encode (start end)
+  (interactive "r")
+  "replace the region with a URL encoded version"
+  (let* ((text (buffer-substring-no-properties start end))
+         (encoded (url-hexify-string text)))
+    (delete-region start end)
+    (insert encoded)))
+
 (provide 'edd-util)
