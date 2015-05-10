@@ -214,8 +214,7 @@
   :commands edd-with-secrets)
 
 (use-package edd-erc
-  :load-path "edd"
-  :commands edd-erc)
+  :load-path "edd")
 
 (use-package edd-jabber
   :load-path "edd")
