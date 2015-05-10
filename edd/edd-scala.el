@@ -56,6 +56,7 @@
   :bind ("C-c s" . sbt-start)
   :bind ("C-c h s" . run-scala)
   :config
+  (local-set-key (kbd "C-c C-b a") 'edd-sbt-assembly)
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
   (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
   (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))
@@ -94,6 +95,10 @@ class %TESTCLASS% extends FlatSpec with Matchers {
   (let ((n (edd-scala-class-or-module-containing-point))
         (p (edd-scala-package-containing-point)))
     (concat p "." n)))
+
+(defun edd-sbt-assembly ()
+  (interactive)
+  (sbt-command "assembly"))
 
 (defun edd-sbt-test-only ()
   (interactive)
