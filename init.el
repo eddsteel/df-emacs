@@ -326,6 +326,15 @@
 (use-package markdown-mode+
   :ensure t)
 
+(use-package imenu-anywhere
+  :ensure t
+  :init (global-set-key (kbd "C-c .") 'helm-imenu-anywhere)
+  :config (defun jcs-use-package ()
+            (add-to-list 'imenu-generic-expression
+             '("Used Packages"
+               "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))
+  (add-hook 'emacs-lisp-mode-hook #'jcs-use-package))
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html

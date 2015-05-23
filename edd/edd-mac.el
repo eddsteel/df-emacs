@@ -24,5 +24,7 @@
 
 (global-set-key (kbd "<f10>") 'toggle-frame-fullscreen)
 
+(use-package reveal-in-finder :ensure t)
+
 
 (provide 'edd-mac)
