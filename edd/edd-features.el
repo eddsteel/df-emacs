@@ -50,4 +50,10 @@
 (eval-after-load "hideshow" '(diminish 'hs-minor-mode))
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
 
+;; Cycle spaces
+(global-set-key (kbd "M-SPC") 'cycle-spacing)
+
+;; make C-v M-v symmetrical
+(setq scroll-preserve-screen-position 'always)
+
 (provide 'edd-features)
