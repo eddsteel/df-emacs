@@ -78,20 +78,17 @@
   (set-face-attribute whitespace-indentation nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")
   (set-face-attribute whitespace-trailing nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))
 
-;; ace-jump
-(use-package ace-jump-mode
-  :ensure t
-  :bind
-  (("C-c j" . ace-jump-mode)
-   ("C-c k" . ace-jump-mode-pop-mark)))
 
-;; Ace window mode
+;; Ace window/jump
 (use-package ace-window
   :ensure t
   :bind
+  ("M-s" . avi-goto-word-1)
   ("C-x o" . ace-window)
+  ("M-g g" . avi-goto-line) ; M-g M-g is still goto line
   :init
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
   (setq aw-background nil))
 
 ;; guide key
