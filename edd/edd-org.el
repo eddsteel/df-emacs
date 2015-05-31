@@ -1,18 +1,21 @@
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :ensure org-plus-contrib
+  :ensure graphviz-dot-mode
   :init
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   :config
   (defun my-org-confirm-babel-evaluate (lang body)
-    (not (string= lang "dot")))  ; don't ask for dot
+    (not (or
+          (string= lang "dot")       ; don't ask for dot
+          (string= lang "ditaa"))))  ; or ditaa
   (defun orgfile (file)
     (expand-file-name (concat file ".org") org-directory))
   (appt-activate 1)
   (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((dot . t)))
+   '((dot . t) (ditaa . t)))
   (setq org-src-fontify-natively t)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
