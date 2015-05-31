@@ -83,7 +83,14 @@
     (beginning-of-buffer)
     (replace-regexp "\\\\\\[\\(http.*\\)\\\\\\]" "[\\1]")))
 
-(use-package ox-reveal)
+(use-package ox-reveal
+  :config
+  (setq org-reveal-title-slide-template
+          "<h1>%t</h1>
+<p><strong>%a</strong>, Platform Team</p>
+<p>%e</p>")
+  (setq org-reveal-transition "fade"))
+
 (use-package org-notmuch)
 (use-package edd-org-gcal
   :commands (org-gcal-refresh-token org-gcal-fetch))
