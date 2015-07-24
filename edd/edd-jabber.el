@@ -24,12 +24,13 @@
                                              (:port . 5223)
                                              (:connection-type . ssl)
                                              (:password . ,gchat-password)) t)
-                              (add-to-list 'jabber-account-list
-                                           `(,gchat-uid2
-                                             (:network-server . "talk.google.com")
-                                             (:port . 5223)
-                                             (:connection-type . ssl)
-                                             (:password . ,gchat-password2)) t)))
+                              ;; (add-to-list 'jabber-account-list
+                              ;;              `(,gchat-uid2
+                              ;;                (:network-server . "talk.google.com")
+                              ;;                (:port . 5223)
+                              ;;                (:connection-type . ssl)
+                              ;;                (:password . ,gchat-password2)) t)
+                              ))
   (edd-with-secrets "hipchat"
                     (add-to-list 'jabber-account-list
                                  `(,(concat hipchat-gid "_" hipchat-uid "@chat.hipchat.com")

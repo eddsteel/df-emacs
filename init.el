@@ -3,7 +3,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("Melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
 (package-initialize)
@@ -295,7 +295,6 @@
 
 (use-package magit
   :ensure t
-  :diminish magit-auto-revert-mode
   :bind ("C-c m" . magit-status))
 
 (let
@@ -331,6 +330,45 @@
              '("Used Packages"
                "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))
   (add-hook 'emacs-lisp-mode-hook #'jcs-use-package))
+
+(use-package helm-swoop
+  :ensure t
+  :config
+  ;; When doing isearch, hand the word over to helm-swoop
+  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+  ;; From helm-swoop to helm-multi-swoop-all
+  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+  ;; When doing evil-search, hand the word over to helm-swoop
+  ;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
+
+  ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+  (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+
+  ;; Move up and down like isearch
+  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+  :bind
+  (("M-i" . helm-swoop)
+   ("M-I" . helm-swoop-back-to-last-point)
+   ("C-c M-i" . helm-multi-swoop)))
+
+;; smoother scrolling
+(use-package smooth-scrolling
+  :ensure t
+  :init
+  (setq smooth-scroll-margin 5
+        scroll-conservatively 101
+        scroll-preserve-screen-position t
+        auto-window-vscroll nil)
+  :config
+  (setq scroll-margin 5))
+
+
+(use-package offlineimap
+  :ensure t)
+
 
 ;; acknowledgements
 ;;

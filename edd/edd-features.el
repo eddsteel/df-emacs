@@ -56,4 +56,7 @@
 ;; make C-v M-v symmetrical
 (setq scroll-preserve-screen-position 'always)
 
+;; use the sensible counter
+(global-set-key (kbd "M-=") 'count-words)
+
 (provide 'edd-features)

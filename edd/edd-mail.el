@@ -43,6 +43,9 @@
     (interactive)
     (notmuch-search-tag-all '("-unread")))
   (bind-key "M" 'edd-notmuch-mark-search-read 'notmuch-search-mode-map)
+  (bind-key "g" 'notmuch-refresh-this-buffer 'notmuch-search-mode-map)
+  (bind-key "g" 'notmuch-refresh-this-buffer 'notmuch-show-mode-map)
+  (bind-key "g" 'notmuch-refresh-this-buffer 'notmuch-tree-mode-map)
   :bind
   ("C-c n" . notmuch))
 
