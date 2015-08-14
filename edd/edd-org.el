@@ -53,6 +53,7 @@
             (org-agenda-compact-blocks t)))))
   (define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
   (define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
+  (define-key org-mode-map (kbd "C-M-o") 'org-insert-heading)
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
