@@ -363,12 +363,17 @@
         scroll-preserve-screen-position t
         auto-window-vscroll nil)
   :config
-  (setq scroll-margin 5))
+  (setq scroll-margin 5)
+  (add-hook 'term-mode-hook (lambda () (setq-local scroll-margin 0))))
 
 
 (use-package offlineimap
   :ensure t)
 
+(use-package company-emoji
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-emoji))
 
 ;; acknowledgements
 ;;

@@ -32,7 +32,7 @@
 (savehist-mode t)
 
 ;; goto address mode
-(dolist (hook '(text-mode conf-mode-hook jabber-chat-mode-hook))
+(dolist (hook '(text-mode conf-mode-hook jabber-chat-mode-hook term-mode-hook))
   (add-hook hook #'goto-address-mode))
 
 ;; uniquify buffers
@@ -58,5 +58,11 @@
 
 ;; use the sensible counter
 (global-set-key (kbd "M-=") 'count-words)
+
+;; Terminal -- kill on exit
+(defadvice term-handle-exit
+  (after term-kill-buffer-on-exit activate)
+(kill-buffer))
+
 
 (provide 'edd-features)
