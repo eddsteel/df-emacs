@@ -379,6 +379,12 @@
 (global-company-mode)
 
 (use-package ssh
+  :ensure t
+  :commands ssh
+  :config
+  (setq ssh-directory-tracking-mode t)
+  (shell-dirtrack-mode t)
+  (setq dirtrackp nil))
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
