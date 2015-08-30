@@ -364,7 +364,8 @@
         auto-window-vscroll nil)
   :config
   (setq scroll-margin 5)
-  (add-hook 'term-mode-hook (lambda () (setq-local scroll-margin 0))))
+  (dolist (hook '(term-mode-hook comint-hook))
+    (add-hook hook (lambda () (setq-local scroll-margin 0)))))
 
 
 (use-package offlineimap
@@ -375,6 +376,9 @@
   :config
   (add-to-list 'company-backends 'company-emoji))
 
+(global-company-mode)
+
+(use-package ssh
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
