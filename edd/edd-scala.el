@@ -54,7 +54,13 @@
   :ensure t
   :commands (sbt-start run-scala)
   :bind ("C-c s" . sbt-start)
-  :bind ("C-c h s" . run-scala)
+  :bind ("C-c h s" . edd-run-scala)
+  :init
+  (defun edd-run-scala ()
+    (interactive)
+    (if (sbt:find-root)
+        run-scala
+      (comint-run "scala")))
   :config
   (local-set-key (kbd "C-c C-b a") 'edd-sbt-assembly)
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
@@ -111,8 +117,6 @@ class %TESTCLASS% extends FlatSpec with Matchers {
   (interactive)
   (when edd-scala-last-test-only
     (sbt-command (concat "test-only " edd-scala-last-test-only))))
-
-
 
 (add-hook 'scala-mode-hook (lambda () (setq-local nyan-bar-length 16)))
 
