@@ -385,6 +385,17 @@
   (setq ssh-directory-tracking-mode t)
   (shell-dirtrack-mode t)
   (setq dirtrackp nil))
+(use-package quickrun
+  :ensure t
+  :bind
+  (("C-c q q" . quickrun)
+   ("C-c q r" . quickrun-region)))
+
+(use-package expand-region
+  :ensure t
+  :bind
+  (("C-=" . expand-region)))
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
