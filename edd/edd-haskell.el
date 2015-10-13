@@ -2,15 +2,15 @@
   :ensure t
   :mode "\\.hs\\'"
   :init
-  (dolist (hook '(haskell-indentation-mode
-                  haskell-doc-mode
+  (dolist (hook '(haskell-doc-mode
+                  haskell-indentation-mode
                   haskell-decl-scan-mode))
     (add-hook 'haskell-mode-hook hook))
   (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
     (add-to-list 'exec-path my-cabal-path))
   (setq
-   company-ghc-show-info t
+;;   company-ghc-show-info t
    haskell-tags-on-save t
    haskell-process-suggest-remove-import-lines t
    haskell-process-auto-import-loaded-modules t
@@ -31,11 +31,16 @@
   :bind
   ("C-c h h" . switch-to-haskell))
 
-(use-package "ghc"
+(use-package "hi2"
   :ensure t
-  :commands (ghc-init ghc-debug)
+  :commands (turn-on-hi2)
   :init
-  (add-hook 'haskell-mode-hook 'ghc-init))
+    (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
+;; use cabal's ghc-mod instead of the package.
+(add-to-list 'load-path "~/.cabal/share/x86_64-osx-ghc-7.6.3/ghc-mod-5.4.0.0/elisp")
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 
 (provide 'edd-haskell)
