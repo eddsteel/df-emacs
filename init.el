@@ -273,7 +273,7 @@
   (setq flycheck-scalastylerc
         (expand-file-name "scalastyle/scalastyle-config.xml"))
   (add-hook 'scala-mode-hook
-            (lambda () (unless (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt")
+            (lambda () (unless (and (buffer-file-name (current-buffer)) (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt"))
                     (flycheck-mode 1)))))
 
 (use-package rainbow-delimiters
