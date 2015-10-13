@@ -1,3 +1,7 @@
+;; Features -- tweaking of stuff that's built-in and doesn't require packages.
+;;
+;;
+
 (dolist
     (feature '(upcase-region downcase-region set-goal-column narrow-to-region))
   (put feature 'disabled nil))
@@ -64,5 +68,11 @@
   (after term-kill-buffer-on-exit activate)
 (kill-buffer))
 
+;; bind C-c ! to reload config (like org)
+(defun edd-config-reload ()
+  (interactive)
+  (load user-init-file))
+
+(global-set-key (kbd "C-c !") 'edd-config-reload)
 
 (provide 'edd-features)
