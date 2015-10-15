@@ -399,7 +399,23 @@
 (use-package expand-region
   :ensure t
   :bind
-  (("C-=" . expand-region)))
+  (("C-=" . er/expand-region)))
+
+;; wrap-region
+(use-package wrap-region
+  :ensure t
+  :config
+  (wrap-region-add-wrappers
+   '(("*" "*" nil org-mode)
+     ("~" "~" nil org-mode)
+     ("/" "/" nil org-mode)
+     ("=" "=" "+" org-mode)
+     ("_" "_" nil org-mode)
+     ("/*" "*/" "/" (scala-mode java-mode))
+     ("$" "$" nil (org-mode latex-mode))))
+  (add-hook 'org-mode-hook 'wrap-region-mode)
+  (add-hook 'latex-mode-hook 'wrap-region-mode)
+  (add-hook 'prog-mode-hook 'wrap-region-mode))
 
 ;; acknowledgements
 ;;
