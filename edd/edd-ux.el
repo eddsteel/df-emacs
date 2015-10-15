@@ -20,7 +20,7 @@
 
 ;; use that font I like.
 (when window-system
-  (set-face-attribute 'default nil :height 140 :font "Fira Mono")
+  (set-default-font "-*-Fira Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
   ;; fade when inactive
   (set-frame-parameter (selected-frame) 'alpha '(100 80))
   (put 'default-frame-alist 'alpha '(100 80)))

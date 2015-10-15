@@ -37,6 +37,11 @@
   (edd-load-theme 'spolsky)
   (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
 
+(use-package material-theme
+  :ensure t
+  :config
+  (edd-load-theme 'material))
+
 ;; nyan nyan
 ;;
 (use-package nyan-mode
@@ -405,4 +410,5 @@
 ;; https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
 ;; https://github.com/bodil/emacs.d/blob/master
 ;; https://github.com/shosti/.emacs.d/blob/master/personal/p-jabber.el
-;; http://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html
+;; http://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.
+;; http://pragmaticemacs.com/emacs/wrap-text-in-custom-characters/
