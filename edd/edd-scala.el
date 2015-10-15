@@ -59,7 +59,7 @@
   (defun edd-run-scala ()
     (interactive)
     (if (sbt:find-root)
-        run-scala
+        (run-scala)
       (comint-run "scala")))
   :config
   (local-set-key (kbd "C-c C-b a") 'edd-sbt-assembly)
