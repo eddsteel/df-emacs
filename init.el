@@ -84,17 +84,26 @@
   (set-face-attribute whitespace-trailing nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))
 
 
-;; Ace window/jump
+;; Ace window
 (use-package ace-window
   :ensure t
   :bind
-  ("M-s" . avi-goto-word-1)
   ("C-x o" . ace-window)
-  ("M-g g" . avi-goto-line) ; M-g M-g is still goto line
   :init
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
   (setq aw-background nil))
+
+(use-package ace-isearch
+  :ensure t
+  :init
+  (global-ace-isearch-mode +1)
+  :bind
+  ("C-c '" . avy-goto-char-timer)
+  :config
+  (global-set-key [\C-39] 'avy-goto-char-timer)
+  (global-set-key (kbd "C-;") 'avy-goto-char-timer)
+  (setq avy-timeout-seconds 0.3))
 
 ;; guide key
 (use-package guide-key
