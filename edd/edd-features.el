@@ -23,6 +23,7 @@
 (read-abbrev-file
  (expand-file-name "abbreviations" user-emacs-directory))
 (add-hook 'prog-mode-hook #'abbrev-mode)
+(add-hook 'term-mode-hook #'abbrev-mode)
 (eval-after-load "abbrev" '(diminish 'abbrev-mode ""))
 
 ;; custom file
