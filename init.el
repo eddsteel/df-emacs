@@ -99,10 +99,8 @@
   :init
   (global-ace-isearch-mode +1)
   :bind
-  ("C-c '" . avy-goto-char-timer)
+  ("C-:" . avy-goto-char-timer)
   :config
-  (global-set-key [\C-39] 'avy-goto-char-timer)
-  (global-set-key (kbd "C-;") 'avy-goto-char-timer)
   (setq avy-timeout-seconds 0.3))
 
 ;; guide key
