@@ -417,6 +417,20 @@
   (add-hook 'latex-mode-hook 'wrap-region-mode)
   (add-hook 'prog-mode-hook 'wrap-region-mode))
 
+;; "Then Emacs will understand path like /vcsh:zsh:."
+(add-to-list 'tramp-methods '("vcsh"
+                              (tramp-login-program "vcsh")
+                              (tramp-login-args
+                               (("enter")
+                                ("%h")))
+                              (tramp-remote-shell "/bin/sh")
+                              (tramp-remote-shell-args
+                               ("-c"))))
+
+(use-package docker :ensure t)
+(use-package docker-tramp :ensure t)
+(use-package dockerfile-mode :ensure t)
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
@@ -428,3 +442,4 @@
 ;; https://github.com/shosti/.emacs.d/blob/master/personal/p-jabber.el
 ;; http://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.
 ;; http://pragmaticemacs.com/emacs/wrap-text-in-custom-characters/
+;; http://lists.madduck.net/pipermail/vcs-home/2013-August/000880.html
