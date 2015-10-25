@@ -147,7 +147,7 @@
   :bind
   (("C-h d" . helm-dash)
    ("C-x b" . helm-mini)
-;   ("M-y" . helm-show-kill-ring)
+   ("C-M-y" . helm-show-kill-ring)
    ("M-x" . helm-M-x)
    ("C-x C-m" . helm-M-x)
    ("C-x C-f" . helm-find-files)))
