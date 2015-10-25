@@ -103,15 +103,8 @@
   :config
   (setq avy-timeout-seconds 0.3))
 
-;; guide key
-(use-package guide-key
-  :ensure t
-  :diminish guide-key-mode
-  :init
-  (setq guide-key/guide-key-sequence
-        '("C-x r" "C-x 4" "C-x 8" "C-c C-x" "C-c C-v"))
-  :config
-  (guide-key-mode 1))
+(use-package which-key
+  :ensure t)
 
 ;; hardcore mode
 (use-package hardcore-mode
