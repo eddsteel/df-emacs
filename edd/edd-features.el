@@ -76,4 +76,7 @@
 
 (global-set-key (kbd "C-c !") 'edd-config-reload)
 
+;; yank over region
+(delete-selection-mode 1)
+
 (provide 'edd-features)
