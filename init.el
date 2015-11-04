@@ -250,10 +250,10 @@
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 
-(use-package edd-mail
+(use-package edd-org
   :load-path "edd")
 
-(use-package edd-org
+(use-package edd-mail
   :load-path "edd")
 
 (use-package edd-pdf

@@ -2,9 +2,8 @@
   :mode ("\\.org\\'" . org-mode)
   :ensure org-plus-contrib
   :ensure graphviz-dot-mode
-  :init
-  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   :config
+  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   (defun my-org-confirm-babel-evaluate (lang body)
     (not (or
           (string= lang "dot")       ; don't ask for dot
