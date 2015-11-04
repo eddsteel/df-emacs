@@ -49,14 +49,14 @@
   :bind
   ("C-c n" . notmuch))
 
-(use-package notmuch-unread
-  :ensure t
-  :config
-  (setq notmuch-unread-search-term "tag:unread and tag:inbox")
+;; (use-package notmuch-unread
+;;   :ensure t
+;;   :config
+;;   (setq notmuch-unread-search-term "tag:unread and tag:inbox")
 
-  (defun notmuch-unread-update-handler ()
-    "Update the mode line."
-    (setq notmuch-unread-mode-line-string
-          (format " ✉%d" (notmuch-unread-count)))))
+;;   (defun notmuch-unread-update-handler ()
+;;     "Update the mode line."
+;;     (setq notmuch-unread-mode-line-string
+;;           (format " ✉%d" (notmuch-unread-count)))))
 
 (provide 'edd-mail)
