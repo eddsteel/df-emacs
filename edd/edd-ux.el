@@ -20,10 +20,17 @@
 
 ;; use that font I like.
 (when window-system
-  (set-default-font "-*-Fira Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-  ;; fade when inactive
-  (set-frame-parameter (selected-frame) 'alpha '(100 80))
-  (put 'default-frame-alist 'alpha '(100 80)))
+  (if (eq 'darwin system-type)
+      (progn
+        (set-default-font "-*-Fira Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+
+        ;; fade when inactive
+        (set-frame-parameter (selected-frame) 'alpha '(100 80))
+        (put 'default-frame-alist 'alpha '(100 80)))
+    (progn
+      (set-default-font "-*-Fira Mono-normal-normal-normal-*-17-*-*-*-m-0-iso10646-1")
+      ;; don't fade, WM will do that on everything.
+      (set-face-background 'default "#222222"))))
 
 (defvar edd-load-theme-hook
   '()

@@ -1,3 +1,7 @@
+;; Do this stuff first to avoid flicker
+;;
+(load-file (concat user-emacs-directory "edd/edd-ux.el"))
+
 ;; Bootstrap packages.
 ;;
 (require 'package)
@@ -18,24 +22,29 @@
   (require 'diminish)
   (require 'bind-key))
 
+;; built-in features
+;;
+(use-package edd-features
+  :load-path "edd")
+
 ;; System-specific stuff.
 ;;
 (use-package edd-mac
   :load-path "edd"
   :if (eq 'darwin system-type))
 
-;; Basic UX (no packages)
-;;
-(use-package edd-ux
-  :load-path "edd")
+
+(use-package edd-linux
+  :load-path "edd"
+  :if (not (eq 'darwin system-type)))
 
 ;; theme
 ;;
-(use-package sublime-themes
-  :ensure t
-  :config
-  (edd-load-theme 'spolsky)
-  (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
+;;(use-package sublime-themes
+;;  :ensure t
+;;  :config
+;;  (edd-load-theme 'spolsky)
+;;  (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
 
 (use-package material-theme
   :ensure t
@@ -49,10 +58,6 @@
   :config
   (nyan-mode))
 
-;; built-in features
-;;
-(use-package edd-features
-  :load-path "edd")
 
 ;; utilities that are too small to live alone
 ;;
