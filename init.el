@@ -141,8 +141,7 @@
   (helm-mode 1)
   (edd-theme-helm)
   :bind
-  (("C-h d" . helm-dash)
-   ("C-x b" . helm-mini)
+  (("C-x b" . helm-mini)
    ("C-M-y" . helm-show-kill-ring)
    ("M-x" . helm-M-x)
    ("C-x C-m" . helm-M-x)
