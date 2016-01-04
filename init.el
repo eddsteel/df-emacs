@@ -99,15 +99,6 @@
   (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
   (setq aw-background nil))
 
-(use-package ace-isearch
-  :ensure t
-  :init
-  (global-ace-isearch-mode +1)
-  :bind
-  ("C-:" . avy-goto-char-timer)
-  :config
-  (setq avy-timeout-seconds 0.3))
-
 (use-package which-key
   :ensure t)
 
