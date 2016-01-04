@@ -20,6 +20,7 @@
   (setq org-hide-leading-stars t)
   (setq org-use-speed-commands t)
   (setq org-directory "~/.org")
+  (setq org-ellipsis "…")
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
   (setq org-refile-targets
