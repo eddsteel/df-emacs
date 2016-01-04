@@ -78,6 +78,8 @@
 ;; comfortable bindings
 ;; C-h for delete
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+;; C-z for help, in exchange
+(define-key key-translation-map (kbd "C-z") (kbd "<help>"))
 
 
 (provide 'edd-ux)
