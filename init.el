@@ -216,7 +216,8 @@
   :load-path "edd")
 
 (use-package edd-jabber
-  :load-path "edd")
+  :load-path "edd"
+  :bind ("C-c j" . edd-hipchat-join))
 
 (use-package edd-haskell
   :load-path "edd")
@@ -249,7 +250,8 @@
   :load-path "edd")
 
 (use-package edd-mail
-  :load-path "edd")
+  :load-path "edd"
+  :bind ("C-c n" . edd-mailbox))
 
 (use-package edd-pdf
   :load-path "edd")
