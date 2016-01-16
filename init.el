@@ -69,7 +69,8 @@
    ("C-c M-n" . edd-jump-to-next-url)
    ("C-c x" . edd-term)
    ("C-c o" . edd-initial-file-or-scratch)
-   ("C-c u" . edd-hex-encode)))
+   ("C-c u" . edd-hex-encode)
+   ("C-c C-v" . edd-sudo-ff)))
 
 ;; whitespace
 ;;

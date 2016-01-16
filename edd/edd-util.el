@@ -49,4 +49,12 @@
     (delete-region start end)
     (insert encoded)))
 
+;; From https://github.com/sri/dotfiles/blob/master/emacs/emacs.d/my-fns.el#L236
+;;
+(defun edd-sudo-ff ()
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (when file-name
+      (find-alternate-file (concat "/sudo::" file-name)))))
+
 (provide 'edd-util)
