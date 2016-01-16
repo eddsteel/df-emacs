@@ -299,6 +299,9 @@
   :ensure t
   :bind ("C-c m" . magit-status))
 
+(use-package magit-filenotify
+  :ensure t)
+
 (let
     ((localel (locate-user-emacs-file "local.el")))
   (when (file-readable-p localel)
