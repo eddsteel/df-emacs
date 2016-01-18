@@ -148,11 +148,6 @@
    ("C-x C-m" . helm-M-x)
    ("C-x C-f" . helm-find-files)))
 
-;; helm-dash
-(use-package helm-dash
-  :bind ("C-c h d" . helm-dash)
-  :init
-  (setq helm-dash-common-docsets '("Akka" "Scala")))
 
 ;; projectile
 ;;
@@ -330,7 +325,7 @@
 
 (use-package imenu-anywhere
   :ensure t
-  :init (global-set-key (kbd "C-c .") 'helm-imenu-anywhere)
+  :init (global-set-key (kbd "C-c ,") 'helm-imenu-anywhere)
   :config (defun jcs-use-package ()
             (add-to-list 'imenu-generic-expression
              '("Used Packages"
@@ -355,10 +350,11 @@
   (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
   (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
   (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
-  :bind
-  (("M-i" . helm-swoop)
-   ("M-I" . helm-swoop-back-to-last-point)
-   ("C-c M-i" . helm-multi-swoop)))
+;;  :bind
+;;  (("M-i" . helm-swoop)
+;;   ("M-I" . helm-swoop-back-to-last-point)
+;;   ("C-c M-i" . helm-multi-swoop)))
+  )
 
 ;; smoother scrolling
 (use-package smooth-scrolling
@@ -431,6 +427,9 @@
 (use-package docker :ensure t)
 (use-package docker-tramp :ensure t)
 (use-package dockerfile-mode :ensure t)
+
+(use-package edd-hydra
+  :load-path "edd")
 
 ;; acknowledgements
 ;;
