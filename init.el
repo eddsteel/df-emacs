@@ -159,10 +159,13 @@
   (setq projectile-mode-line
         '(:eval (format " ☄{%s}" (projectile-project-name))))
   (setq projectile-completion-system 'helm)
-  (def-projectile-commander-method ?S "Run a build shell (e.g. SBT)"
-    ;; TODO: support others
-    (sbt-start))
   (helm-projectile-on))
+
+(use-package swiper-helm
+  :ensure t)
+
+(use-package fixmee
+  :ensure t)
 
 ;; RE-Builder
 ;;
@@ -387,6 +390,7 @@
   (setq ssh-directory-tracking-mode t)
   (shell-dirtrack-mode t)
   (setq dirtrackp nil))
+
 (use-package quickrun
   :ensure t
   :bind
