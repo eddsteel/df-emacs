@@ -433,6 +433,7 @@
 (use-package dockerfile-mode :ensure t)
 
 (use-package edd-hydra
+  :demand t
   :load-path "edd")
 
 ;; acknowledgements
