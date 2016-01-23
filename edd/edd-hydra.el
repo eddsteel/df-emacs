@@ -25,7 +25,7 @@
   (defhydra hydra-project (:color blue :hint nil :idle 0.4)
     "
     ^^                ^^              ^^                 ^^     ╭──────────────────┐
-    ^Files^           ^Search^        ^Buffer^           ^Do^   │ P %15s(concat (projectile-project-name) \" \")│
+    ^Files^           ^Search^        ^Buffer^           ^Do^   │ P %s(truncate-string-to-width (projectile-project-name) 15 0 ?  ?…)│
   ╭─^─────^───────────^──────^────────^──────^───────────^──^───┴──────────────────╯
     _f_ file          _a_ ag          _b_ switch         _g_ magit
     _l_ file dwim     _A_ grep        _v_ show all       _i_ info
@@ -143,7 +143,6 @@
             (hydra-project/body))))
 
   (define-key projectile-mode-map (kbd "C-c p") nil)
-  (global-set-key (kbd "C-c p") 'hydra-project/body)
-)
+  (global-set-key (kbd "C-c p") 'hydra-project/body))
 
 (provide 'edd-hydra)
