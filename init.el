@@ -299,9 +299,10 @@
 
 (use-package magit
   :ensure t
-  :bind ("C-c m" . magit-status))
+  :demand t)
 
 (use-package magit-filenotify
+  :demand t
   :ensure t)
 
 (let
