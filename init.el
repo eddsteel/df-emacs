@@ -154,6 +154,9 @@
 (use-package projectile
   :ensure t
   :ensure helm-projectile
+  :init
+  (setq projectile-keymap-prefix (kbd "C-c C-p"))
+
   :config
   (projectile-global-mode)
   (setq projectile-mode-line
