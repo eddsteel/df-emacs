@@ -16,7 +16,7 @@
 ;; show me where I am.
 (column-number-mode t)
 (show-paren-mode t)
-(global-hl-line-mode nil)
+(add-hook 'prog-mode-hook (lambda () (hl-line-mode t)))
 
 ;; use that font I like.
 (when window-system

@@ -40,16 +40,24 @@
 
 ;; theme
 ;;
-;;(use-package sublime-themes
-;;  :ensure t
-;;  :config
-;;  (edd-load-theme 'spolsky)
-;;  (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
+;; (use-package sublime-themes
+;;   :ensure t
+;;   :config
+;;   (edd-load-theme 'spolsky)
+;;   (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
 
-(use-package material-theme
+;; (use-package material-theme
+;;   :ensure t
+;;   :config
+;;   (edd-load-theme 'material))
+
+(use-package monokai-theme
   :ensure t
   :config
-  (edd-load-theme 'material))
+  (edd-load-theme 'monokai)
+  (defadvice hl-line-mode (after dino-advise-hl-line-mode
+                                 activate compile)
+    (set-face-attribute hl-line-face nil :inherit 'highlight :underline nil)))
 
 ;; nyan nyan
 ;;
