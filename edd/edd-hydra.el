@@ -50,8 +50,8 @@
         "
 ;        ("<tab>" hydra-master/body "back")
         ("<ESC>" nil "quit")
-        ("a"   projectile-ag)
-        ("A"   projectile-grep)
+        ("a"   helm-projectile-ag)
+        ("A"   helm-projectile-grep)
         ("b"   projectile-switch-to-buffer)
         ("B"   projectile-switch-to-buffer-other-window)
         ("c"   projectile-run-async-shell-command-in-root)
