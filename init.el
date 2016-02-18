@@ -448,6 +448,10 @@
   :demand t
   :load-path "edd")
 
+(use-package rust-mode :ensure t)
+(use-package cargo :ensure t)
+(use-package toml :ensure t)
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
