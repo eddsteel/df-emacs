@@ -33,5 +33,9 @@
 
 (use-package reveal-in-finder :ensure t)
 
+(setenv "DOCKER_TLS_VERIFY" "1")
+(setenv "DOCKER_HOST" "tcp://192.168.99.101:2376")
+(setenv "DOCKER_CERT_PATH" "~/.docker/machine/machines/dev")
+(setenv "DOCKER_MACHINE_NAME" "dev")
 
 (provide 'edd-mac)
