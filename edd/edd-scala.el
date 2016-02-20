@@ -4,7 +4,9 @@
   :config
   (setq scala-indent:align-parameters t)
   (setq scala-indent:align-forms t)
-  (setq scala-indent:use-javadoc-style t))
+  (setq scala-indent:use-javadoc-style nil)
+  (setq flycheck-scalastyle-jar "~/.local/share/scalastyle.jar")
+  (setq flycheck-scalastylerc "~/.config/scalastyle.xml"))
 
 (use-package ensime
   :ensure t
