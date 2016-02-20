@@ -93,13 +93,20 @@
     ^Char^           ^Word^                ^org^              ^find^      │  Navigate  │
   ╭─^^───────────────^^────────────────────^^──────────────────^^─────────┴────────────╯
     _c_ 2 chars      _w_: word by char     _h_: headline       _o_: helm-occur
-    _C_ char         _W_: some word        _a_: agenda heading _p_: helm-swiper
+    _C_ char         _W_: some word        _a_: agenda heading _i_: helm-swiper
     _L_ char in line _s_: subword by char  _q_: swoop buffers  _f_: search forward
     ^ ^              _S_: some subword     ^ ^                 _b_: search backward
 
+    ^^Flycheck^
+  ^^^ ───────────────^^────────────────────^^──────────────────^^─────────┴────────────╯
+    _nn_ next issue
+    _np_ prev issue
+    _nl_ list issues
+    _nc_ compile
+
 
     _B_: helm-buffers       _l_: avy-goto-line
-    _m_: helm-mini          _i_: ace-window
+    _m_: helm-mini          _I_: ace-window
     _R_: helm-recentf
 
     _P_: Project            _._: mark position _/_: jump to mark
@@ -116,17 +123,22 @@
     ("S" avy-goto-subword-0)
 
     ("l" avy-goto-line)
-    ("i" ace-window)
+    ("I" ace-window)
 
     ("h" helm-org-headlines)
     ("a" helm-org-agenda-files-headings)
     ("q" helm-multi-swoop-org)
 
     ("o" helm-occur)
-    ("p" swiper-helm)
+    ("i" swiper-helm)
 
     ("f" isearch-forward)
     ("b" isearch-backward)
+
+    ("nn" flycheck-next-error)
+    ("np" flycheck-previous-error)
+    ("nl" list-flycheck-errors)
+    ("nc" flycheck-compile)
 
     ("." org-mark-ring-push :color red)
     ("/" org-mark-ring-goto :color blue)
