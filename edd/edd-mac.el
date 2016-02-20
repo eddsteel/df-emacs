@@ -17,6 +17,13 @@
   (setq epg-gpg-program "gpg2"))
 
 
+;; Use homebrew's scalastyle
+;;
+(eval-after-load "flycheck"
+  (setq flycheck-scalastyle-jar "/usr/local/Cellar/scalastyle/0.8.0/libexec/scalastyle_2.11-0.8.0-batch.jar"))
+
+
+
 ;; unbind some annoying defaults
 ;;
 (dolist (troublesome '("<f11>" "s-h" "s-z" "C-z" "C-x C-z"))
