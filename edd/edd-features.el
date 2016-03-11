@@ -67,7 +67,26 @@
 ;; Terminal -- kill on exit
 (defadvice term-handle-exit
   (after term-kill-buffer-on-exit activate)
-(kill-buffer))
+  (kill-buffer))
+
+;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
+;;
+(defun edd-term-paste (&optional string)
+ (interactive)
+ (process-send-string
+  (get-buffer-process (current-buffer))
+  (if string string (current-kill 0))))
+
+;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
+;;
+(defun edd-term-hook ()
+    (goto-address-mode)
+    (define-key term-raw-map (kbd "C-y") 'edd-term-paste)
+    (define-key term-raw-map (kbd "C-c C-r") 'rename-buffer))
+
+(add-hook 'term-mode-hook 'edd-term-hook)
+
+
 
 ;; bind C-c ! to reload config (like org)
 (defun edd-config-reload ()
