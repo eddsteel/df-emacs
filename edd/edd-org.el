@@ -3,6 +3,7 @@
   :ensure org-plus-contrib
   :ensure graphviz-dot-mode
   :config
+  (setq org-html-validation-link nil)
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   (defun my-org-confirm-babel-evaluate (lang body)
     (not (or
