@@ -15,7 +15,14 @@
   (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((dot . t) (ditaa . t)))
+   '((dot . t)
+     (ditaa . t)
+     (emacs-lisp . t)
+     (scala . t)
+     (ledger . t)
+     (haskell . t)
+     (sqlite . t)
+     (shell . t)))
   (setq org-src-fontify-natively t)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
