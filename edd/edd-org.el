@@ -4,25 +4,31 @@
   :ensure graphviz-dot-mode
   :config
   (setq org-html-validation-link nil)
+  (setq org-html-head-include-default-style nil)
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
-  (defun my-org-confirm-babel-evaluate (lang body)
-    (not (or
-          (string= lang "dot")       ; don't ask for dot
-          (string= lang "ditaa"))))  ; or ditaa
+  (setq org-confirm-babel-evaluate nil
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t)
   (defun orgfile (file)
     (expand-file-name (concat file ".org") org-directory))
   (appt-activate 1)
-  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((dot . t)
+   '((clojure . t)
+     (css . t)
      (ditaa . t)
+     (dot . t)
      (emacs-lisp . t)
-     (scala . t)
-     (ledger . t)
      (haskell . t)
-     (sqlite . t)
-     (shell . t)))
+     (js . t)
+     (ledger . t)
+     (plantuml . t)
+     (python . t)
+     (ruby . t)
+     (scala . t)
+     (sh . t)
+     (shell . t)
+     (sqlite . t)))
   (setq org-src-fontify-natively t)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)

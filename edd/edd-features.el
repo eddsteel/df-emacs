@@ -98,4 +98,9 @@
 ;; yank over region
 (delete-selection-mode 1)
 
+;; ssh is "faster", and ask for dumb prompts.
+(setq tramp-terminal-type "dumb")
+(setq tramp-default-method "ssh")
+
+
 (provide 'edd-features)
