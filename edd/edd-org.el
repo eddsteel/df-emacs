@@ -119,10 +119,14 @@
 (use-package edd-org-gcal
   :commands (org-gcal-refresh-token org-gcal-fetch))
 
+
 (use-package ob-http
   :ensure t
   :defer nil
   :init
   (add-to-list 'org-babel-load-languages '(http . t)))
+
+(use-package edd-gtd
+  :load-path "~/.gtd")
 
 (provide 'edd-org)

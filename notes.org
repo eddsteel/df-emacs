@@ -1,0 +1,10 @@
+* Incorporate some ideas from [[https://github.com/otfrom/otfrom-org-emacs/blob/master/org/config.org]]
+** DONE Ace jump to C-c j and C-c k
+   CLOSED: [2014-04-11 Fri 12:17]
+** install discover.el and get rid of guide
+** install exec path from shell
+* org
+** org-gcal - make it automatic
+** org-feed?
+** appt?
+* http://www.emacswiki.org/emacs/DelightedModes
