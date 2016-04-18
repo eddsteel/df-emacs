@@ -109,4 +109,7 @@
   "Kill up to, but not including ARGth occurrence of CHAR.")
 (global-set-key (kbd "M-Z") 'zap-up-to-char)
 
+;; some associations
+(add-to-list 'auto-mode-alist '("\\.apib\\'" . markdown-mode))
+
 (provide 'edd-features)
