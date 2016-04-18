@@ -98,9 +98,15 @@
 ;; yank over region
 (delete-selection-mode 1)
 
+
 ;; ssh is "faster", and ask for dumb prompts.
 (setq tramp-terminal-type "dumb")
 (setq tramp-default-method "ssh")
 
+
+;; zap up to char
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.")
+(global-set-key (kbd "M-Z") 'zap-up-to-char)
 
 (provide 'edd-features)
