@@ -9,11 +9,13 @@
   (setq org-confirm-babel-evaluate nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t)
+
   (defun orgfile (file)
     (expand-file-name (concat file ".org") org-directory))
   (appt-activate 1)
   (org-babel-do-load-languages
    'org-babel-load-languages
+<<<<<<< 80befabc79b90a518dd0d026e5a705ffdf5cc910
    '((clojure . t)
      (css . t)
      (ditaa . t)
@@ -29,6 +31,9 @@
      (sh . t)
      (shell . t)
      (sqlite . t)))
+=======
+   '((dot . t) (ditaa . t) (http . t) (emacs-lisp . t) (sh . t) (scala . t)))
+>>>>>>> org-babel HTTP and make babel less noisy.
   (setq org-src-fontify-natively t)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
@@ -113,5 +118,11 @@
 (use-package org-notmuch)
 (use-package edd-org-gcal
   :commands (org-gcal-refresh-token org-gcal-fetch))
+
+(use-package ob-http
+  :ensure t
+  :defer nil
+  :init
+  (add-to-list 'org-babel-load-languages '(http . t)))
 
 (provide 'edd-org)
