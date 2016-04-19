@@ -38,4 +38,8 @@
 (setenv "DOCKER_CERT_PATH" "~/.docker/machine/machines/dev")
 (setenv "DOCKER_MACHINE_NAME" "dev")
 
+;; HYPER
+;;
+(setq ns-function-modifier 'hyper)
+
 (provide 'edd-mac)
