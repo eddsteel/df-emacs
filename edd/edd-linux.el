@@ -33,4 +33,8 @@
     ;;(set-face-background 'org-block bg)))
     ))
 
+
+;; let's use chromium
+(setq browse-url-browser-function 'browse-url-chromium)
+
 (provide 'edd-linux)
