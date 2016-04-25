@@ -54,10 +54,7 @@
 (use-package monokai-theme
   :ensure t
   :config
-  (edd-load-theme 'monokai)
-  (defadvice hl-line-mode (after dino-advise-hl-line-mode
-                                 activate compile)
-    (set-face-attribute hl-line-face nil :inherit 'highlight :underline nil)))
+  (edd-load-theme 'monokai))
 
 ;; nyan nyan
 ;;
