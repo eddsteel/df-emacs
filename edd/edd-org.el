@@ -15,13 +15,13 @@
   (appt-activate 1)
   (org-babel-do-load-languages
    'org-babel-load-languages
-<<<<<<< 80befabc79b90a518dd0d026e5a705ffdf5cc910
    '((clojure . t)
      (css . t)
      (ditaa . t)
      (dot . t)
      (emacs-lisp . t)
      (haskell . t)
+     (http . t)
      (js . t)
      (ledger . t)
      (plantuml . t)
@@ -31,9 +31,7 @@
      (sh . t)
      (shell . t)
      (sqlite . t)))
-=======
-   '((dot . t) (ditaa . t) (http . t) (emacs-lisp . t) (sh . t) (scala . t)))
->>>>>>> org-babel HTTP and make babel less noisy.
+
   (setq org-src-fontify-natively t)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
