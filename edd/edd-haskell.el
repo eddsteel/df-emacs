@@ -25,7 +25,6 @@
     (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
     (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
     (define-key haskell-mode-map (kbd "C-c DEL") 'haskell-hoogle)
-    (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
     (add-hook 'haskell-mode-hook (lambda () (helm-dash-activate-docset 'Haskell)))
     )
   :bind
