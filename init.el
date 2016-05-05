@@ -448,6 +448,8 @@
 (use-package rust-mode :ensure t)
 (use-package cargo :ensure t)
 (use-package toml :ensure t)
+(use-package toml-mode :ensure t)
+(use-package flycheck-rust :ensure t)
 
 ;;preview files in dired
 (use-package peep-dired
