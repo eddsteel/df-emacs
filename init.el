@@ -51,10 +51,15 @@
 ;;   :config
 ;;   (edd-load-theme 'material))
 
-(use-package monokai-theme
+;(use-package monokai-theme
+;  :ensure t
+;  :config
+;  (edd-load-theme 'monokai))
+
+(use-package darkokai-theme
   :ensure t
   :config
-  (edd-load-theme 'monokai))
+  (edd-load-theme 'darkokai))
 
 ;; nyan nyan
 ;;
@@ -457,6 +462,14 @@
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
+
+(use-package volatile-highlights
+  :ensure t
+  :config
+  (volatile-highlights-mode t))
+
+(use-package multi-term
+  :ensure t)
 
 ;; acknowledgements
 ;;
