@@ -471,6 +471,17 @@
 (use-package multi-term
   :ensure t)
 
+(use-package corral
+  :ensure t
+  :bind
+  (("M-9" . corral-parentheses-backward)
+   ("M-0" . corral-parentheses-forward)
+   ("M-[" . corral-brackets-backward)
+   ("M-]" . corral-brackets-forward)
+   ("M-{" . corral-braces-backward)
+   ("M-}" . corral-braces-forward)
+   ("M-\"" . corral-double-quotes-backward)))
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
