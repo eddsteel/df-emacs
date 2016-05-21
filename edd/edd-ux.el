@@ -5,7 +5,8 @@
 (mouse-avoidance-mode 'banish)
 
 ;; don't yell.
-(setq visible-bell 0)
+(setq visible-bell nil) ;; The default
+(setq ring-bell-function 'ignore)
 
 ;; don't distract.
 (setq inhibit-startup-message t)
