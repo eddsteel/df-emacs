@@ -5,7 +5,7 @@
 (mouse-avoidance-mode 'banish)
 
 ;; don't yell.
-(setq visible-bell 1)
+(setq visible-bell 0)
 
 ;; don't distract.
 (setq inhibit-startup-message t)
@@ -22,7 +22,7 @@
 (when window-system
   (if (eq 'darwin system-type)
       (progn
-        (set-default-font "-*-Fira Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+        (set-default-font "-*-Fira Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
 
         ;; fade when inactive
         (set-frame-parameter (selected-frame) 'alpha '(100 80))
