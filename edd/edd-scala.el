@@ -12,14 +12,21 @@
 (use-package ensime
   :ensure t
   :init
-  (add-hook 'scala-mode-hook #'ensime-scala-mode-hook)
+  (setq ensime-auto-generate-config 't)
+  (defun edd-ensime-scala-mode-hook ()
+    (let ((file (ensime-config-find-file (buffer-file-name))))
+      (when file
+        (call-interactively 'ensime))
+      (ensime-mode)))
+
+  (add-hook 'scala-mode-hook #'edd-ensime-scala-mode-hook)
   :config
   (setq ensime-goto-test-config-defaults
         (plist-put ensime-goto-test-config-defaults
                    :test-template-fn 'edd-ensime-test-template))
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
   :commands
-  (ensime-scala-mode-hook)
+  (ensime-scala-mode-hook ensime-config-find-file)
   :bind
   ("C-c e" . ensime))
 
