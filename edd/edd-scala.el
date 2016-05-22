@@ -26,7 +26,7 @@
                    :test-template-fn 'edd-ensime-test-template))
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
   :commands
-  (ensime-scala-mode-hook ensime-config-find-file)
+  (ensime-scala-mode-hook ensime-config-find-file ensime-connection-or-nil)
   :bind
   ("C-c e" . ensime))
 
@@ -38,9 +38,11 @@
   :init
   (defun edd-run-scala ()
     (interactive)
-    (if (sbt:find-root)
-        (run-scala)
-      (comint-run "scala")))
+    (if (ensime-connection-or-nil)
+        (call-interactively 'ensime-inf-run-scala)
+      (if (sbt:find-root)
+          (run-scala)
+        (comint-run "scala"))))
   :config
   (local-set-key (kbd "C-c C-b a") 'edd-sbt-assembly)
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
