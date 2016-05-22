@@ -2,47 +2,15 @@
   :mode ("\\.org\\'" . org-mode)
   :ensure org-plus-contrib
   :ensure graphviz-dot-mode
+  :ensure htmlize
+;;   most :config replaced with edd-org-options
   :config
-  (setq org-html-validation-link nil)
-  (setq org-html-head-include-default-style nil)
-  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
-  (setq org-confirm-babel-evaluate nil
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t)
-
+  (setq org-directory "~/.org")
   (defun orgfile (file)
     (expand-file-name (concat file ".org") org-directory))
-  (appt-activate 1)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((clojure . t)
-     (css . t)
-     (ditaa . t)
-     (dot . t)
-     (emacs-lisp . t)
-     (haskell . t)
-     (http . t)
-     (js . t)
-     (ledger . t)
-     (plantuml . t)
-     (python . t)
-     (ruby . t)
-     (scala . t)
-     (sh . t)
-     (shell . t)
-     (sqlite . t)))
-
-  (setq org-src-fontify-natively t)
-  (setq org-log-done t)
-  (setq org-hide-leading-stars t)
-  (setq org-use-speed-commands t)
-  (setq org-directory "~/.org")
-  (setq org-ellipsis "…")
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
   (setq org-refile-targets
-        `((nil . (:level . 1)) ; current buffer headlines
-          (,(mapcar 'orgfile '("work" "home" "read-review")) . (:tag . "in"))))
+      `((nil . (:level . 1)) ; current buffer headlines
+        (,(mapcar 'orgfile '("work" "home" "read-review")) . (:tag . "in"))))
   (setq org-capture-templates
         `(("t" "todo" entry (file ,(orgfile "refile"))
            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
@@ -55,23 +23,20 @@
   (setq org-agenda-work-files
         (mapcar 'orgfile '("work" "cal-work")))
   (setq org-agenda-custom-commands
-        '(("w" "work agenda"
-           ((agenda "" ((org-agenda-ndays 1)))
-            (tags-todo "next")
-            (todo "WAIT")
-            (tags "goal"))
-           ((org-agenda-files org-agenda-work-files)
-            (org-agenda-compact-blocks t)))
-          ("s" "standup"
-           ((todo "DONE")
-            (tags-todo "next")
-            (todo "WAIT"))
-           ((org-agenda-files org-agenda-work-files)
-            (org-agenda-compact-blocks t)))))
-  (define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
-  (define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
-  (define-key org-mode-map (kbd "C-M-o") 'org-insert-heading)
-  (add-hook 'org-mode-hook (lambda () (hl-line-mode t)))
+      '(("w" "work agenda"
+         ((agenda "" ((org-agenda-ndays 1)))
+          (tags-todo "next")
+          (todo "WAIT")
+          (tags "goal"))
+         ((org-agenda-files org-agenda-work-files)
+          (org-agenda-compact-blocks t)))
+        ("s" "standup"
+         ((todo "DONE")
+          (tags-todo "next")
+          (todo "WAIT"))
+         ((org-agenda-files org-agenda-work-files)
+          (org-agenda-compact-blocks t)))))
+
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
@@ -117,14 +82,22 @@
 (use-package edd-org-gcal
   :commands (org-gcal-refresh-token org-gcal-fetch))
 
-
 (use-package ob-http
   :ensure t
   :defer nil
   :init
   (add-to-list 'org-babel-load-languages '(http . t)))
 
+(use-package edd-org-options
+  :config ;; additional
+  (appt-activate 1)
+  (add-to-list 'org-babel-load-languages
+               '(shell . t)))
+
 (use-package edd-gtd
   :load-path "~/.gtd")
+
+(use-package interleave
+  :ensure t)
 
 (provide 'edd-org)
