@@ -18,8 +18,6 @@
      (fbg "#121212"))
   (dolist (fce '(default fringe))
     (set-face-background fce bg))
-  (dolist (fce '(mode-line mode-line-inactive))
-    (set-face-background fce fbg))
 
   (eval-after-load 'magit
     '(dolist (fce '(magit-diff-added-highlight
