@@ -2,6 +2,7 @@
   :ensure t
   :mode ("\\.scala\\'" . scala-mode)
   :config
+  (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters t)
   (setq scala-indent:align-forms t)
   (setq scala-indent:use-javadoc-style nil)
