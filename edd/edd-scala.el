@@ -18,36 +18,6 @@
         (plist-put ensime-goto-test-config-defaults
                    :test-template-fn 'edd-ensime-test-template))
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
-  (defun ensime-modeline-string ()
-    "Return the string to display in the modeline.
-  \"ENSIME\" only appears if we aren't connected.  If connected, include
-  connection-name, and possibly some state
-  information."
-    (when ensime-mode
-      (condition-case err
-          (let ((conn (ensime-connection-or-nil)))
-            (cond ((and ensime-mode (not conn))
-                   (cond
-                    ((ensime-owning-server-process-for-source-file buffer-file-name)
-                     " [E:Starting]")
-                    (t " Ø")))
-
-                  ((and ensime-mode (ensime-connected-p conn))
-                   (concat " ["
-                           (or (plist-get (ensime-config conn) :name)
-                               "E:Connected")
-                           (let ((status (ensime-modeline-state-string conn))
-                                 (unready (not (ensime-analyzer-ready conn))))
-                             "")
-                           (concat (format " : %s/%s"
-                                           (ensime-num-errors conn)
-                                           (ensime-num-warnings conn)))
-                           "]"))
-                  (ensime-mode " [E: Dead Connection]")
-                  ))
-        (error (progn
-                 " [E: wtf]"
-                 )))))
   :commands
   (ensime-scala-mode-hook)
   :bind
