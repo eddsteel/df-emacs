@@ -312,6 +312,7 @@
   :ensure t
   :demand t)
 
+
 (use-package magit-filenotify
   :demand t
   :ensure t)
@@ -479,6 +480,18 @@
    ("M-{" . corral-braces-backward)
    ("M-}" . corral-braces-forward)
    ("M-\"" . corral-double-quotes-backward)))
+
+(use-package engine-mode
+  :ensure t
+  :init
+  (engine-mode 1)
+  :config
+  (engine/set-keymap-prefix (kbd "C-x g"))
+  (defengine google
+    "https://google.com/search?q=%s"
+    :keybinding "g"
+    :browser 'eww-browse-url))
+
 
 ;; acknowledgements
 ;;
