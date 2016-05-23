@@ -109,4 +109,7 @@
 ;; some associations
 (add-to-list 'auto-mode-alist '("\\.apib\\'" . markdown-mode))
 
+;; use english dictionary (there's no canadian or british one)
+(setq ispell-dictionary "english")
+
 (provide 'edd-features)
