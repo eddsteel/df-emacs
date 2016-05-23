@@ -11,7 +11,8 @@
 
 ;; server
 ;;
-(when window-system
+(require 'server)
+(when (and window-system (not (server-running-p)))
   (add-hook 'after-init-hook 'server-start t))
 
 ;; text increase
