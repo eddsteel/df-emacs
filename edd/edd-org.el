@@ -11,31 +11,6 @@
   (setq org-refile-targets
       `((nil . (:level . 1)) ; current buffer headlines
         (,(mapcar 'orgfile '("work" "home" "read-review")) . (:tag . "in"))))
-  (setq org-capture-templates
-        `(("t" "todo" entry (file ,(orgfile "refile"))
-           "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("w" "org-protocol" entry plain (file+headline ,(orgfile "read-review") "unread")
-           "** TODO review %c\n%U\n" :immediate-finish t)
-          ("u" "URL to read" plain (file+headline ,(orgfile "read-review") "unread")
-           "[[%i]] %t\n")))
-  (setq org-agenda-files (mapcar 'orgfile '("work" "dorp/home" "cal-home" "cal-work")))
-  (setq org-agenda-include-diary t)
-  (setq org-agenda-work-files
-        (mapcar 'orgfile '("work" "cal-work")))
-  (setq org-agenda-custom-commands
-      '(("w" "work agenda"
-         ((agenda "" ((org-agenda-ndays 1)))
-          (tags-todo "next")
-          (todo "WAIT")
-          (tags "goal"))
-         ((org-agenda-files org-agenda-work-files)
-          (org-agenda-compact-blocks t)))
-        ("s" "standup"
-         ((todo "DONE")
-          (tags-todo "next")
-          (todo "WAIT"))
-         ((org-agenda-files org-agenda-work-files)
-          (org-agenda-compact-blocks t)))))
 
   :bind
   (("C-c l" . org-store-link)
