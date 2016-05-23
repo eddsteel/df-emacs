@@ -145,6 +145,8 @@
    ("C-x C-f" . helm-find-files)))
 
 
+
+
 ;; projectile
 ;;
 (use-package projectile
@@ -277,7 +279,6 @@
 
 (use-package flycheck
   :ensure t
-  :diminish flycheck-mode
   :config
   (setq flycheck-scalastyle-jar
         (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
