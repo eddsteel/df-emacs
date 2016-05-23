@@ -177,8 +177,6 @@
 (use-package swiper-helm
   :ensure t)
 
-(use-package fixmee
-  :ensure t)
 
 ;; RE-Builder
 ;;
