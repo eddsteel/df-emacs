@@ -57,4 +57,13 @@
     (when file-name
       (find-alternate-file (concat "/sudo::" file-name)))))
 
+;; Exercism submit from project root
+(require 'projectile)
+(defun edd-ex-submit ()
+  (interactive)
+  (let ((file (buffer-file-name))
+        (default-directory (projectile-project-root)))
+    (display-buffer (process-buffer
+     (start-process "exercism" "*exercism*" "exercism" "submit" file)))))
+
 (provide 'edd-util)
