@@ -14,10 +14,11 @@
   :init
   (setq ensime-auto-generate-config 't)
   (defun edd-ensime-scala-mode-hook ()
-    (let ((file (ensime-config-find-file (buffer-file-name))))
-      (when file
-        (call-interactively 'ensime))
-      (ensime-mode)))
+    (when buffer-file-name ;; i.e. not org babel
+      (let ((file (ensime-config-find-file (buffer-file-name))))
+        (when file
+          (call-interactively 'ensime))
+        (ensime-mode))))
 
   (add-hook 'scala-mode-hook #'edd-ensime-scala-mode-hook)
   :config
