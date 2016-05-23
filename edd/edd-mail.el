@@ -3,16 +3,17 @@
   "Open default mailbox"
   (notmuch))
 
+(setq mail-specify-envelope-from t
+      mail-envelope-from 'header
+      send-mail-function 'sendmail-send-it
+      message-sendmail-envelope-from 'header
+      message-send-mail-function 'message-send-mail-with-sendmail)
+
 (use-package notmuch
   :ensure t
   :commands notmuch
   :config
-  (edd-with-secrets "mail"
-                    (setq mail-specify-envelope-from t
-                          mail-envelope-from 'header
-                          send-mail-function 'sendmail-send-it
-                          message-sendmail-envelope-from 'header
-                          message-send-mail-function 'message-send-mail-with-sendmail))
+  (edd-with-secrets "mail" '())
   (require 'org-notmuch)
   (setq notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i")

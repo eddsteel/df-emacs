@@ -262,6 +262,12 @@
 
 (use-package edd-mail
   :load-path "edd"
+  :init
+  (setq mail-specify-envelope-from t
+        mail-envelope-from 'header
+        send-mail-function 'sendmail-send-it
+        message-sendmail-envelope-from 'header
+        message-send-mail-function 'message-send-mail-with-sendmail)
   :bind ("C-c n" . edd-mailbox))
 
 (use-package edd-pdf
