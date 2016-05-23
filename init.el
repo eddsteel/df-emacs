@@ -494,7 +494,8 @@
   (defengine google
     "https://google.com/search?q=%s"
     :keybinding "g"
-    :browser 'eww-browse-url))
+    :browser 'eww-browse-url)
+  :commands engine-mode)
 
 
 ;; acknowledgements
