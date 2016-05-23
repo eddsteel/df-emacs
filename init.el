@@ -286,6 +286,7 @@
         (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
   (setq flycheck-scalastylerc
         (expand-file-name "scalastyle/scalastyle-config.xml"))
+  (add-hook 'rust-mode-hook #'flycheck-mode)
   (add-hook 'scala-mode-hook
             (lambda () (unless (and (buffer-file-name (current-buffer)) (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt"))
                     (flycheck-mode 1)))))
@@ -450,11 +451,8 @@
   :demand t
   :load-path "edd")
 
-(use-package rust-mode :ensure t)
-(use-package cargo :ensure t)
-(use-package toml :ensure t)
-(use-package toml-mode :ensure t)
-(use-package flycheck-rust :ensure t)
+(use-package edd-rust
+  :load-path "edd")
 
 ;;preview files in dired
 (use-package peep-dired
