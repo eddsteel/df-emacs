@@ -16,7 +16,8 @@
   (defun edd-ensime-scala-mode-hook ()
     (when buffer-file-name ;; i.e. not org babel
       (let ((file (ensime-config-find-file (buffer-file-name))))
-        (when file
+        (when (and file
+                   (not (ensime-connection-or-nil)))
           (call-interactively 'ensime))
         (ensime-mode))))
 
