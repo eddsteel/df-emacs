@@ -156,7 +156,8 @@
   (setq projectile-keymap-prefix (kbd "C-c C-p"))
 
   :config
-  (projectile-global-mode)
+  (add-hook 'text-mode-hook #'projectile-mode)
+  (add-hook 'prog-mode-hook #'projectile-mode)
   (setq projectile-mode-line
         '(:eval (format " ☄{%s}" (projectile-project-name))))
   (setq projectile-completion-system 'helm)
