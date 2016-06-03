@@ -66,4 +66,19 @@
     (display-buffer (process-buffer
      (start-process "exercism" "*exercism*" "exercism" "submit" file)))))
 
+
+;; This is rad, copied from
+(defun edd-fill-or-unfill ()
+  "Like `fill-paragraph', but unfill if used twice."
+  (interactive)
+  (let ((fill-column
+         (if (eq last-command 'edd-fill-or-unfill)
+             (progn (setq this-command nil)
+                    (point-max))
+           fill-column)))
+    (call-interactively #'fill-paragraph)))
+
+(global-set-key [remap fill-paragraph]
+                #'edd-fill-or-unfill)
+
 (provide 'edd-util)
