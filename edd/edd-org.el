@@ -70,7 +70,7 @@
                '(shell . t)))
 
 (use-package edd-gtd
-  :load-path "~/.gtd")
+  :load-path "~/txt/gtd")
 
 (use-package interleave
   :ensure t)
