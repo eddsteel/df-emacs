@@ -36,10 +36,10 @@
   :init
     (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
-;; use cabal's ghc-mod instead of the package.
-(add-to-list 'load-path "~/.cabal/share/x86_64-osx-ghc-7.6.3/ghc-mod-5.4.0.0/elisp")
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+(use-package "intero"
+  :ensure t
+  :commands (intero-mode)
+  :init
+    (add-hook 'haskell-mode-hook 'intero-mode))
 
 (provide 'edd-haskell)
