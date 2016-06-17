@@ -71,12 +71,15 @@
   (kill-buffer))
 
 ;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
+;; with an addition: strip space/newlines from the end.
 ;;
 (defun edd-term-paste (&optional string)
  (interactive)
  (process-send-string
   (get-buffer-process (current-buffer))
-  (if string string (current-kill 0))))
+  (replace-regexp-in-string "[ \n]*\\'" ""
+                            (if string string (current-kill 0)))))
+
 
 ;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
 ;;
