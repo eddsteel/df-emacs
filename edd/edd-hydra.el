@@ -88,7 +88,7 @@
     ("R" helm-recentf "recentf")
     ("P" hydra-project/body "project >>"))
 
-  (global-set-key (kbd "C-c .") 'hydra-goto/body)
+  (global-set-key (kbd "C-c o") 'hydra-goto/body)
   (setq projectile-switch-project-action
         (lambda ()
           (progn
