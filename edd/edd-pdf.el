@@ -162,4 +162,7 @@ of the page at all that means scroll down."
 
   (add-hook 'doc-view-mode-hook 'edd-pdf-1col))
 
+(use-package pdf-tools
+  :ensure t)
+
 (provide 'edd-pdf)
