@@ -105,6 +105,11 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 (add-hook 'scala-mode-hook (lambda () (setq-local nyan-bar-length 16)))
 
 
+(defun edd-align-sbt-deps ()
+  (interactive)
+  (align-regexp (region-beginning) (region-end) "\\(\\s-+\\)\\(%%?\\|\"\\)" 1 1 't))
+
+
 (defun edd-java-hook ()
   (setq compile-command "ant \-emacs compile \-find")
   (local-set-key (kbd "C-x C-k") 'recompile))
