@@ -142,8 +142,8 @@
    ("C-M-y" . helm-show-kill-ring)
    ("M-x" . helm-M-x)
    ("C-x C-m" . helm-M-x)
-   ("C-x C-f" . helm-find-files)))
-
+   ("C-x C-f" . helm-find-files)
+   ("C-x f" . helm-for-files)))
 
 
 

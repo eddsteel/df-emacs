@@ -22,6 +22,11 @@
 (eval-after-load "flycheck"
   (setq flycheck-scalastyle-jar "/usr/local/Cellar/scalastyle/0.8.0/libexec/scalastyle_2.11-0.8.0-batch.jar"))
 
+;; Use mdfind not locate
+;;
+(eval-after-load "helm"
+  (setq helm-locate-command "mdfind -name %s %s"))
+
 
 
 ;; unbind some annoying defaults
