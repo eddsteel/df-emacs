@@ -187,16 +187,6 @@
   :init
   (setq reb-re-syntax 'string))
 
-;; iy-go-to-char
-(use-package iy-go-to-char
-  :ensure t
-  :bind
-  (("C-c f" . iy-go-to-char)
-   ("C-c F" . iy-go-to-char-backward)
-   ("C-c ;" . iy-go-to-or-up-to-continue)
-   ("C-c t" . iy-go-up-to-char)
-   ("C-c T" . iy-go-up-to-char-backward)))
-
 ;; vagrant
 (use-package vagrant
   :ensure t
