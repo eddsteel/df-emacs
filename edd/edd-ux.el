@@ -2,7 +2,7 @@
 (dolist
     (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode blink-cursor-mode))
   (when (fboundp mode) (funcall mode -1)))
-(mouse-avoidance-mode 'banish)
+(mouse-avoidance-mode 'jump)
 
 ;; don't yell.
 (setq visible-bell nil) ;; The default
