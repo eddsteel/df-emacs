@@ -84,6 +84,11 @@
     ("nl" list-flycheck-errors "error list")
     ("nc" flycheck-compile "refresh errors")
 
+    ("Nn" git-gutter:next-hunk "next git hunk")
+    ("Np" git-gutter:previous-hunk "previous git hunk")
+    ("Nl" git-gutter:statistic "count git changes")
+    ("Ns" git-gutter:popup-hunk "show current git change")
+
     ("b" helm-mini "buffer")
     ("R" helm-recentf "recentf")
     ("P" hydra-project/body "project >>"))
