@@ -28,6 +28,12 @@
   (setq helm-locate-command "mdfind -name %s %s"))
 
 
+;; EMOJE
+;;
+(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (set-fontset-font t 'unicode "Apple Color Emoji" frame 'prepend)))
 
 ;; unbind some annoying defaults
 ;;
@@ -35,11 +41,6 @@
   (global-unset-key (kbd troublesome)))
 
 (global-set-key (kbd "<f10>") 'toggle-frame-fullscreen)
-
-(setenv "DOCKER_TLS_VERIFY" "1")
-(setenv "DOCKER_HOST" "tcp://192.168.99.101:2376")
-(setenv "DOCKER_CERT_PATH" "~/.docker/machine/machines/dev")
-(setenv "DOCKER_MACHINE_NAME" "dev")
 
 ;; HYPER
 ;;
