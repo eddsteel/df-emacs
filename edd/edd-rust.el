@@ -2,10 +2,7 @@
   :ensure t)
 
 (use-package cargo
-  :ensure t
-  :bind
-   ("C-c C-t" . cargo-process-test)
-   ("C-c C-c" . cargo-process-build))
+  :ensure t)
 
 (use-package toml :ensure t)
 (use-package toml-mode :ensure t)
