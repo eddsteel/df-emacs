@@ -499,6 +499,15 @@
   :commands engine-mode)
 
 
+(use-package anzu
+  :ensure t
+  :init
+  (global-anzu-mode +1)
+  :bind
+  (("M-%" . anzu-query-replace)
+   ("C-M-%" . anzu-query-replace-regexp)))
+
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
