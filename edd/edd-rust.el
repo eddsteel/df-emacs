@@ -2,15 +2,17 @@
   :ensure t)
 
 (use-package cargo
-  :ensure t)
+  :ensure t
+  :init
+  (add-hook 'rust-mode-hook #'cargo-minor-mode))
 
 (use-package toml :ensure t)
 (use-package toml-mode :ensure t)
+
 (use-package flycheck-rust
   :ensure t
     :init
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
 
 (use-package ac-racer
   :init
