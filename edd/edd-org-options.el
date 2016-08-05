@@ -1,6 +1,7 @@
 ;; org config that doesn't load packages
 
 (require 'org)
+(require 'ob-http)
 (setq org-html-validation-link nil)
 (setq org-html-head-include-default-style nil)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))

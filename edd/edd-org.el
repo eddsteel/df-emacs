@@ -1,8 +1,10 @@
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :ensure org-plus-contrib
+  :ensure ob-http
   :ensure graphviz-dot-mode
   :ensure htmlize
+  :ensure org-download
 ;;   most :config replaced with edd-org-options
   :config
   (setq org-directory "~/.org")
