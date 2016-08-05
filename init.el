@@ -113,6 +113,7 @@
 (use-package helm
   :ensure t
   :ensure helm-ag
+  :ensure helm-company
   :diminish helm-mode
   :init
   (defun edd-theme-helm ()
@@ -136,6 +137,10 @@
       (set-face-attribute 'helm-source-header nil :background background :foreground imode-fg :weight 'bold :height 1.3 :family "Sans Serif")
       (set-face-attribute 'helm-visible-mark nil :background imode-fg)))
   (add-hook 'edd-load-theme-hook 'edd-theme-helm)
+  (eval-after-load 'company
+    '(progn
+       (define-key company-mode-map (kbd "C-M-i") 'helm-company)
+       (define-key company-active-map (kbd "C-M-i") 'helm-company)))
   :config
   (helm-mode 1)
   (edd-theme-helm)
