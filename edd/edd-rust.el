@@ -7,7 +7,9 @@
   (add-hook 'rust-mode-hook #'cargo-minor-mode))
 
 (use-package toml :ensure t)
-(use-package toml-mode :ensure t)
+(use-package toml-mode :ensure t
+  :init
+  (add-hook 'toml-mode #'cargo-minor-mode))
 
 (use-package flycheck-rust
   :ensure t
