@@ -10,6 +10,7 @@
   (setq flycheck-scalastylerc "~/.config/scalastyle.xml"))
 
 (use-package ensime
+  :pin melpa-stable
   :ensure t
   :init
   (setq ensime-auto-generate-config 't)
