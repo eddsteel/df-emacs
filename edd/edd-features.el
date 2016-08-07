@@ -115,4 +115,9 @@
 ;; use english dictionary (there's no canadian or british one)
 (setq ispell-dictionary "english")
 
+;; next/previous buffers
+(global-set-key (kbd "C-(") 'previous-buffer)
+(global-set-key (kbd "C-)") 'next-buffer)
+
+
 (provide 'edd-features)
