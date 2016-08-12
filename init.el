@@ -283,6 +283,7 @@
 
 (use-package flycheck
   :ensure t
+  :diminish (flycheck-mode . " 📈")
   :config
   (setq flycheck-scalastyle-jar
         (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
@@ -465,6 +466,7 @@
               ("P" . peep-dired)))
 
 (use-package volatile-highlights
+  :diminish volatile-highlights-mode
   :ensure t
   :config
   (volatile-highlights-mode t))
@@ -498,6 +500,7 @@
 
 (use-package anzu
   :ensure t
+  :diminish anzu-mode
   :init
   (global-anzu-mode +1)
   :bind
