@@ -313,7 +313,9 @@
 
 (use-package magit
   :ensure t
-  :demand t)
+  :demand t
+  :config
+  (setq magit-commit-arguments '("--gpg-sign=33620159D40385A0")))
 
 
 (use-package magit-filenotify
