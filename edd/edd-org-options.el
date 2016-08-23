@@ -34,8 +34,9 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
 
+
 (define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
 (define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
 (define-key org-mode-map (kbd "C-M-o") 'org-insert-heading)
-(add-hook 'org-mode-hook (lambda () (hl-line-mode t)))
+
 (provide 'edd-org-options)

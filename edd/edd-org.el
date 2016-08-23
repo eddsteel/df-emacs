@@ -5,6 +5,11 @@
   :ensure graphviz-dot-mode
   :ensure htmlize
   :ensure org-download
+  :ensure org-bullets
+  :init
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook (lambda () (hl-line-mode t)))
+
 ;;   most :config replaced with edd-org-options
   :config
   (setq org-directory "~/.org")
@@ -13,7 +18,8 @@
   (setq org-refile-targets
       `((nil . (:level . 1)) ; current buffer headlines
         (,(mapcar 'orgfile '("work" "home" "read-review")) . (:tag . "in"))))
-
+  (setq org-bullets-bullet-list
+        '("🍣" "🐸" "🐳" "🐻" "◉" "○" "✸" "✿"))
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
