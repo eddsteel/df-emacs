@@ -36,8 +36,8 @@
 (use-package sbt-mode
   :ensure t
   :commands (sbt-start run-scala)
-  :bind ("C-c s" . sbt-start)
-  :bind ("C-c h s" . edd-run-scala)
+  :bind (("C-c s" . sbt-start)
+         ("C-c h s" . edd-run-scala))
   :init
   (defun edd-run-scala ()
     (interactive)
@@ -51,6 +51,11 @@
   (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
   (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
   (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))
+
+
+(define-derived-mode sbt-file-mode scala-mode "SBT file mode"
+  "A mode for editing .sbt files")
+(add-to-list 'auto-mode-alist '("\\.sbt\\'" . sbt-file-mode))
 
 
 (defun edd-ensime-test-template ()
@@ -93,10 +98,12 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 
 (defun edd-sbt-test-only ()
   (interactive)
-  (let ((n (edd-scala-fqn-containing-point)))
+  (letrec ((n (edd-scala-fqn-containing-point))
+        (cmd (concat "test-only " n " -- -oDF")))
     (when n
       (setq edd-scala-last-test-only n)
-      (sbt-command (concat "test-only " n)))))
+      (message (concat "sbt " cmd)
+      (sbt-command cmd)))))
 
 (defun edd-sbt-test-only-last ()
   (interactive)
@@ -114,6 +121,12 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 (defun edd-java-hook ()
   (setq compile-command "ant \-emacs compile \-find")
   (local-set-key (kbd "C-x C-k") 'recompile))
+
+(defun edd-scala-helm-method ()
+  (interactive)
+  (call-interactively 'helm-occur "\bdef\ "))
+(add-hook 'scala-mode-hook (lambda () (local-set-key (kbd "C-c .") 'edd-scala-helm-method)))
+
 
 (add-hook 'java-mode-hook 'edd-java-hook)
 
