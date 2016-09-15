@@ -128,6 +128,44 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 (add-hook 'scala-mode-hook (lambda () (local-set-key (kbd "C-c .") 'edd-scala-helm-method)))
 
 
+(setq edd-scala-sort-imports-rules
+      '(("^import com\\.hootsuite\\." . "1") ("^import scala\\." . "6") ("^import java\\." . "7") ("^import " . "5")))
+
+;; TODO: support blank lines as both a rule and while traversing
+(defun edd-scala-sort-imports ()
+  "Sorts imports according to rules, which are cons pairs of regexp to order"
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (search-forward-regexp "^package\\b")
+    (search-forward-regexp "^import\\b")
+    (beginning-of-line)
+    (let ((start (point)))
+      (while (looking-at-p "^import\\b")
+        (forward-line))
+      (end-of-line)
+      (let ((end (point)))
+        (goto-char start)
+        (while (looking-at-p "^import\\b")
+          (mapcar
+           (lambda (pair)
+             (let ((rule (car pair))
+                   (ord (cdr pair)))
+               (when
+                   (search-forward-regexp rule (line-end-position) 't)
+                 (replace-match (concat ord "\\&")))))
+           edd-scala-sort-imports-rules)
+
+          (forward-line))
+        (sort-lines nil start end)
+        (goto-char start)
+        (while (search-forward-regexp "^\\([0-9]\\)import\\b")
+          (replace-match "import"))
+        ))
+      ))
+
+
+
 (add-hook 'java-mode-hook 'edd-java-hook)
 
 (provide 'edd-scala)
