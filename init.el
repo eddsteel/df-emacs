@@ -1,24 +1,35 @@
-;; Do this stuff first to avoid flicker
-;;
-(load-file (concat user-emacs-directory "edd/edd-ux.el"))
-
 ;; Bootstrap packages.
 ;;
 (require 'package)
-(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
+(setq package-enable-at-startup nil)
 (package-initialize)
 
 ;; Bootstrap use-package.
 ;;
 (unless (package-installed-p 'use-package)
+  (message "whoa! Bootstrapping.")
   (package-refresh-contents)
   (package-install 'use-package))
+
+;; theme
+;;
+(defvar edd-theme)
+(use-package darkokai-theme
+  :ensure t
+  :init
+  (setq edd-theme 'darkokai))
+
+;; Do this stuff early to avoid flicker
+;;
+(use-package edd-ux
+  :load-path "edd")
+
 (eval-when-compile
   (require 'use-package)
   (require 'diminish)
@@ -40,28 +51,6 @@
   :load-path "edd"
   :if (not (eq 'darwin system-type)))
 
-;; theme
-;;
-;; (use-package sublime-themes
-;;   :ensure t
-;;   :config
-;;   (edd-load-theme 'spolsky)
-;;   (set-face-attribute 'hl-line nil :inherit 'highlight :underline nil))
-
-;; (use-package material-theme
-;;   :ensure t
-;;   :config
-;;   (edd-load-theme 'material))
-
-;(use-package monokai-theme
-;  :ensure t
-;  :config
-;  (edd-load-theme 'monokai))
-
-(use-package darkokai-theme
-  :ensure t
-  :config
-  (edd-load-theme 'darkokai))
 
 ;; nyan nyan
 ;;
