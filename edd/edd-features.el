@@ -120,4 +120,16 @@
 (global-set-key (kbd "C-)") 'next-buffer)
 
 
+;; kill current buffer by default
+;; http://irreal.org/blog/?p=5585
+(defun edd-kill-a-buffer (askp)
+  (interactive "P")
+  (if askp
+      (kill-buffer (funcall completing-read-function
+                            "Kill buffer: "
+                            (mapcar #'buffer-name (buffer-list))))
+    (kill-this-buffer)))
+
+(global-set-key (kbd "C-x k") 'edd-kill-a-buffer)
+
 (provide 'edd-features)
