@@ -98,56 +98,17 @@
   (setq too-hardcore-return 1)
   (global-hardcore-mode t))
 
-;; helm
-(use-package helm
-  :ensure t
-  :ensure helm-ag
-  :ensure helm-company
-  :diminish helm-mode
-  :init
-  (defun edd-theme-helm ()
-    (let ((string (face-foreground 'font-lock-string-face))
-          (builtin (face-foreground 'font-lock-builtin-face))
-          (function (face-foreground 'font-lock-function-name-face))
-          (variable (face-foreground 'font-lock-variable-name-face))
-          (keyword (face-foreground 'font-lock-keyword-face))
-          (background (face-background 'default))
-          (highlight (face-background 'highlight))
-          (mode-bg (face-background 'mode-line))
-          (imode-fg (face-foreground 'mode-line-inactive)))
-      (set-face-attribute 'helm-candidate-number nil :background string :foreground background)
-      (set-face-attribute 'helm-grep-file nil :foreground builtin :underline t)
-;;      (set-face-attribute 'helm-grep-finish nil :foreground function)
-;;    (set-face-attribute 'helm-grep-lineno nil :foreground variable)
-;;    (set-face-attribute 'helm-grep-match nil :foreground string)
-;;    (set-face-attribute 'helm-grep-running nil :foreground variable)
-      (set-face-attribute 'helm-prefarg nil :foreground function)
-      (set-face-attribute 'helm-selection nil :background highlight :foreground keyword :underline t)
-      (set-face-attribute 'helm-source-header nil :background background :foreground imode-fg :weight 'bold :height 1.3 :family "Sans Serif")
-      (set-face-attribute 'helm-visible-mark nil :background imode-fg)))
-  (add-hook 'edd-load-theme-hook 'edd-theme-helm)
-  (eval-after-load 'company
-    '(progn
-       (define-key company-mode-map (kbd "C-M-i") 'helm-company)
-       (define-key company-active-map (kbd "C-M-i") 'helm-company)))
-  :config
-  (helm-mode 1)
-  (edd-theme-helm)
-  :bind
-  (("C-x b" . helm-mini)
-   ("C-M-y" . helm-show-kill-ring)
-   ("M-x" . helm-M-x)
-   ("C-x C-m" . helm-M-x)
-   ("C-x C-f" . helm-find-files)
-   ("C-x f" . helm-for-files)))
+;;(use-package edd-helm
+;;  :load-path "edd")
 
+(use-package edd-ivy
+  :load-path "edd")
 
 
 ;; projectile
 ;;
 (use-package projectile
   :ensure t
-  :ensure helm-projectile
   :init
   (setq projectile-keymap-prefix (kbd "C-c C-p"))
 
@@ -155,9 +116,7 @@
   (add-hook 'text-mode-hook #'projectile-mode)
   (add-hook 'prog-mode-hook #'projectile-mode)
   (setq projectile-mode-line
-        '(:eval (format " ☄{%s}" (projectile-project-name))))
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
+        '(:eval (format " ☄{%s}" (projectile-project-name)))))
 
 ;; utilities that are too small to live alone
 ;;
@@ -170,10 +129,6 @@
    ("C-c x" . edd-term)
    ("C-c o" . edd-initial-file-or-scratch)
    ("C-c u" . edd-hex-encode)))
-
-
-(use-package swiper-helm
-  :ensure t)
 
 
 ;; RE-Builder
@@ -260,13 +215,6 @@
 (use-package edd-pdf
   :load-path "edd")
 
-(use-package helm-dash
-  :ensure t
-  :init
-  (setq helm-dash-common-docsets '("Akka" "Scala" "Java_SE7"))
-  :bind (("C-c d d" . helm-dash)
-         ("C-c d a" . helm-dash-activate-docset)))
-
 (use-package edd-scala
   :load-path "edd")
 
@@ -279,6 +227,7 @@
   (setq flycheck-scalastylerc
         (expand-file-name "scalastyle/scalastyle-config.xml"))
   (add-hook 'rust-mode-hook #'flycheck-mode)
+  (add-hook 'go-mode-hook #'flycheck-mode)
   (add-hook 'scala-mode-hook
             (lambda () (unless (and (buffer-file-name (current-buffer)) (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt"))
                     (flycheck-mode 1)))))
@@ -338,36 +287,12 @@
 
 (use-package imenu-anywhere
   :ensure t
-  :init (global-set-key (kbd "C-c ,") 'helm-imenu-anywhere)
   :config (defun jcs-use-package ()
             (add-to-list 'imenu-generic-expression
              '("Used Packages"
                "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))
   (add-hook 'emacs-lisp-mode-hook #'jcs-use-package))
 
-(use-package helm-swoop
-  :ensure t
-  :config
-  ;; When doing isearch, hand the word over to helm-swoop
-  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-  ;; From helm-swoop to helm-multi-swoop-all
-  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-  ;; When doing evil-search, hand the word over to helm-swoop
-  ;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
-
-  ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-  (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
-
-  ;; Move up and down like isearch
-  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
-;;  :bind
-;;  (("M-i" . helm-swoop)
-;;   ("M-I" . helm-swoop-back-to-last-point)
-;;   ("C-c M-i" . helm-multi-swoop)))
-  )
 
 ;; smoother scrolling
 (use-package smooth-scrolling
@@ -449,6 +374,9 @@
 (use-package edd-rust
   :load-path "edd")
 
+(use-package edd-go
+  :load-path "edd")
+
 ;;preview files in dired
 (use-package peep-dired
   :ensure t
@@ -497,6 +425,38 @@
   :bind
   (("M-%" . anzu-query-replace)
    ("C-M-%" . anzu-query-replace-regexp)))
+
+
+(use-package emms
+  :ensure t
+  :load-path "../src/emms/lisp"
+  :commands emms-smart-browse
+  :init
+  (require 'emms-setup)
+  (emms-all)
+  (emms-default-players)
+  (setq emms-source-file-default-directory (expand-file-name "~/Music"))
+
+  (require 'emms-tag-editor)
+  (require 'emms-info)
+
+  ;; Use only libtag for tagging.
+  (require 'emms-info-libtag)
+  (setq emms-info-functions '(emms-info-libtag))
+  (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
+
+  (defun edd-emms-volume-m-change (amount)
+    "Change m volume by AMOUNT"
+    (message "Volume: %s%%"
+             (with-temp-buffer
+               (when (zerop
+                      (call-process "m" nil (current-buffer) nil
+                                    "volume"
+                                    (format "%s%d" (if (< amount 0) "-" "+")
+                                            (abs amount))))
+                 (if (re-search-backward "Vol: \\([0-9]+\\)" nil t)
+                     (match-string 1))))))
+  (setq emms-volume-change-function 'edd-emms-volume-m-change))
 
 
 ;; acknowledgements
