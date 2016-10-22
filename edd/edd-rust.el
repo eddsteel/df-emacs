@@ -13,12 +13,12 @@
 
 (use-package flycheck-rust
   :ensure t
-    :init
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-    :bind
-    (:map rust-mode-map
-     ("M-n" . flycheck-next-error)
-     ("M-p" . flycheck-previous-error)))
+  :init
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  :bind
+  (:map rust-mode-map
+        ("M-n" . flycheck-next-error)
+        ("M-p" . flycheck-previous-error)))
 
 
 (use-package ac-racer

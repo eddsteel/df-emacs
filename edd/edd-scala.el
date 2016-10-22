@@ -7,7 +7,68 @@
   (setq scala-indent:align-forms t)
   (setq scala-indent:use-javadoc-style nil)
   (setq flycheck-scalastyle-jar "~/.local/share/scalastyle.jar")
-  (setq flycheck-scalastylerc "~/.config/scalastyle.xml"))
+  (setq flycheck-scalastylerc "~/.config/scalastyle.xml")
+  (defun edd-scala-ivy-method ()
+    (interactive)
+    (funcall 'swiper "\\bdef "))
+
+  (define-key scala-mode-map (kbd "C-c .") 'edd-scala-ivy-method)
+;; TODO: support blank lines as both a rule and while traversing
+  (defun edd-scala-sort-imports ()
+    "Sorts imports according to rules, which are cons pairs of regexp to order"
+    (interactive)
+    (save-excursion
+      (beginning-of-buffer)
+      (let ((importre "^import\\b")
+            (blankre  "^$"))
+        (search-forward-regexp "^package\\b")
+        (search-forward-regexp importre)
+        (beginning-of-line)
+        (let ((start (point)))
+          (while (looking-at-p importre)
+            (forward-line))
+          (end-of-line)
+          (let ((end (point)))
+            (mapcar
+             (lambda (pair)
+               (progn
+                 (goto-char start)
+                 (while (< (point) end)
+                   (let ((rule (car pair))
+                         (ord (cdr pair)))
+                     (when
+                         (search-forward-regexp rule end 't)
+                       (replace-match (concat ord "\\&")))
+                     (forward-line)))))
+             edd-scala-sort-imports-rules)
+            (sort-lines nil start end)
+            (goto-char start)
+            (while (search-forward-regexp "^\\([0-9]\\)import\\b" nil 't)
+              (replace-match "import")))))))
+
+  (defun edd-scala-ignore-style (start end)
+    "Ignore a scalastyle rule. If region is active it will be
+   wrapped in a scalastyle:off/scalastyle:on comment pair. If not, a
+   scalastyle:ignore comment will be used."
+    (interactive "r")
+    (let ((rule (completing-read "style-rule "
+                                 '("file.size.limit" "line.size.limit" "line.contains.tab" "header.matches" "newline.at.eof" "no.newline.at.eof" "regex" "whitespace.end.of.line" "class.name" "covariant.equals" "cyclomatic.complexity" "equals.hash.code" "if.brace" "illegal.imports" "magic.number" "method.length" "method.name" "no.clone" "no.finalize" "no.whitespace.after.left.bracket" "no.whitespace.before.left.bracket" "null" "number.of.methods" "number.of.types" "object.name" "package.object.name" "parameter.number" "public.methods.have.type" "return" "simplify.boolean.expression" "spaces.after.plus" "spaces.before.plus" "structural.type" "uppercase.l" "var.field" "var.local" "while"))))
+      (save-excursion
+        (if (region-active-p)
+            (progn
+              (goto-char end)
+              (end-of-line)
+              (newline)
+              (insert "// scalastyle:on " rule)
+              (indent-according-to-mode)
+              (goto-char start)
+              (beginning-of-line)
+              (open-line 1)
+              (insert "// scalastyle:off " rule)
+              (indent-according-to-mode))
+          (progn
+            (end-of-line)
+            (insert " // scalastyle:ignore " rule)))))))
 
 (use-package ensime
   :pin melpa-stable
@@ -27,7 +88,7 @@
   (setq ensime-goto-test-config-defaults
         (plist-put ensime-goto-test-config-defaults
                    :test-template-fn 'edd-ensime-test-template))
-  (setq ensime-use-helm 't)
+  (setq ensime-use-helm nil)
   (setq ensime-graphical-tooltips 't)
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
   :commands
@@ -113,12 +174,11 @@ class %TESTCLASS% extends FlatSpec with Matchers {
     (sbt-command (concat "test-only " edd-scala-last-test-only))))
 
 (add-hook 'scala-mode-hook (lambda () (setq-local nyan-bar-length 16)))
-
+(add-hook 'scala-mode-hook (lambda () (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))))
 
 (defun edd-align-sbt-deps ()
   (interactive)
   (align-regexp (region-beginning) (region-end) "\\(\\s-+\\)\\(%%?\\|\"\\)" 1 1 't))
-
 
 (defun edd-java-hook ()
   (setq compile-command "ant \-emacs compile \-find")
@@ -127,67 +187,9 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 (defun edd-scala-helm-method ()
   (interactive)
   (call-interactively 'helm-occur "\bdef\ "))
-(add-hook 'scala-mode-hook (lambda () (local-set-key (kbd "C-c .") 'edd-scala-helm-method)))
 
 (setq edd-scala-sort-imports-rules
       '(("^import com\\.hootsuite\\." . "1") ("^import scala\\." . "6") ("^import java\\." . "7") ("^import javax\\." . "8") ("^import " . "5")))
-
-;; TODO: support blank lines as both a rule and while traversing
-(defun edd-scala-sort-imports ()
-  "Sorts imports according to rules, which are cons pairs of regexp to order"
-  (interactive)
-  (save-excursion
-    (beginning-of-buffer)
-    (let ((importre "^import\\b")
-          (blankre  "^$"))
-      (search-forward-regexp "^package\\b")
-      (search-forward-regexp importre)
-      (beginning-of-line)
-      (let ((start (point)))
-        (while (looking-at-p importre)
-          (forward-line))
-        (end-of-line)
-        (let ((end (point)))
-          (mapcar
-           (lambda (pair)
-             (progn
-               (goto-char start)
-               (while (< (point) end)
-                 (let ((rule (car pair))
-                       (ord (cdr pair)))
-                   (when
-                       (search-forward-regexp rule end 't)
-                     (replace-match (concat ord "\\&")))
-                   (forward-line)))))
-           edd-scala-sort-imports-rules)
-          (sort-lines nil start end)
-          (goto-char start)
-          (while (search-forward-regexp "^\\([0-9]\\)import\\b" nil 't)
-            (replace-match "import")))))))
-
-(defun edd-scala-ignore-style (start end)
-  "Ignore a scalastyle rule. If region is active it will be
-   wrapped in a scalastyle:off/scalastyle:on comment pair. If not, a
-   scalastyle:ignore comment will be used."
-  (interactive "r")
-  (let ((rule (completing-read "style-rule "
-                               '("file.size.limit" "line.size.limit" "line.contains.tab" "header.matches" "newline.at.eof" "no.newline.at.eof" "regex" "whitespace.end.of.line" "class.name" "covariant.equals" "cyclomatic.complexity" "equals.hash.code" "if.brace" "illegal.imports" "magic.number" "method.length" "method.name" "no.clone" "no.finalize" "no.whitespace.after.left.bracket" "no.whitespace.before.left.bracket" "null" "number.of.methods" "number.of.types" "object.name" "package.object.name" "parameter.number" "public.methods.have.type" "return" "simplify.boolean.expression" "spaces.after.plus" "spaces.before.plus" "structural.type" "uppercase.l" "var.field" "var.local" "while"))))
-    (save-excursion
-      (if (region-active-p)
-          (progn
-            (goto-char end)
-            (end-of-line)
-            (newline)
-            (insert "// scalastyle:on " rule)
-            (indent-according-to-mode)
-            (goto-char start)
-            (beginning-of-line)
-            (open-line 1)
-            (insert "// scalastyle:off " rule)
-            (indent-according-to-mode))
-        (progn
-          (end-of-line)
-          (insert " // scalastyle:ignore " rule))))))
 
 (add-hook 'java-mode-hook 'edd-java-hook)
 

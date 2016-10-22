@@ -18,18 +18,31 @@
 
 
 
+  ;; emms
+  (defhydra hydra-music (:color blue :columns 3) "Music"
+    ("a"   emms-browse-by-album "browse (album)")
+    ("SPC" emms-pause "play/pause")
+    ("i"   emms-show "show info")
+    ("I"   emms-show-all "show tags")
+    ("n"   emms-next "next track")
+    ("p"   emms-previous "previous track")
+    ("+"   emms-volume-raise "volume up")
+    ("-"   emms-volume-lower "volume down"))
+
   ;; projectile
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
   (defhydra hydra-project (:color blue :idle 0.4 :columns 3) "Projectile"
     ("<ESC>" nil "quit")
-    ("a"   helm-projectile-ag "ag")
-    ("A"   helm-projectile-grep "grep")
-    ("b"   projectile-switch-to-buffer "buffer")
+    ("a"   projectile-ag "ag")
+    ("A"   projectile-grep "grep")
+    ("b"   counsel-projectile-switch-to-buffer "buffer")
     ("B"   projectile-switch-to-buffer-other-window "buffer other window")
     ("c"   projectile-run-async-shell-command-in-root "shell command")
     ("C"   projectile-run-command-in-root "command")
     ("d"   projectile-find-dir "find dir")
     ("D"   projectile-find-dir-other-window "find dir other window")
+    ("e"   project-find-file "find file (any file under root)")
+    ("E"   project-find-regexp "find regexp (any file under root)")
     ("f"   projectile-find-file "find file")
     ("F"   projectile-find-file-other-window "find file other window")
     ("g"   projectile-vc "VC")
@@ -69,12 +82,7 @@
     ("l" avy-goto-line "line")
     ("I" ace-window "window")
 
-    ("h" helm-org-headlines "org headline")
-    ("a" helm-org-agenda-files-headings "agenda headline")
-    ("q" helm-multi-swoop-org "org swoop")
-
-    ("o" helm-occur "helm occur")
-    ("i" swiper-helm "swiper")
+    ("i" swiper "swiper")
 
     ("s" isearch-forward "search >")
     ("r" isearch-backward "search <")
@@ -89,8 +97,8 @@
     ("Nl" git-gutter:statistic "count git changes")
     ("Ns" git-gutter:popup-hunk "show current git change")
 
-    ("b" helm-mini "buffer")
-    ("R" helm-recentf "recentf")
+    ("b" ivy-switch-buffer "buffer")
+    ("R" counsel-recentf "recentf")
     ("P" hydra-project/body "project >>"))
 
   (global-set-key (kbd "C-c o") 'hydra-goto/body)
@@ -102,5 +110,10 @@
 
   (define-key projectile-mode-map (kbd "C-c p") nil)
   (global-set-key (kbd "C-c p") 'hydra-project/body))
+
+  (global-set-key (kbd "C-c SPC") 'hydra-music/body)
+  (add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c SPC") 'hydra-music/body)))
 
 (provide 'edd-hydra)

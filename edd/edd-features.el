@@ -65,6 +65,9 @@
 ;; use the sensible counter
 (global-set-key (kbd "M-=") 'count-words)
 
+;; make M-x more available
+(global-set-key (kbd "C-x C-m") 'execute-extended-command)
+
 ;; Terminal -- kill on exit
 (defadvice term-handle-exit
   (after term-kill-buffer-on-exit activate)
@@ -131,5 +134,10 @@
     (kill-this-buffer)))
 
 (global-set-key (kbd "C-x k") 'edd-kill-a-buffer)
+
+(global-set-key (kbd "M-o") 'other-window)
+
+;; allow backwards as well as forwards
+(global-set-key (kbd "C-x C-`") 'previous-error)
 
 (provide 'edd-features)

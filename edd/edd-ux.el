@@ -17,7 +17,13 @@
 ;; show me where I am.
 (column-number-mode t)
 (show-paren-mode t)
+
 (add-hook 'prog-mode-hook (lambda () (hl-line-mode t)))
+
+;; use when themese don't set hl-line
+(defun edd-fix-hl-line-mode ()
+  (interactive)
+  (set-face-background 'hl-line (face-background 'highlight)))
 
 ;; Theme stuff
 (defvar edd-load-theme-hook '()

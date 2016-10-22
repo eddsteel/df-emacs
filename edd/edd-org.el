@@ -81,6 +81,8 @@
   :load-path "~/txt/gtd")
 
 (use-package interleave
-  :ensure t)
+  :ensure t
+  :config
+  (setq interleave-org-notes-dir-list '("." "~/doc/notes")))
 
 (provide 'edd-org)
