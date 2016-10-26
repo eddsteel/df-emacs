@@ -36,4 +36,9 @@
   :bind
   ("C-c n" . notmuch))
 
+(use-package mu4e
+  :init
+  (setq mu4e-maildir "~/spool")
+  (setq mu4e-get-mail-command "offlineimap"))
+
 (provide 'edd-mail)
