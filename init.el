@@ -436,7 +436,7 @@
   (require 'emms-setup)
   (emms-all)
   (emms-default-players)
-  (setq emms-source-file-default-directory (expand-file-name "~/Music"))
+  (setq emms-source-file-default-directory (expand-file-name "~/media/Music"))
 
   (require 'emms-tag-editor)
   (require 'emms-info)
