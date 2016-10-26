@@ -27,6 +27,7 @@
       (set-face-attribute 'helm-source-header nil :background background :foreground imode-fg :weight 'bold :height 1.3 :family "Sans Serif")
       (set-face-attribute 'helm-visible-mark nil :background imode-fg)))
   (add-hook 'edd-load-theme-hook 'edd-theme-helm)
+  :config
   (eval-after-load 'company
     '(progn
        (define-key company-mode-map (kbd "C-M-i") 'helm-company)
@@ -37,7 +38,6 @@
        (helm-projectile-on)))
   (eval-after-load 'imenu-anywhere
     '(global-set-key (kbd "C-c ,") 'helm-imenu-anywhere))
-  :config
   (helm-mode 1)
   (edd-theme-helm)
   :bind
@@ -46,7 +46,8 @@
    ("M-x" . helm-M-x)
    ("C-x C-m" . helm-M-x)
    ("C-x C-f" . helm-find-files)
-   ("C-x f" . helm-for-files)))
+   ("C-x f" . helm-for-files)
+   ("M-i" . helm-imenu)))
 
 (use-package helm-swoop
   :ensure t

@@ -6,13 +6,15 @@
   :ensure ivy-hydra
   :ensure counsel
   :ensure counsel-projectile
-  :diminish
+  :diminish " 🍃"
   :bind
   ("C-'" . avy-goto-char-2)
   ("M-x" . counsel-M-x)
   ("C-x C-m" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
+  ("C-M-." . swiper)
   ("C-M-y" . counsel-yank-pop)
+  ("M-i" . counsel-imenu)
   :init
   (with-eval-after-load 'ido
     (ido-mode -1)

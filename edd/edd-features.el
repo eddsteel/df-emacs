@@ -140,4 +140,10 @@
 ;; allow backwards as well as forwards
 (global-set-key (kbd "C-x C-`") 'previous-error)
 
+;; imenu
+(global-set-key (kbd "M-i") 'imenu)
+
+;; diminish autorevert
+(diminish 'auto-revert-mode)
+
 (provide 'edd-features)

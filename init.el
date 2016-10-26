@@ -340,6 +340,7 @@
 ;; wrap-region
 (use-package wrap-region
   :ensure t
+  :diminish 'wrap-region-mode
   :config
   (wrap-region-add-wrappers
    '(("*" "*" nil org-mode)
