@@ -1,6 +1,9 @@
 (use-package scala-mode
-  :ensure t
+  :ensure sbt-mode
   :mode ("\\.scala\\'" . scala-mode)
+  :bind (("C-c s" . sbt-start)
+         ("C-c h s" . edd-run-scala))
+
   :config
   (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters t)
@@ -8,6 +11,61 @@
   (setq scala-indent:use-javadoc-style nil)
   (setq flycheck-scalastyle-jar "~/.local/share/scalastyle.jar")
   (setq flycheck-scalastylerc "~/.config/scalastyle.xml")
+  (add-hook 'scala-mode-hook (lambda () (setq-local nyan-bar-length 16)))
+  (add-hook 'scala-mode-hook (lambda () (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))))
+  (add-hook 'scala-mode-hook (lambda () (progn
+                                    (local-set-key (kbd "C-c C-b a") 'edd-sbt-assembly)
+                                    (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
+                                    (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
+                                    (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))))
+  (defun edd-run-scala ()
+    (interactive)
+    (if (ensime-connection-or-nil)
+        (call-interactively 'ensime-inf-run-scala)
+      (if (sbt:find-root)
+          (run-scala)
+        (comint-run "scala"))))
+  (defun edd-scala-package-containing-point ()
+    (save-excursion
+      (let ((segs '()))
+        (while (search-backward-regexp
+                "^package \\(\\(?:[a-z0-9_]+\\.\\)*[a-z0-9)]+\\)"
+                (point-min) t)
+          (let ((segment (match-string 1)))
+            (add-to-list 'segs (ensime-kill-txt-props segment))))
+        (mapconcat 'identity segs "."))))
+
+  (defun edd-scala-class-or-module-containing-point ()
+    (save-excursion
+      (when (search-backward-regexp
+             "^\\(?:class\\|object\\) \\(\\(?:[A-Z]+\\)[a-zA-Z0-9_]*\\)"
+             (point-min) t)
+        (let  ((match (match-string 1)))
+          (ensime-kill-txt-props match)))))
+
+  (defun edd-scala-fqn-containing-point ()
+    (let ((n (edd-scala-class-or-module-containing-point))
+          (p (edd-scala-package-containing-point)))
+      (concat p "." n)))
+
+  (defun edd-sbt-assembly ()
+    (interactive)
+    (sbt-command "assembly"))
+
+  (defun edd-sbt-test-only ()
+    (interactive)
+    (letrec ((n (edd-scala-fqn-containing-point))
+             (cmd (concat "test-only " n " -- -oDF")))
+      (when n
+        (setq edd-scala-last-test-only n)
+        (message (concat "sbt " cmd)
+                 (sbt-command cmd)))))
+
+  (defun edd-sbt-test-only-last ()
+    (interactive)
+    (when edd-scala-last-test-only
+      (sbt-command (concat "test-only " edd-scala-last-test-only))))
+
   (defun edd-scala-ivy-method ()
     (interactive)
     (funcall 'swiper "\\bdef "))
@@ -96,26 +154,8 @@
   :bind
   ("C-c e" . ensime))
 
-(use-package sbt-mode
-  :ensure t
-  :commands (sbt-start run-scala)
-  :bind (("C-c s" . sbt-start)
-         ("C-c h s" . edd-run-scala))
-  :init
-  (defun edd-run-scala ()
-    (interactive)
-    (if (ensime-connection-or-nil)
-        (call-interactively 'ensime-inf-run-scala)
-      (if (sbt:find-root)
-          (run-scala)
-        (comint-run "scala"))))
-  :config
-  (local-set-key (kbd "C-c C-b a") 'edd-sbt-assembly)
-  (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
-  (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
-  (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))
-
-
+;; Extra mode for .sbt files to stop them being covered in errors.
+;;
 (define-derived-mode sbt-file-mode scala-mode "SBT file mode"
   "A mode for editing .sbt files")
 (add-to-list 'auto-mode-alist '("\\.sbt\\'" . sbt-file-mode))
@@ -132,49 +172,8 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 }")
 
 
-(defun edd-scala-package-containing-point ()
-  (save-excursion
-    (let ((segs '()))
-      (while (search-backward-regexp
-              "^package \\(\\(?:[a-z0-9_]+\\.\\)*[a-z0-9)]+\\)"
-              (point-min) t)
-        (let ((segment (match-string 1)))
-          (add-to-list 'segs (ensime-kill-txt-props segment))))
-      (mapconcat 'identity segs "."))))
 
-(defun edd-scala-class-or-module-containing-point ()
-  (save-excursion
-    (when (search-backward-regexp
-           "^\\(?:class\\|object\\) \\(\\(?:[A-Z]+\\)[a-zA-Z0-9_]*\\)"
-           (point-min) t)
-      (let  ((match (match-string 1)))
-        (ensime-kill-txt-props match)))))
 
-(defun edd-scala-fqn-containing-point ()
-  (let ((n (edd-scala-class-or-module-containing-point))
-        (p (edd-scala-package-containing-point)))
-    (concat p "." n)))
-
-(defun edd-sbt-assembly ()
-  (interactive)
-  (sbt-command "assembly"))
-
-(defun edd-sbt-test-only ()
-  (interactive)
-  (letrec ((n (edd-scala-fqn-containing-point))
-        (cmd (concat "test-only " n " -- -oDF")))
-    (when n
-      (setq edd-scala-last-test-only n)
-      (message (concat "sbt " cmd)
-      (sbt-command cmd)))))
-
-(defun edd-sbt-test-only-last ()
-  (interactive)
-  (when edd-scala-last-test-only
-    (sbt-command (concat "test-only " edd-scala-last-test-only))))
-
-(add-hook 'scala-mode-hook (lambda () (setq-local nyan-bar-length 16)))
-(add-hook 'scala-mode-hook (lambda () (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))))
 
 (defun edd-align-sbt-deps ()
   (interactive)
