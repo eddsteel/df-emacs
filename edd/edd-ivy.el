@@ -6,6 +6,7 @@
   :ensure ivy-hydra
   :ensure counsel
   :ensure counsel-projectile
+  :ensure ag
   :diminish " 🍃"
   :bind
   ("C-'" . avy-goto-char-2)
