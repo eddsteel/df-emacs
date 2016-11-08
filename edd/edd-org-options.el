@@ -33,7 +33,7 @@
 (setq org-ellipsis "…")
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
-
+(setq org-special-ctrl-a/e t)
 
 (define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
 (define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
