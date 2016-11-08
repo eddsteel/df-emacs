@@ -52,19 +52,20 @@
 ;; From https://github.com/sri/dotfiles/blob/master/emacs/emacs.d/my-fns.el#L236
 ;;
 (defun edd-sudo-ff ()
+  "Use TRAMP to `sudo' the current buffer"
   (interactive)
   (let ((file-name (buffer-file-name)))
     (when file-name
       (find-alternate-file (concat "/sudo::" file-name)))))
 
 ;; Exercism submit from project root
-(require 'projectile)
-(defun edd-ex-submit ()
-  (interactive)
-  (let ((file (buffer-file-name))
-        (default-directory (projectile-project-root)))
-    (display-buffer (process-buffer
-     (start-process "exercism" "*exercism*" "exercism" "submit" file)))))
+(with-eval-after-load "projectile"
+  (defun edd-ex-submit ()
+    (interactive)
+    (let ((file (buffer-file-name))
+          (default-directory (projectile-project-root)))
+      (display-buffer (process-buffer
+     (start-process "exercism" "*exercism*" "exercism" "submit" file))))))
 
 
 ;; This is rad, copied from
