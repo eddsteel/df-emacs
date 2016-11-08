@@ -21,6 +21,7 @@
     (ido-mode -1)
     ;; Enable ivy
     (ivy-mode 1))
+  (ivy-mode 1)
 
   (defun edd-theme-ivy ()
     (let ((func (face-foreground 'font-lock-function-name-face)))
@@ -28,7 +29,6 @@
       (set-face-attribute 'minibuffer-prompt nil :foreground func)))
 
   :config
-  (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
   (setq ivy-use-virtual-buffers t)
   ;; number of result lines to display
