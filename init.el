@@ -436,7 +436,7 @@
   (require 'emms-setup)
   (emms-all)
   (emms-default-players)
-  (setq emms-source-file-default-directory (expand-file-name "~/media/Music"))
+  (setq emms-source-file-default-directory (expand-file-name "~/media/music"))
 
   (require 'emms-tag-editor)
   (require 'emms-info)
@@ -445,19 +445,9 @@
   (require 'emms-info-libtag)
   (setq emms-info-functions '(emms-info-libtag))
   (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
+  (setq emms-volume-change-function 'emms-volume-pulse-change))
 
-  (defun edd-emms-volume-m-change (amount)
-    "Change m volume by AMOUNT"
-    (message "Volume: %s%%"
-             (with-temp-buffer
-               (when (zerop
-                      (call-process "m" nil (current-buffer) nil
-                                    "volume"
-                                    (format "%s%d" (if (< amount 0) "-" "+")
-                                            (abs amount))))
-                 (if (re-search-backward "Vol: \\([0-9]+\\)" nil t)
-                     (match-string 1))))))
-  (setq emms-volume-change-function 'edd-emms-volume-m-change))
+
 
 
 ;; acknowledgements
