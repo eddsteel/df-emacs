@@ -68,8 +68,8 @@
     ("U"   projectile-test-project "test project")
     ("v"   projectile-display-buffer "display buffer")
     ("V"   projectile-ibuffer "ibuffer")
-    ("X"   projectile-run-shell "shell")
-    ("x"   (lambda ()(interactive)(projectile-run-term "/bin/bash")) "term"))
+    ("X"   (lambda ()(interactive)(projectile-run-term "/bin/bash")) "term")
+    ("x"   projectile-run-shell "shell"))
 
   ;; Thanks http://kitchingroup.cheme.cmu.edu/blog/2015/09/28/A-cursor-goto-hydra-for-emacs/
   (defhydra hydra-goto (:color blue :columns 4) "goto"
