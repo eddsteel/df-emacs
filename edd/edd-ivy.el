@@ -9,7 +9,7 @@
   :ensure ag
   :diminish " 🍃"
   :bind
-  ("C-'" . avy-goto-char-2)
+  ("C-'" . avy-goto-char-timer)
   ("M-x" . counsel-M-x)
   ("C-x C-m" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
