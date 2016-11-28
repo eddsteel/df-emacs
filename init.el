@@ -1,5 +1,11 @@
 ;; Bootstrap packages.
 ;;
+
+(let
+    ((localprel (locate-user-emacs-file "local-pre.el")))
+  (when (file-readable-p localprel)
+    (load-file localprel)))
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
@@ -259,11 +265,6 @@
   :demand t
   :ensure t)
 
-(let
-    ((localel (locate-user-emacs-file "local.el")))
-  (when (file-readable-p localel)
-    (load-file localel)))
-
 (use-package ledger-mode
   :ensure t
   :mode ("\\.ledger$" "ledger\\.dat$")
@@ -446,6 +447,10 @@
   (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
   (setq emms-volume-change-function 'emms-volume-pulse-change))
 
+(let
+    ((localel (locate-user-emacs-file "local.el")))
+  (when (file-readable-p localel)
+    (load-file localel)))
 
 
 
