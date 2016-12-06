@@ -2,12 +2,17 @@
 
 (require 'org)
 (require 'ob-http)
+(require 'ox-deck)
 (setq org-html-validation-link nil)
 (setq org-html-head-include-default-style nil)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 (setq org-confirm-babel-evaluate nil
       org-src-fontify-natively t
       org-src-tab-acts-natively t)
+(setq org-deck-title-slide-template
+  "<h1>%t</h1>
+<h2>%a</h2>")
+(setq org-export-allow-bind-keywords t)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
