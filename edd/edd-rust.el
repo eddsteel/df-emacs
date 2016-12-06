@@ -1,4 +1,9 @@
 (use-package rust-mode
+  :config
+  (defun edd-rust-ivy-function ()
+    (interactive)
+    (funcall 'swiper "\\bfn "))
+  (define-key rust-mode-map (kbd "C-c .") 'edd-rust-ivy-function)
   :ensure t)
 
 (use-package cargo
@@ -19,7 +24,6 @@
   (:map rust-mode-map
         ("M-n" . flycheck-next-error)
         ("M-p" . flycheck-previous-error)))
-
 
 (use-package ac-racer
   :init
