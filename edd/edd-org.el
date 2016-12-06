@@ -69,7 +69,7 @@
   :ensure t
   :defer nil
   :init
-  (add-to-list 'org-babel-load-languages '(http . t)))
+  (org-babel-do-load-languages 'org-babel-load-languages '((http . t))))
 
 (use-package edd-org-options
   :config ;; additional
