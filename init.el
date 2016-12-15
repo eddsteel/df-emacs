@@ -466,3 +466,4 @@
 ;; http://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.
 ;; http://pragmaticemacs.com/emacs/wrap-text-in-custom-characters/
 ;; http://lists.madduck.net/pipermail/vcs-home/2013-August/000880.html
+;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/

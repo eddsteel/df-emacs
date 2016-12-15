@@ -7,12 +7,18 @@
 (setq org-html-head-include-default-style nil)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 (setq org-confirm-babel-evaluate nil
+      org-edit-src-content-indentation 0
       org-src-fontify-natively t
+      org-src-preserve-indentation t
       org-src-tab-acts-natively t)
 (setq org-deck-title-slide-template
   "<h1>%t</h1>
 <h2>%a</h2>")
 (setq org-export-allow-bind-keywords t)
+(defun edd-org-babel-code-properties
+    "inserts some default properties for org-babel. Note you still need :exports per block for github support"
+    (interactive)
+    (insert "#+PROPERTY:header-args :results output :session :cache yes :tangle yes :comments org :exports both"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -29,7 +35,8 @@
    (ruby . t)
    (scala . t)
    (sh . t)
-   (sqlite . t)))
+   (sqlite . t)
+   (http . t)))
 
 (setq org-src-fontify-natively t)
 (setq org-log-done t)
