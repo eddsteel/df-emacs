@@ -52,8 +52,7 @@
     (when (display-graphic-p)
       (if (eq 'darwin system-type)
           (progn
-            (set-frame-font "-*-Fira Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-
+            (set-frame-font "-*-Fira Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" 't)
             ;; fade when inactive
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (put 'default-frame-alist 'alpha '(100 80)))
