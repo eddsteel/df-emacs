@@ -62,4 +62,11 @@
                        (match-string 1))))))
     (setq emms-volume-change-function 'edd-emms-volume-m-change))
 
+(defun edd-wibble-font ()
+  "Switch GUI font between different sizes (switching between laptop and monitor)"
+  (interactive)
+  (if (eq (face-attribute 'default :height) 120)
+      (set-face-attribute 'default (selected-frame) :height 140)
+    (set-face-attribute 'default (selected-frame) :height 120)))
+
 (provide 'edd-mac)
