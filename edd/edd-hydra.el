@@ -33,7 +33,7 @@
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
   (defhydra hydra-project (:color blue :idle 0.4 :columns 3) "Projectile"
     ("<ESC>" nil "quit")
-    ("a"   projectile-ag "ag")
+    ("a"   projectile-ripgrep "rg")
     ("A"   projectile-grep "grep")
     ("b"   counsel-projectile-switch-to-buffer "buffer")
     ("B"   projectile-switch-to-buffer-other-window "buffer other window")
