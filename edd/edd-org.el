@@ -78,11 +78,13 @@
                '(shell . t)))
 
 (use-package edd-gtd
-  :load-path "~/txt/gtd")
+  :load-path "~/txt/gtd"
+  :bind
+  (("C-c w" . edd/go-to-work)))
 
 (use-package interleave
   :ensure t
   :config
-  (setq interleave-org-notes-dir-list '("." "~/doc/notes")))
+  (setq interleave-org-notes-dir-list '("." "~/txt/notes")))
 
 (provide 'edd-org)
