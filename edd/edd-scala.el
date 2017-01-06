@@ -24,7 +24,7 @@
         (call-interactively 'ensime-inf-run-scala)
       (if (sbt:find-root)
           (run-scala)
-        (comint-run "scala"))))
+        (comint-run "amm"))))
   (defun edd-scala-package-containing-point ()
     (save-excursion
       (let ((segs '()))
