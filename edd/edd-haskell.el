@@ -38,8 +38,10 @@
 
 (use-package "intero"
   :ensure t
-  :commands (intero-mode)
+  :commands (intero-mode intero-mode-blacklist)
   :init
-    (add-hook 'haskell-mode-hook 'intero-mode))
+  (setq intero-blacklist (list (expand-file-name "~/.xmonad")))
+  (add-hook 'haskell-mode-hook 'intero-mode)
+  (add-hook 'haskell-mode-hook 'intero-mode-blacklist))
 
 (provide 'edd-haskell)
