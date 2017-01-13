@@ -12,12 +12,6 @@
 
 ;;   most :config replaced with edd-org-options
   :config
-  (setq org-directory "~/.org")
-  (defun orgfile (file)
-    (expand-file-name (concat file ".org") org-directory))
-  (setq org-refile-targets
-      `((nil . (:level . 1)) ; current buffer headlines
-        (,(mapcar 'orgfile '("work" "home" "read-review")) . (:tag . "in"))))
   (setq org-bullets-bullet-list
         '("🍣" "🐸" "🐳" "🐻" "◉" "○" "✸" "✿"))
   :bind
@@ -62,8 +56,6 @@
   (setq org-reveal-transition "fade"))
 
 (use-package org-notmuch)
-(use-package edd-org-gcal
-  :commands (org-gcal-refresh-token org-gcal-fetch))
 
 (use-package ob-http
   :ensure t
@@ -78,7 +70,7 @@
                '(shell . t)))
 
 (use-package edd-gtd
-  :load-path "~/txt/gtd"
+  :demand
   :bind
   (("C-c w" . edd/go-to-work)))
 
