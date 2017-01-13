@@ -51,4 +51,16 @@
 (define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
 (define-key org-mode-map (kbd "C-M-o") 'org-insert-heading)
 
+;           (darkokai-yellow           "#E6DB74")
+;          (darkokai-orange           "#ffac4a")
+;          (darkokai-red              "#ff0066")
+;          (darkokai-magenta          "#ff8eff")
+;          (darkokai-violet           "#ab7eff")
+;          (darkokai-blue             "#06d8ff")
+;          (darkokai-cyan             "#53f2dc")
+;          (darkokai-green            "#63de5d")
+;          (darkokai-gray             "#35393b")
+
+(setq org-todo-keyword-faces '(("DEV" . (:underline t :foreground "#35393b")) ("STG" . (:underline t :foreground "#ffac4a")) ("PR" . "#53f2dc")))
+
 (provide 'edd-org-options)
