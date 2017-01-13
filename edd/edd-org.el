@@ -57,7 +57,7 @@
   :config
   (setq org-reveal-title-slide-template
           "<h1>%t</h1>
-<p><strong>%a</strong>, Platform Team</p>
+<p><strong>%a</strong>, Publishing Team</p>
 <p>%e</p>")
   (setq org-reveal-transition "fade"))
 
