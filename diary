@@ -1,2 +1,2 @@
-#include "~/txt/gtd/google-home"
-#include "~/txt/gtd/google-work"
+#include "~/txt/gtd/home.diary"
+#include "~/txt/gtd/work.diary"

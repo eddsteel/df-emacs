@@ -133,4 +133,28 @@
 (add-hook 'diary-list-entries-hook 'diary-include-other-diary-files)
 (add-hook 'diary-mark-entries-hook 'diary-mark-included-diary-files)
 (setq org-agenda-include-diary t)
+
+;; a no-dep "import all my configured calendars" deal
+;;
+(defun edd/batch-import-calendars ()
+  (require 'edd-secrets (expand-file-name "~/.emacs.d/edd/edd-secrets.el"))
+  (edd-with-secrets "gcal"
+                      (dolist (pair edd/calendars)
+                      (edd/download-calendar (car pair) (cdr pair)))))
+
+(edd/batch-import-calendars)
+
+;; Download given URL and convert to diary format inside org dir.
+;;
+;; thanks jeff https://github.com/jstautz/.emacs.d/blob/9b2e405ddc3733630699179697d1c57c9f59032d/init-custom-functions.el#L22
+;;
+(defun edd/download-calendar (label url)
+  (let ((diaryfile (concat org-directory "/" label ".diary"))
+        (tmpfile (url-file-local-copy url)))
+      (find-file diaryfile)
+      (flush-lines "^[& ]")
+      (icalendar-import-file tmpfile diaryfile t)
+      (kill-buffer (current-buffer))
+      (kill-buffer (current-buffer))))
+
 (provide 'edd-gtd)
