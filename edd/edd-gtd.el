@@ -1,7 +1,7 @@
 (appt-activate 1)
 
 (require 'org)
-(require 'org-protocol)
+;(require 'org-protocol)
 
 ;; Log state changes
 (setq org-log-done t)
@@ -149,8 +149,6 @@
   (edd-with-secrets "gcal"
                       (dolist (pair edd/calendars)
                       (edd/download-calendar (car pair) (cdr pair)))))
-
-(edd/batch-import-calendars)
 
 ;; Download given URL and convert to diary format inside org dir.
 ;;
