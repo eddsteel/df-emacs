@@ -93,16 +93,7 @@
           ((org-agenda-compact-blocks t))
           )
         ("work" . "work things")
-        ("wp" "work project list"
-         ((tags "+work+project"))
-         ((org-show-following-heading nil)
-          (org-show-hierarchy-above nil)
-          (org-show-context 'minimal))
-         )
-        ("wc" "work next actions"
-         ((tags-todo "work&TODO=\"NEXT\""))
-         ((org-agenda-compact-blocks t)))
-        ("wa" "work agenda"
+        ("ws" "work sup"
          ((tags "work&TODO=\"NEXT\"")
           (agenda ""
                   ((org-agenda-span 3)
@@ -112,6 +103,14 @@
          (
           (org-agenda-compact-blocks t))
           (org-agenda-tag-filter "work"))
+        ("wa" "work agenda"
+         ((agenda ""
+                  ((org-agenda-span 3)
+                   (org-agenda-start-day "-1d")
+                   (org-agenda-skip-function '(edd/org-agenda-filter-tag "work")))))
+
+         ((org-agenda-compact-blocks t))
+         (org-agenda-tag-filter "work"))
         ("ws" "standup"
          ((tags "work&TODO=\"DONE\"")
           (tags "work&TODO=\"NEXT\"")
@@ -122,7 +121,16 @@
           (tags "work&TODO=\"TODO\""))
          (
           (org-agenda-compact-blocks t))
-          (org-agenda-tag-filter "work"))))
+          (org-agenda-tag-filter "work"))
+        ("wp" "work project list"
+         ((tags "+work+project"))
+         ((org-show-following-heading nil)
+          (org-show-hierarchy-above nil)
+          (org-show-context 'minimal))
+         )
+        ("wc" "work next actions"
+         ((tags-todo "work&TODO=\"NEXT\""))
+         ((org-agenda-compact-blocks t)))))
 
 (setq org-agenda-default-appointment-duration 60)
 (setq org-icalendar-timezone "America/Vancouver")
