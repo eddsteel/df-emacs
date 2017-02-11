@@ -31,7 +31,8 @@
 
   ;; projectile
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
-  (defhydra hydra-project (:color blue :idle 0.4 :columns 3) "Projectile"
+  ;;
+  (defhydra hydra-project (:color blue :idle 0.4 :columns 5) "Projectile"
     ("<ESC>" nil "quit")
     ("a"   projectile-ripgrep "rg")
     ("A"   projectile-grep "grep")
@@ -55,7 +56,8 @@
     ("ks"  projectile-cleanup-known-projects "cleanup projects")
     ("l"   projectile-find-file-dwim "find-file DWIM")
     ("L"   projectile-find-file-dwim-other-window "find-file DWIM other window")
-    ("m"   projectile-compile-project "compile")
+    ("m"   helm-make-projectile "run Make target")
+    ("M"   projectile-compile-project "compile")
     ("o"   projectile-find-other-file "find other file")
     ("O"   projectile-find-other-file-other-window "find other file other window")
     ("p"   projectile-switch-project "switch project >>" :exit t )

@@ -1,12 +1,13 @@
 ;; Mostly taken from https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
 ;;
 
-(use-package ivy :ensure t
+(use-package ivy
   :ensure t
   :ensure ivy-hydra
   :ensure counsel
   :ensure counsel-projectile
-  :ensure ag
+  :ensure rg
+  :ensure
   :diminish " 🍃"
   :bind
   ("C-'" . avy-goto-char-timer)
@@ -62,5 +63,16 @@
   (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
   (add-hook 'edd-load-theme-hook 'edd-theme-ivy)
   (edd-theme-ivy))
+
+;; Need to use
+;; https://raw.githubusercontent.com/abo-abo/helm-make/master/helm-make.el
+;; for ivy support
+;;
+(use-package helm-make
+  :commands (helm-make helm-make-projectile)
+  :init
+  (setq helm-make-completion-method 'ivy)
+  :pin manual)
+
 
 (provide 'edd-ivy)
