@@ -51,7 +51,7 @@
 (define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
 (define-key org-mode-map (kbd "C-M-o") 'org-insert-heading)
 
-;           (darkokai-yellow           "#E6DB74")
+;          (darkokai-yellow           "#E6DB74")
 ;          (darkokai-orange           "#ffac4a")
 ;          (darkokai-red              "#ff0066")
 ;          (darkokai-magenta          "#ff8eff")
@@ -61,6 +61,10 @@
 ;          (darkokai-green            "#63de5d")
 ;          (darkokai-gray             "#35393b")
 
-(setq org-todo-keyword-faces '(("DEV" . (:underline t :foreground "#53f2dc")) ("STG" . (:underline t :foreground "#ffac4a")) ("PRD" . (:underline t)) ("PR" . "#53f2dc")))
+(setq org-todo-keyword-faces
+      '(("DEV" . (:underline t :foreground "#53f2dc" :bold t))
+        ("STG" . (:underline t :foreground "#ffac4a" :bold t))
+        ("PRD" . (:underline t :bold t))
+        ("PR" . "#53f2dc")))
 
 (provide 'edd-org-options)
