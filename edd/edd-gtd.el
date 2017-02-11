@@ -95,6 +95,10 @@
         ("work" . "work things")
         ("ws" "work sup"
          ((tags "work&TODO=\"NEXT\"")
+          (tags "work&TODO=\"INPROG\"")
+          (tags "work&TODO=\"PR\"")
+          (tags "work&TODO=\"DEV\"")
+          (tags "work&TODO=\"STG\"")
           (agenda ""
                   ((org-agenda-span 3)
                    (org-agenda-start-day "-1d")
@@ -114,6 +118,11 @@
         ("ws" "standup"
          ((tags "work&TODO=\"DONE\"")
           (tags "work&TODO=\"NEXT\"")
+          (tags "work&TODO=\"INPROG\"")
+          (tags "work&TODO=\"DEV\"")
+          (tags "work&TODO=\"PR\"")
+          (tags "work&TODO=\"STG\"")
+          (tags "work&TODO=\"PRD\"")
           (agenda ""
                   ((org-agenda-span 2)
                    (org-agenda-start-day "-1d")
