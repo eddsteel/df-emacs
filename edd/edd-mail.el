@@ -40,9 +40,9 @@
   :commands mu4e
   :load-path "/usr/share/emacs/site-lisp/mu4e"
   :init
-  (setq mu4e-use-fancy-chars 't)
+  (setq mu4e-use-fancy-chars t)
   (setq mu4e-maildir "~/spool")
-
+  (setq mu4e-hide-index-messages t)
 
   :config
   (edd-with-secrets "mail"
