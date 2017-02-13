@@ -80,6 +80,14 @@
     (search-forward-regexp "^* Work Projects")
     (org-narrow-to-element)))
 
+(defun edd/go-home ()
+  (interactive)
+  (progn
+    (find-file "~/txt/gtd/projects.org")
+    (widen)
+    (beginning-of-buffer)
+    (search-forward-regexp "^* Projects")
+    (org-narrow-to-element)))
 
 (setq org-agenda-custom-commands
       '(("p" "project list"
