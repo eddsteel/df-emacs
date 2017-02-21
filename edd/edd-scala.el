@@ -132,6 +132,7 @@
   :pin melpa-stable
   :init
   (setq ensime-auto-generate-config 't)
+  (setq ensime-startup-notification nil)
   (defun edd-ensime-scala-mode-hook ()
     (when buffer-file-name ;; i.e. not org babel
       (let ((file (ensime-config-find-file (buffer-file-name))))
