@@ -63,9 +63,9 @@
 ;          (darkokai-gray             "#35393b")
 
 (setq org-todo-keyword-faces
-      '(("DEV" . (:underline t :foreground "#53f2dc" :bold t))
-        ("STG" . (:underline t :foreground "#ffac4a" :bold t))
-        ("PRD" . (:underline t :bold t))
+      '(("DEV" . (:underline t :foreground "#53f2dc" :bold))
+        ("STG" . (:underline t :foreground "#ffac4a" :bold))
+        ("PRD" . (:underline t :bold))
         ("PR" . "#53f2dc")))
 
 (provide 'edd-org-options)
