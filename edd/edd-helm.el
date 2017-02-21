@@ -1,5 +1,4 @@
 (use-package helm
-  :ensure t
   :ensure helm-ag
   :ensure helm-company
   :ensure helm-projectile
@@ -50,7 +49,6 @@
    ("M-i" . helm-imenu)))
 
 (use-package helm-swoop
-  :ensure t
   :config
   ;; When doing isearch, hand the word over to helm-swoop
   (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)

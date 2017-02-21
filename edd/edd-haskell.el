@@ -1,5 +1,4 @@
 (use-package haskell-mode
-  :ensure t
   :mode "\\.hs\\'"
   :init
   (dolist (hook '(haskell-doc-mode
@@ -31,13 +30,11 @@
   ("C-c h h" . switch-to-haskell))
 
 (use-package "hi2"
-  :ensure t
   :commands (turn-on-hi2)
   :init
     (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
 (use-package "intero"
-  :ensure t
   :commands (intero-mode intero-mode-blacklist)
   :init
   (setq intero-blacklist (list (expand-file-name "~/.xmonad")))

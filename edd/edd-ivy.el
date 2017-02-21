@@ -2,12 +2,10 @@
 ;;
 
 (use-package ivy
-  :ensure t
   :ensure ivy-hydra
   :ensure counsel
   :ensure counsel-projectile
   :ensure rg
-  :ensure
   :diminish " 🍃"
   :bind
   ("C-'" . avy-goto-char-timer)
@@ -69,6 +67,7 @@
 ;; for ivy support
 ;;
 (use-package helm-make
+  :ensure nil
   :commands (helm-make helm-make-projectile)
   :init
   (setq helm-make-completion-method 'ivy)

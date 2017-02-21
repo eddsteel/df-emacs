@@ -1,21 +1,17 @@
 (use-package go-eldoc
-  :ensure t
   :init
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package go-errcheck
   :bind
-  ("C-c C-b c" . go-errcheck)
-  :ensure t)
+  ("C-c C-b c" . go-errcheck))
 
 (use-package flymake-go
-  :ensure t
   :bind
   ("M-n" . flycheck-next-error)
   ("M-p" . flycheck-previous-error))
 
 (use-package go-mode
-  :ensure t
   :init
   (if-let ((gopath (getenv "GOPATH")))
       (prog2
@@ -38,7 +34,6 @@
                             (set (make-local-variable 'company-backends) '(company-go))
                             (company-mode))))
 
-(use-package go-projectile
-  :ensure t)
+(use-package go-projectile)
 
 (provide 'edd-go)

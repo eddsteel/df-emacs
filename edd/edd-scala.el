@@ -130,7 +130,6 @@
 
 (use-package ensime
   :pin melpa-stable
-  :ensure t
   :init
   (setq ensime-auto-generate-config 't)
   (defun edd-ensime-scala-mode-hook ()

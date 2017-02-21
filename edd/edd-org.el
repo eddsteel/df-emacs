@@ -9,6 +9,8 @@
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook (lambda () (hl-line-mode t)))
+  (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
+  (add-hook 'org-mode-hook (lambda () (org-display-inline-images t t)))
 
 ;;   most :config replaced with edd-org-options
   :config
@@ -21,7 +23,6 @@
    ("C-c c" . org-capture)))
 
 (use-package weather-metno
-  :ensure t
   :commands weather-metno-forecast
   :init
   (setq weather-metno-location-name "Vancouver, Canada"
@@ -31,6 +32,7 @@
         '(:width 16 :height 16 :ascent center)))
 
 (use-package ox-confluence
+  :ensure nil
   :commands (org-confluence-export-as-confluence edd-ox-confluence)
   :config
   (defun edd-ox-confluence ()
@@ -55,15 +57,13 @@
 <p>%e</p>")
   (setq org-reveal-transition "fade"))
 
-(use-package org-notmuch)
-
 (use-package ob-http
-  :ensure t
   :defer nil
   :init
   (org-babel-do-load-languages 'org-babel-load-languages '((http . t))))
 
 (use-package edd-org-options
+  :ensure nil
   :config ;; additional
   (appt-activate 1)
   (add-to-list 'org-babel-load-languages
@@ -71,11 +71,11 @@
 
 (use-package edd-gtd
   :demand
+  :ensure nil
   :bind
   (("C-c w" . edd/go-to-work)))
 
 (use-package interleave
-  :ensure t
   :config
   (setq interleave-org-notes-dir-list '("." "~/txt/notes")))
 

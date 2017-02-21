@@ -1,40 +1,19 @@
-;; Bootstrap packages.
-;;
-
-(let
-    ((localprel (locate-user-emacs-file "local-pre.el")))
-  (when (file-readable-p localprel)
-    (load-file localprel)))
-
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
-(setq package-enable-at-startup nil)
 (package-initialize)
 
-;; Bootstrap use-package.
-;;
-(unless (package-installed-p 'use-package)
-  (message "whoa! Bootstrapping.")
-  (package-refresh-contents)
-  (package-install 'use-package))
+(add-to-list 'load-path (locate-user-emacs-file "edd"))
+(require 'edd-bootstrap)
+(edd/maybe-load-config "local-pre.el")
 
 ;; theme
 ;;
 (defvar edd-theme)
 (use-package darkokai-theme
-  :ensure t
   :init
   (setq edd-theme 'darkokai))
 
 ;; Do this stuff early to avoid flicker
 ;;
-(use-package edd-ux
-  :load-path "edd")
+(use-package edd-ux :ensure nil)
 
 (eval-when-compile
   (require 'use-package)
@@ -43,32 +22,29 @@
 
 ;; built-in features
 ;;
-(use-package edd-features
-  :load-path "edd")
+(use-package edd-features :ensure nil)
 
 ;; System-specific stuff.
 ;;
 (use-package edd-mac
-  :load-path "edd"
+  :ensure nil
   :if (eq 'darwin system-type))
 
 
 (use-package edd-linux
-  :load-path "edd"
+  :ensure nil
   :if (not (eq 'darwin system-type)))
 
 
 ;; nyan nyan
 ;;
 (use-package nyan-mode
-  :ensure t
   :config
   (nyan-mode))
 
 ;; whitespace
 ;;
 (use-package whitespace
-  :ensure t
   :diminish whitespace-mode
   :init
   (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook org-mode-hook))
@@ -85,7 +61,6 @@
 
 ;; Ace window
 (use-package ace-window
-  :ensure t
   :bind
   ("C-x o" . ace-window)
   :init
@@ -93,28 +68,23 @@
   (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
   (setq aw-background nil))
 
-(use-package which-key
-  :ensure t)
+(use-package which-key)
 
 ;; hardcore mode
 (use-package hardcore-mode
-  :ensure t
   :diminish hardcore-mode
   :config
   (setq too-hardcore-return 1)
   (global-hardcore-mode t))
 
-;;(use-package edd-helm
-;;  :load-path "edd")
+;;(use-package edd-helm :ensure nil)
 
-(use-package edd-ivy
-  :load-path "edd")
+(use-package edd-ivy :ensure nil)
 
 
 ;; projectile
 ;;
 (use-package projectile
-  :ensure t
   :init
   (setq projectile-keymap-prefix (kbd "C-c C-p"))
 
@@ -127,7 +97,7 @@
 ;; utilities that are too small to live alone
 ;;
 (use-package edd-util
-  :load-path "edd"
+  :ensure nil
   :bind
   (("C-w" . kill-region-or-backward-kill-word)
    ("C-c M-p" . edd-jump-to-prev-url)
@@ -140,13 +110,11 @@
 ;; RE-Builder
 ;;
 (use-package re-builder
-  :ensure t
   :init
   (setq reb-re-syntax 'string))
 
 ;; vagrant
 (use-package vagrant
-  :ensure t
   :init
   (defun edd-vagrant-edit ()
     (interactive)
@@ -162,27 +130,23 @@
 
 ;; pretty lambda
 (use-package pretty-lambdada
-  :ensure t
   :init (add-hook 'geiser-hook 'pretty-lambda)
   :config (pretty-lambda-for-modes))
 
 ;; secret config -- used below.
 (use-package edd-secrets
-  :load-path "edd"
+  :ensure nil
   :commands edd-with-secrets)
 
-(use-package edd-erc
-  :load-path "edd")
+(use-package edd-erc :ensure nil)
 
 (use-package edd-jabber
-  :load-path "edd"
+  :ensure nil
   :bind ("C-c j" . edd-hipchat-join))
 
-(use-package edd-haskell
-  :load-path "edd")
+(use-package edd-haskell :ensure nil)
 
 (use-package "company"
-  :ensure t
   :ensure company-ghc
   :commands (company-mode)
   :diminish (company-search-mode company-mode)
@@ -205,11 +169,10 @@
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 
-(use-package edd-org
-  :load-path "edd")
+(use-package edd-org :ensure nil)
 
 (use-package edd-mail
-  :load-path "edd"
+  :ensure nil
   :init
   (setq mail-specify-envelope-from t
         mail-envelope-from 'header
@@ -218,14 +181,12 @@
         message-send-mail-function 'message-send-mail-with-sendmail)
   :bind ("C-c n" . edd-mailbox))
 
-(use-package edd-pdf
-  :load-path "edd")
+(use-package pdf-tools)
+;; (use-package edd-pdf)
 
-(use-package edd-scala
-  :load-path "edd")
+(use-package edd-scala :ensure nil)
 
 (use-package flycheck
-  :ensure t
   :diminish (flycheck-mode . " 📈")
   :config
   (setq flycheck-scalastyle-jar
@@ -239,54 +200,42 @@
                     (flycheck-mode 1)))))
 
 (use-package rainbow-delimiters
-  :ensure t
   :init
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package auto-highlight-symbol
   :init
   (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode)
-  :diminish auto-highlight-symbol-mode
-  :ensure t)
+  :diminish auto-highlight-symbol-mode)
 
 (use-package git-gutter
-  :ensure t
   :diminish git-gutter-mode
   :config
   (global-git-gutter-mode 1))
 
 (use-package magit
-  :ensure t
   :demand t
   :config
   (setq magit-commit-arguments '("--gpg-sign=33620159D40385A0")))
 
-(use-package magit-filenotify
-  :demand t
-  :ensure t)
+(use-package magit-filenotify :demand t)
 
 (use-package ledger-mode
-  :ensure t
   :mode ("\\.ledger$" "ledger\\.dat$")
   :config
   (setq ledger-post-auto-adjust-amounts t))
 
-(use-package tea-time
-  :ensure t)
+(use-package tea-time)
 
 (use-package bbdb
-  :ensure t
   :config (bbdb-initialize)
   :commands bbdb)
 
-(use-package git-timemachine
-  :ensure t)
+(use-package git-timemachine)
 
-(use-package markdown-mode+
-  :ensure t)
+(use-package markdown-mode+)
 
 (use-package imenu-anywhere
-  :ensure t
   :config (defun jcs-use-package ()
             (add-to-list 'imenu-generic-expression
              '("Used Packages"
@@ -296,7 +245,6 @@
 
 ;; smoother scrolling
 (use-package smooth-scrolling
-  :ensure t
   :init
   (setq smooth-scroll-margin 5
         scroll-conservatively 101
@@ -308,18 +256,15 @@
     (add-hook hook (lambda () (setq-local scroll-margin 0)))))
 
 
-(use-package offlineimap
-  :ensure t)
+(use-package offlineimap)
 
 (use-package company-emoji
-  :ensure t
   :config
   (add-to-list 'company-backends 'company-emoji))
 
 (global-company-mode)
 
 (use-package ssh
-  :ensure t
   :commands ssh
   :config
   (setq ssh-directory-tracking-mode t)
@@ -327,19 +272,16 @@
   (setq dirtrackp nil))
 
 (use-package quickrun
-  :ensure t
   :bind
   (("C-c q q" . quickrun)
    ("C-c q r" . quickrun-region)))
 
 (use-package expand-region
-  :ensure t
   :bind
   (("C-=" . er/expand-region)))
 
 ;; wrap-region
 (use-package wrap-region
-  :ensure t
   :diminish 'wrap-region-mode
   :config
   (wrap-region-add-wrappers
@@ -364,38 +306,32 @@
                               (tramp-remote-shell-args
                                ("-c"))))
 
-(use-package docker :ensure t)
-(use-package docker-tramp :ensure t)
-(use-package dockerfile-mode :ensure t)
+(use-package docker)
+(use-package docker-tramp)
+(use-package dockerfile-mode)
 
 (use-package edd-hydra
-  :demand t
-  :load-path "edd")
+  :ensure nil
+  :demand t)
 
-(use-package edd-rust
-  :load-path "edd")
+(use-package edd-rust :ensure nil)
 
-(use-package edd-go
-  :load-path "edd")
+(use-package edd-go :ensure nil)
 
 ;;preview files in dired
 (use-package peep-dired
-  :ensure t
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
 
 (use-package volatile-highlights
   :diminish volatile-highlights-mode
-  :ensure t
   :config
   (volatile-highlights-mode t))
 
-(use-package multi-term
-  :ensure t)
+(use-package multi-term)
 
 (use-package corral
-  :ensure t
   :bind
   (("M-9" . corral-parentheses-backward)
    ("M-0" . corral-parentheses-forward)
@@ -406,7 +342,6 @@
    ("M-\"" . corral-double-quotes-backward)))
 
 (use-package engine-mode
-  :ensure t
   :init
   (engine-mode 1)
   :config
@@ -417,9 +352,7 @@
     :browser 'eww-browse-url)
   :commands engine-mode)
 
-
 (use-package anzu
-  :ensure t
   :diminish anzu-mode
   :init
   (global-anzu-mode +1)
@@ -429,7 +362,6 @@
 
 
 (use-package emms
-  :ensure t
   :load-path "../src/emms/lisp"
   :commands emms-smart-browse
   :init
@@ -447,20 +379,17 @@
   (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
   (setq emms-volume-change-function 'emms-volume-pulse-change))
 
-(let
-    ((localel (locate-user-emacs-file "local.el")))
-  (when (file-readable-p localel)
-    (load-file localel)))
-
 
 (use-package dumb-jump
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
          ("M-g q" . dumb-jump-quick-look))
   :config
-  (setq dumb-jump-selector 'ivy)
-  :ensure)
+  (setq dumb-jump-selector 'ivy))
 
+(use-package elm-mode)
+
+(edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html

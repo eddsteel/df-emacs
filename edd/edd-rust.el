@@ -3,21 +3,18 @@
   (defun edd-rust-ivy-function ()
     (interactive)
     (funcall 'swiper "\\bfn "))
-  (define-key rust-mode-map (kbd "C-c .") 'edd-rust-ivy-function)
-  :ensure t)
+  (define-key rust-mode-map (kbd "C-c .") 'edd-rust-ivy-function))
 
 (use-package cargo
-  :ensure t
   :init
   (add-hook 'rust-mode-hook #'cargo-minor-mode))
 
-(use-package toml :ensure t)
-(use-package toml-mode :ensure t
+(use-package toml)
+(use-package toml-mode
   :init
   (add-hook 'toml-mode #'cargo-minor-mode))
 
 (use-package flycheck-rust
-  :ensure t
   :init
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   :bind
@@ -30,7 +27,6 @@
   (setq racer-cmd (expand-file-name "~/.cargo/bin/racer"))
   (setq racer-rust-src-path (expand-file-name "~/src/rustc-1.9.0/src"))
   (add-hook 'rust-mode-hook #'ac-racer-setup)
-  :commands (ac-racer-setup)
-  :ensure t)
+  :commands (ac-racer-setup))
 
 (provide 'edd-rust)

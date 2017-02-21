@@ -10,7 +10,8 @@
       org-edit-src-content-indentation 0
       org-src-fontify-natively t
       org-src-preserve-indentation t
-      org-src-tab-acts-natively t)
+      org-src-tab-acts-natively t
+      org-hide-emphasis-markers t)
 (setq org-deck-title-slide-template
   "<h1>%t</h1>
 <h2>%a</h2>")

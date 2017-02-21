@@ -162,7 +162,6 @@
 ;;
 ;;  (add-hook 'doc-view-mode-hook 'edd-pdf-1col))
 
-(use-package pdf-tools
-  :ensure t)
+(use-package pdf-tools)
 
 (provide 'edd-pdf)

@@ -3,7 +3,6 @@
 ;; GTALK
 
 (use-package jabber
-  :ensure t
   :init
   (setq starttls-use-gnutls t
         starttls-gnutls-program "gnutls-cli"
@@ -103,10 +102,8 @@
       (edd-hipchat-load-users))))
 
 ;; User-complete
-(use-package request
-  :ensure t)
-(use-package json
-  :ensure t)
+(use-package request)
+(use-package json)
 
 (defvar hipchat-users nil
   "All users on the hipchat server, used only for mentions")
