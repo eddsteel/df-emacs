@@ -8,10 +8,10 @@
  (rear-context-string . "0-12 Wed 10:19]\n")
  (position . 7260))
 ("org-refile-last-stored"
- (filename . "~/txt/gtd/projects.org")
- (front-context-string . "*** TODO Mirror ")
- (rear-context-string . "0-12 Wed 10:19]\n")
- (position . 7260))
+ (filename . "~/txt/gtd/tickler.org")
+ (front-context-string . "** fix feet     ")
+ (rear-context-string . "2017-01-21 Sat>\n")
+ (position . 1283))
 ("org-capture-last-stored"
  (filename . "~/txt/gtd/inbox.org")
  (front-context-string . "** TODO Mirror M")
