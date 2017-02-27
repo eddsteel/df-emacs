@@ -178,6 +178,7 @@
       (flush-lines "^[& ]")
       (icalendar-import-file tmpfile diaryfile t)
       (kill-buffer (current-buffer))
-      (kill-buffer (current-buffer))))
+      (kill-buffer (current-buffer))
+      (delete-file tmpfile)))
 
 (provide 'edd-gtd)

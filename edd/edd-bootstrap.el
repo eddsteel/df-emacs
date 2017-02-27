@@ -1,10 +1,6 @@
 ;; Bootstrap use-package.
 ;;
-(unless (package-installed-p 'use-package)
-  (message "whoa! Bootstrapping.")
-  (package-refresh-contents)
-  (package-install 'use-package))
-
+(require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
@@ -12,6 +8,11 @@
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
 (setq package-enable-at-startup nil)
+(unless (package-installed-p 'use-package)
+  (message "whoa! Bootstrapping.")
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 (setq use-package-always-ensure t)
 
 (defun edd/maybe-load-config (name)

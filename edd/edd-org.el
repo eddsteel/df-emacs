@@ -62,6 +62,8 @@
   :init
   (org-babel-do-load-languages 'org-babel-load-languages '((http . t))))
 
+(use-package ob-async)
+
 (use-package edd-org-options
   :ensure nil
   :config ;; additional

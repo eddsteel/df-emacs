@@ -216,6 +216,7 @@
 (use-package magit
   :demand t
   :config
+  (setq magit-completing-read-function 'ivy-completing-read)
   (setq magit-commit-arguments '("--gpg-sign=33620159D40385A0")))
 
 (use-package magit-filenotify :demand t)
@@ -388,6 +389,17 @@
   (setq dumb-jump-selector 'ivy))
 
 (use-package elm-mode)
+(use-package csv-mode)
+(use-package yaml-mode)
+(use-package php-mode)
+
+;; I downloaded this :(
+(use-package helm-make
+  :ensure nil
+  :config
+  (setq helm-make-completion-method 'ivy))
+
+(use-package edd-rss :ensure nil)
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
