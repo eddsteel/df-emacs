@@ -392,6 +392,7 @@
 (use-package csv-mode)
 (use-package yaml-mode)
 (use-package php-mode)
+(use-package gradle-mode)
 
 ;; I downloaded this :(
 (use-package helm-make
