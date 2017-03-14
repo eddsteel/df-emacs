@@ -158,4 +158,8 @@
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
+;; Use ibuffer instead of list buffers
+;;
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (provide 'edd-features)
