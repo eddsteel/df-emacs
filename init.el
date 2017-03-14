@@ -394,9 +394,8 @@
 (use-package php-mode)
 (use-package gradle-mode)
 
-;; I downloaded this :(
 (use-package helm-make
-  :ensure nil
+  :pin melpa
   :config
   (setq helm-make-completion-method 'ivy))
 
