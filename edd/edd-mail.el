@@ -11,6 +11,7 @@
 
 (use-package mu4e
   :commands mu4e
+  :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e"
   :init
   (setq mu4e-use-fancy-chars t)
@@ -60,7 +61,7 @@
 
                                        (user-mail-address . ,edd-work-mail-address)
                                        (mu4e-compose-signature . ,edd-work-mail-signature))))))
-  (setq mu4e-get-mail-command "offlineimap -o")
+  (setq mu4e-get-mail-command "mbsync -a")
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-sent-messages-behavior 'delete)
   :bind
