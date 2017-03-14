@@ -123,7 +123,7 @@
 
          ((org-agenda-compact-blocks t))
          (org-agenda-tag-filter "work"))
-        ("ws" "standup"
+        ("wS" "standup"
          ((tags "work&TODO=\"DONE\"")
           (tags "work&TODO=\"NEXT\"")
           (tags "work&TODO=\"INPROG\"")
@@ -162,6 +162,7 @@
 ;; a no-dep "import all my configured calendars" deal
 ;;
 (defun edd/batch-import-calendars ()
+  (interactive)
   (require 'edd-secrets (expand-file-name "~/.emacs.d/edd/edd-secrets.el"))
   (edd-with-secrets "gcal"
                       (dolist (pair edd/calendars)

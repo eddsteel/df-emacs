@@ -388,18 +388,23 @@
   :config
   (setq dumb-jump-selector 'ivy))
 
-(use-package elm-mode)
-(use-package csv-mode)
-(use-package yaml-mode)
-(use-package php-mode)
-(use-package gradle-mode)
-
 (use-package helm-make
   :pin melpa
   :config
   (setq helm-make-completion-method 'ivy))
 
 (use-package edd-rss :ensure nil)
+
+(use-package csv-mode)
+(use-package elm-mode)
+(use-package gradle-mode)
+(use-package groovy-mode)
+(use-package php-mode)
+(use-package play-routes-mode)
+(use-package projectile-ripgrep)
+(use-package rjsx-mode)
+(use-package yaml-mode)
+
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

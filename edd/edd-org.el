@@ -1,7 +1,6 @@
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :ensure org-plus-contrib
-  :ensure ob-http
   :ensure graphviz-dot-mode
   :ensure htmlize
   :ensure org-download
@@ -21,6 +20,7 @@
    ("C-c a" . org-agenda)
    ("C-c b" . org-iswitchb)
    ("C-c c" . org-capture)))
+
 
 (use-package weather-metno
   :commands weather-metno-forecast
@@ -49,17 +49,28 @@
     (beginning-of-buffer)
     (replace-regexp "\\\\\\[\\(http.*\\)\\\\\\]" "[\\1]")))
 
-(use-package ox-reveal
-  :config
-  (setq org-reveal-title-slide-template
-          "<h1>%t</h1>
-<p><strong>%a</strong>, Publishing Team</p>
-<p>%e</p>")
-  (setq org-reveal-transition "fade"))
+(defun edd/create-ticket-notes (project number)
+  (let ((url (concat "[[j:" project "-" number "]]"))
+        (file (concat "~/txt/work-notes/" project "/" number ".org")))
+    (find-file file)
+    (beginning-of-buffer)
+    (insert "* " url)
+    (newline-and-indent)))
+
+(defun edd/parse-jira-ticket-near-point ()
+  (save-excursion
+    (backward-word-strictly 3)
+    (re-search-forward ".*[^A-Z]\\([A-Z]+\\)-\\([0-9]+\\).*")
+    (cons (match-string 1) (match-string 2))))
+
+(defun edd/create-jira-notes ()
+  (interactive)
+  (let ((ticket (edd/parse-jira-ticket-near-point)))
+    (edd/create-ticket-notes (car ticket) (cdr ticket))))
 
 (use-package ob-http
-  :defer nil
-  :init
+  :defer
+  :config
   (org-babel-do-load-languages 'org-babel-load-languages '((http . t))))
 
 (use-package ob-async)

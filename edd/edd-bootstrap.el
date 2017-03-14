@@ -1,6 +1,7 @@
 ;; Bootstrap use-package.
 ;;
 (require 'package)
+
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
@@ -14,6 +15,12 @@
   (package-install 'use-package))
 
 (setq use-package-always-ensure t)
+
+(unless (package-installed-p 'use-package)
+  (message "whoa! Bootstrapping.")
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 
 (defun edd/maybe-load-config (name)
   (let ((conf (locate-user-emacs-file name)))

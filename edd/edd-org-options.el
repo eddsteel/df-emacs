@@ -1,6 +1,7 @@
 ;; org config that doesn't load packages
 
 (require 'org)
+(require 'org-element)
 (require 'ob-http)
 (require 'ox-deck)
 (setq org-html-validation-link nil)

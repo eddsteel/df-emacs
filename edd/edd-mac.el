@@ -24,9 +24,8 @@
 
 ;; Use mdfind not locate
 ;;
-(eval-after-load "helm"
-  (setq helm-locate-command "mdfind -name %s %s"))
-
+(eval-after-load "ivy"
+  (setq counsel-locate-command "mdfind"))
 
 ;; EMOJE
 ;;
