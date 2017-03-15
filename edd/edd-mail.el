@@ -17,7 +17,11 @@
   (setq mu4e-use-fancy-chars t)
   (setq mu4e-maildir "~/spool")
   (setq mu4e-hide-index-messages t)
-
+  (setq mu4e-headers-skip-duplicates t)
+  (setq mu4e-change-filenames-when-moving t)
+  (setq smtpmail-queue-mail nil
+        stmpmail-queue-dir "~/spool/queue/cur/")
+  (setq mail-user-agent 'mu4e-user-agent)
   :config
   (edd-with-secrets "mail"
                     (setq mu4e-contexts
@@ -39,7 +43,8 @@
                                                                 ("/gmail/sent"    . ?s)
                                                                 ("/gmail/trash"   . ?t)
                                                                 ("/gmail/archive" . ?a)))
-                                       (user-mail-address . ,edd-home-mail-address)))
+                                       (user-mail-address . ,edd-home-mail-address)
+                                       (mu4e-compose-signature . "")))
                              ,(make-mu4e-context
                                :name "work"
                                :enter-func (lambda () (mu4e-message "context: work"))
@@ -61,8 +66,9 @@
 
                                        (user-mail-address . ,edd-work-mail-address)
                                        (mu4e-compose-signature . ,edd-work-mail-signature))))))
-  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-get-mail-command "~/bin/syncmail")
   (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'ask-if-none)
   (setq mu4e-sent-messages-behavior 'delete)
   :bind
   ("C-c m" . mu4e))
