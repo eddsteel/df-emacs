@@ -307,7 +307,11 @@
                               (tramp-remote-shell-args
                                ("-c"))))
 
-(use-package docker)
+(use-package docker
+  :diminish " 🐳"
+  :init
+  (docker-global-mode))
+
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 

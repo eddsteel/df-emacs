@@ -1,8 +1,6 @@
 (use-package scala-mode
   :ensure sbt-mode
   :mode ("\\.scala\\'" . scala-mode)
-  :bind (("C-c s" . sbt-start)
-         ("C-c h s" . edd-run-scala))
 
   :config
   (setenv "COURSIER_NO_TERM" "true")
