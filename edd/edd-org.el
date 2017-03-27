@@ -79,8 +79,9 @@
   :ensure nil
   :config ;; additional
   (appt-activate 1)
-  (add-to-list 'org-babel-load-languages
-               '(shell . t)))
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+               '((shell . t))))
 
 (use-package edd-gtd
   :demand
