@@ -104,8 +104,8 @@
 (delete-selection-mode 1)
 
 ;; ssh is "faster", and ask for dumb prompts.
-(setq tramp-terminal-type "dumb")
-;(setq tramp-default-method "ssh")
+(setq tramp-terminal-type "xterm-256color")
+;(setq tramp-default-method "scp")
 
 ;; zap up to char
 (autoload 'zap-up-to-char "misc"
