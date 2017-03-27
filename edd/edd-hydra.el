@@ -103,15 +103,16 @@
     ("P" hydra-project/body "project >>"))
 
   (defhydra hydra-scala-dev (:color red :idle 0.4) "scala"
-    ("r" edd-run-scala "run Scala REPL (DWIM)")
+    ("c" edd-run-scala "run Scala REPL (DWIM)")
     ("s" sbt-start "run SBT")
     ("e" ensime "run ensime")
     ("E" ensime-refresh-config "regenerate ensime config")
 
     ("bc" ensime-sbt-do-compile "SBT compile")
     ("bl" sbt-run-previous-command "last SBT command")
-    ("btt" edd-sbt-test-only "run open test")
-    ("btl" edd-sbt-test-only-last "run last test")
+    ("ot" edd-sbt-test-only "run open test only")
+    ("ol" edd-sbt-test-only-last "run last test only")
+    ("bt" ensime-sbt-do-test "SBT test")
     ("bx" ensime-sbt-do-clean "SBT clean"))
 
   (global-set-key (kbd "C-c o") 'hydra-goto/body)
