@@ -256,9 +256,6 @@
   (dolist (hook '(term-mode-hook comint-hook))
     (add-hook hook (lambda () (setq-local scroll-margin 0)))))
 
-
-(use-package offlineimap)
-
 (use-package company-emoji
   :config
   (add-to-list 'company-backends 'company-emoji))
@@ -396,7 +393,8 @@
 
 (use-package helm-make
   :config
-  (setq helm-make-completion-method 'ivy))
+  (setq helm-make-completion-method 'ivy)
+  (setq helm-make-comint 't))
 
 (use-package edd-rss :ensure nil)
 
