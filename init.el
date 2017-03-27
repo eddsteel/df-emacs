@@ -389,7 +389,6 @@
   (setq dumb-jump-selector 'ivy))
 
 (use-package helm-make
-  :pin melpa
   :config
   (setq helm-make-completion-method 'ivy))
 
@@ -404,7 +403,10 @@
 (use-package projectile-ripgrep)
 (use-package rjsx-mode)
 (use-package yaml-mode)
-
+(use-package idris-mode
+  :bind
+  (:map idris-mode-map
+        ("C-c C-j" . idris-pop-to-repl)))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
