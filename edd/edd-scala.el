@@ -4,8 +4,8 @@
 
   :config
   (setenv "COURSIER_NO_TERM" "true")
-  (setq scala-indent:align-parameters t)
-  (setq scala-indent:align-forms t)
+  (setq scala-indent:align-parameters nil)
+  (setq scala-indent:align-forms nil)
   (setq scala-indent:use-javadoc-style nil)
   (setq flycheck-scalastyle-jar "~/.local/share/scalastyle.jar")
   (setq flycheck-scalastylerc "~/.config/scalastyle.xml")
@@ -16,6 +16,8 @@
                                     (local-set-key (kbd "C-c C-v C-l") 'edd-sbt-test-only-last)
                                     (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
                                     (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))))
+  (add-hook 'scala-mode-hook (lambda () (setq-local prettify-symbols-alist scala-prettify-symbols-alist)
+                               (prettify-symbols-mode)))
   (defun edd-run-scala ()
     (interactive)
     (if (ensime-connection-or-nil)

@@ -112,7 +112,7 @@
     ("bl" sbt-run-previous-command "last SBT command")
     ("ot" edd-sbt-test-only "run open test only")
     ("ol" edd-sbt-test-only-last "run last test only")
-    ("bt" ensime-sbt-do-test "SBT test")
+    ("bt" ensime-sbt-do-test-dwim "SBT test")
     ("bx" ensime-sbt-do-clean "SBT clean"))
 
   (global-set-key (kbd "C-c o") 'hydra-goto/body)
