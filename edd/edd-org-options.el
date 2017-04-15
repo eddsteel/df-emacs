@@ -69,4 +69,13 @@
         ("PRD" . (:underline t :bold))
         ("PR" . "#53f2dc")))
 
+; Use the CSS file in ~/.emacs.d
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq org-html-head
+                  (concat
+                   "<link rel=\"stylesheet\" href=\""
+                   (file-relative-name user-emacs-directory)
+                   "edd/org-export.css\">"))))
+
 (provide 'edd-org-options)
