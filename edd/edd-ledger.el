@@ -61,9 +61,7 @@
   (let ((end (point)))
     (newline)
     (backward-paragraph)
-    (indent-region (point) end)
-    (forward-word 3)
-    (kill-word 1))
+    (indent-region (point) end))
   (forward-paragraph)
   (next-line))
 
@@ -72,5 +70,8 @@
   (search-forward "???")
   (back-to-indentation)
   (kill-line))
+
+(eval-after-load "ledger"
+  (bind-key (kbd "C-c C-n") 'edd/ledger-next-unknown ledger-mode-map))
 
 (provide 'edd-ledger)
