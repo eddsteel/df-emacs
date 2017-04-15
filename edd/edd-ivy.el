@@ -12,7 +12,7 @@
   ("M-x" . counsel-M-x)
   ("C-x C-m" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
-  ("C-M-." . swiper)
+  ("C-M-." . counsel-grep-or-swiper)
   ("C-M-y" . counsel-yank-pop)
   ("M-i" . counsel-imenu)
   :init
