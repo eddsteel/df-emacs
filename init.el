@@ -408,9 +408,14 @@
 (use-package rjsx-mode)
 (use-package yaml-mode)
 (use-package idris-mode
+  :config
+  (defun edd/idris-next-hole ()
+      (interactive)
+      (search-forward " ?" nil t))
   :bind
   (:map idris-mode-map
-        ("C-c C-j" . idris-pop-to-repl)))
+        ("C-c C-j" . idris-pop-to-repl)
+        ("C-c C-f" . edd/idris-next-hole)))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
