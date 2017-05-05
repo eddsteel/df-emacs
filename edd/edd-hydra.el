@@ -108,6 +108,7 @@
     ("e" ensime "run ensime")
     ("E" ensime-refresh-config "regenerate ensime config")
 
+    ("br" ensime-sbt-do-run "SBT run")
     ("bc" ensime-sbt-do-compile "SBT compile")
     ("bl" sbt-run-previous-command "last SBT command")
     ("ot" edd-sbt-test-only "run open test only")
