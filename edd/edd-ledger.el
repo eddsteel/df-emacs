@@ -65,6 +65,21 @@
   (forward-paragraph)
   (next-line))
 
+
+(defun edd/ledger-decorate-for-sorting (acct-num)
+  (increment-register 1 'edd/ledger-i) ; I think this sets to 1 if it's unset.
+  (forward-word 2)
+  (forward-char)
+  (let ((beg (point)))
+    (forward-word 1)
+    (kill-ring-save beg (point)))
+  (insert " " acct-num)
+  (yank)
+  (insert (format "%03d" (get-register 'edd/ledger-i)))
+  (sentence-end)
+  (next-line 4)
+  (beginning-of-line))
+
 (defun edd/ledger-next-unknown ()
   (interactive)
   (search-forward "???")
