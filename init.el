@@ -326,15 +326,76 @@
 
 (use-package multi-term)
 
-(use-package corral
+(use-package smartparens
+  :diminish " 😎"
+  :config
+  :init
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
+  (require 'smartparens-config)
+  ;; https://ebzzry.io/en/emacs-pairs/#keys
+  (defmacro def-pairs (pairs)
+    `(progn
+       ,@(loop for (key . val) in pairs
+               collect
+               `(defun ,(read (concat
+                               "edd/wrap-with-"
+                               (prin1-to-string key)
+                               "s"))
+                    (&optional arg)
+                  (interactive "p")
+                  (sp-wrap-with-pair ,val)))))
+
+  (def-pairs ((paren . "(")
+              (bracket . "[")
+              (brace . "{")
+              (single-quote . "'")
+              (double-quote . "\"")
+              (back-quote . "`")))
   :bind
-  (("M-9" . corral-parentheses-backward)
-   ("M-0" . corral-parentheses-forward)
-   ("M-[" . corral-brackets-backward)
-   ("M-]" . corral-brackets-forward)
-   ("M-{" . corral-braces-backward)
-   ("M-}" . corral-braces-forward)
-   ("M-\"" . corral-double-quotes-backward)))
+  (:map smartparens-mode-map
+        ("C-M-a" . sp-beginning-of-sexp)
+        ("C-M-e" . sp-end-of-sexp)
+
+        ("C-M-d"   . sp-down-sexp)
+        ("C-M-S-u" . sp-up-sexp)
+        ("C-M-S-d" . sp-backward-down-sexp)
+        ("C-M-u"   . sp-backward-up-sexp)
+
+        ("C-M-f" . sp-forward-sexp)
+        ("C-M-b" . sp-backward-sexp)
+
+        ("C-M-n" . sp-next-sexp)
+        ("C-M-p" . sp-previous-sexp)
+
+        ("C-S-f" . sp-forward-symbol)
+        ("C-S-b" . sp-backward-symbol)
+
+        ("C-<right>" . sp-forward-slurp-sexp)
+        ("M-<right>" . sp-forward-barf-sexp)
+        ("C-<left>"  . sp-backward-slurp-sexp)
+        ("M-<left>"  . sp-backward-barf-sexp)
+
+        ("C-M-t" . sp-transpose-sexp)
+        ("C-M-k" . sp-kill-sexp)
+        ("C-k"   . sp-kill-hybrid-sexp)
+        ("M-k"   . sp-backward-kill-sexp)
+        ("C-M-w" . sp-copy-sexp)
+
+        ("C-<backspace>" . sp-backward-kill-word)
+
+        ("M-[" . sp-backward-unwrap-sexp)
+        ("M-]" . sp-unwrap-sexp)
+
+        ("C-x C-t" . sp-transpose-hybrid-sexp)
+
+        ("C-c ("  . edd/wrap-with-parens)
+        ("C-c ["  . edd/wrap-with-brackets)
+        ("C-c {"  . edd/wrap-with-braces)
+        ("C-c '"  . edd/wrap-with-single-quotes)
+        ("C-c \"" . edd/wrap-with-double-quotes)
+        ("C-c _"  . edd/wrap-with-underscores)
+        ("C-c `"  . edd/wrap-with-back-quotes)))
 
 (use-package engine-mode
   :init
