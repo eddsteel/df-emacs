@@ -417,6 +417,9 @@
         ("C-c C-j" . idris-pop-to-repl)
         ("C-c C-f" . edd/idris-next-hole)))
 
+
+(use-package cider)
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
