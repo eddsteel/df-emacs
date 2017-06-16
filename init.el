@@ -70,15 +70,6 @@
 
 (use-package which-key)
 
-;; hardcore mode
-(use-package hardcore-mode
-  :diminish hardcore-mode
-  :config
-  (setq too-hardcore-return 1)
-  (global-hardcore-mode t))
-
-;;(use-package edd-helm :ensure nil)
-
 (use-package edd-ivy :ensure nil)
 
 
