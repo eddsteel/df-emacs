@@ -15,8 +15,6 @@
   ;; - search docs
   ;; ???
 
-
-
   ;; emms
   (defhydra hydra-music (:color blue :columns 3) "Music"
     ("a"   emms-browse-by-album "browse (album)")
@@ -116,7 +114,7 @@
     ("bt" ensime-sbt-do-test-dwim "SBT test")
     ("bx" ensime-sbt-do-clean "SBT clean"))
 
-  (global-set-key (kbd "C-c o") 'hydra-goto/body)
+  (global-set-key (kbd "C-c u") 'hydra-goto/body)
   (setq projectile-switch-project-action
         (lambda ()
           (progn
@@ -131,6 +129,7 @@
           (lambda ()
             (local-set-key (kbd "C-c SPC") 'hydra-music/body)))
 
-  (global-set-key (kbd "C-c s") 'hydra-scala-dev/body))
+;;  (global-set-key (kbd "C-c s") 'hydra-scala-dev/body))
+  (global-set-key (kbd "C-c s") 'sbt-hydra))
 
 (provide 'edd-hydra)
