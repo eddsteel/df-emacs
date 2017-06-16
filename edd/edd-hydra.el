@@ -100,9 +100,9 @@
     ("R" counsel-recentf "recentf")
     ("P" hydra-project/body "project >>"))
 
-  (defhydra hydra-scala-dev (:color red :idle 0.4) "scala"
+  (defhydra hydra-scala-dev (:color red :idle 0.3) "scala"
     ("c" edd-run-scala "run Scala REPL (DWIM)")
-    ("s" sbt-start "run SBT")
+    ("s" sbt-start "run SBT" :exit t)
     ("e" ensime "run ensime")
     ("E" ensime-refresh-config "regenerate ensime config")
 
