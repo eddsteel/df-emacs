@@ -472,6 +472,8 @@
 
 (use-package cider)
 
+(use-package protobuf-mode)
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
