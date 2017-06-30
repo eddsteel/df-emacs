@@ -145,6 +145,7 @@
 
 ;; diminish autorevert
 (diminish 'auto-revert-mode)
+(diminish 'global-auto-revert-mode)
 
 ;; keep system clipboard in kill ring when overwriting it
 (setq save-interprogram-paste-before-kill t)
