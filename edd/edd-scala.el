@@ -177,10 +177,12 @@
             (insert " // scalastyle:ignore " rule)))))))
 
 (use-package ensime
-  :pin melpa-stable
+  ;; :pin melpa-stable
+  :pin melpa
   :init
   (setq ensime-auto-generate-config 't)
   (setq ensime-startup-notification nil)
+  (setq ensime-startup-snapshot-notification nil)
   (defun edd-ensime-scala-mode-hook ()
     (when buffer-file-name ;; i.e. not org babel
       (let ((file (ensime-config-find-file (buffer-file-name))))
