@@ -182,4 +182,15 @@
       (kill-buffer (current-buffer))
       (delete-file tmpfile)))
 
+;; make projects.org export on save (use local hook)
+(defun edd-gtd-export-projects-on-save ()
+  (add-hook 'after-save-hook #'org-html-export-to-html nil t))
+
+(defun edd-gtd-attach-export-hook ()
+  (when (string= buffer-file-name
+           (expand-file-name (concat org-directory "/" "projects.org")))
+    (edd-gtd-export-projects-on-save)))
+
+(add-hook 'org-mode-hook #'edd-gtd-attach-export-hook)
+
 (provide 'edd-gtd)

@@ -1,3 +1,20 @@
+;; Process is:
+;; - Paste from online banking site
+;; - Remove "exchange amount" if appropriate
+;; - Run appropriate clean function on each line (use macros)
+;; - Clear out text like Preauthorized etc
+;; - Run `tac' on the paragraph
+;; - Initialize counter (using function)
+;; - Convert each line to an item using function
+;; - Convert each item to be sortable
+;;
+;; For each site, use a different account no for the sorting
+;;
+;; Then sort paragraphs on whole buffer
+;; Then paste into ledger file and use next-unknown to fill out details.
+;;
+;;
+
 (defun edd/ledger-clean-vancity (month)
   "Clean an entry pasted from Vancity website
    MONTH is the numeric month e.g. \"02\" for February."
@@ -65,9 +82,12 @@
   (forward-paragraph)
   (next-line))
 
+(defun edd/ledger-initialize-register ()
+    (set-register 'edd/ledger-i 1))
+
 
 (defun edd/ledger-decorate-for-sorting (acct-num)
-  (increment-register 1 'edd/ledger-i) ; I think this sets to 1 if it's unset.
+  (increment-register 1 'edd/ledger-i)
   (forward-word 2)
   (forward-char)
   (let ((beg (point)))
@@ -86,7 +106,15 @@
   (back-to-indentation)
   (kill-line))
 
+(defun edd/ledger-undecorate-all ()
+  (beginning-of-buffer)
+  (while (re-search-forward "\\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\) [[:digit:]]\\{6\\}")
+    (replace-match "\\1")))
+
+
 (eval-after-load "ledger"
   (bind-key (kbd "C-c C-n") 'edd/ledger-next-unknown ledger-mode-map))
+
+
 
 (provide 'edd-ledger)

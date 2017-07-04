@@ -9,9 +9,9 @@
  (position . 7260))
 ("org-refile-last-stored"
  (filename . "~/txt/gtd/tickler.org")
- (front-context-string . "** fix feet     ")
- (rear-context-string . "2017-01-21 Sat>\n")
- (position . 1283))
+ (front-context-string . "** comint mode f")
+ (rear-context-string . "s-ashland-boots\n")
+ (position . 173))
 ("org-capture-last-stored"
  (filename . "~/txt/gtd/inbox.org")
  (front-context-string . "** TODO Mirror M")
