@@ -31,20 +31,24 @@
         ("calendar.org" . (:tag . "inbox"))
         ("projects.org" . (:tag . "project"))
         ("projects.org" . (:tag . "work"))
-        ("inbox.org" . (:tag . "inbox"))))
+        ("inbox.org" . (:tag . "inbox"))
+        ("someday.org" . (:level . 1))))
 
 
 ;; Capture to inbox or Read/Review
 ;;
 (setq org-capture-templates
       `(("t" "todo" entry (file+headline "inbox.org" "In")
-         "* TODO %?\n%a\n" :clock-in t :clock-resume t)
+         "* TODO %?\n%a\n")
+        ("r" "retro item" plain (file "~/txt/work-notes/retro.org")
+         "* ")
+        ("u" "URL to read" plain (file "read-review.org")
+           "[[%i]] %t\n")
+
         ("p" "Protocol" entry (file "read-review.org")
          "* %^{description}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
         ("L" "Protocol Link" entry plain (file "read-review.org")
-         "* [[%u][%^{description}]]")
-        ("u" "URL to read" plain (file "read-review.org")
-           "[[%i]] %t\n")))
+         "* [[%u][%^{description}]]")))
 
 (setq org-agenda-files
       (mapcar (lambda (f) (concat org-directory "/" f))
