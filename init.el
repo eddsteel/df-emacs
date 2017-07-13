@@ -83,7 +83,7 @@
   (add-hook 'text-mode-hook #'projectile-mode)
   (add-hook 'prog-mode-hook #'projectile-mode)
   (setq projectile-mode-line
-        '(:eval (format " ☄{%s}" (projectile-project-name)))))
+        '(:eval (format " 📋%s" (projectile-project-name)))))
 
 ;; utilities that are too small to live alone
 ;;
@@ -176,7 +176,7 @@
 (use-package edd-scala :ensure nil)
 
 (use-package flycheck
-  :diminish (flycheck-mode . " 📈")
+  :diminish (flycheck-mode . " 🛂")
   :config
   (setq flycheck-scalastyle-jar
         (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))

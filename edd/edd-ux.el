@@ -57,7 +57,9 @@
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (put 'default-frame-alist 'alpha '(100 80)))
         (progn
-          (set-frame-font "-*-Fira Mono-normal-normal-normal-*-17-*-*-*-m-0-iso10646-1")
+          (set-face-attribute 'default nil :font "Fira Mono-13")
+          (when (member "Noto Emoji" (font-family-list))
+            (set-fontset-font t nil "Noto Emoji" nil 'prepend))
           ;; don't fade, WM will do that on everything.
           (set-face-background 'default "#222222")
           (edd-load-default-theme))))))

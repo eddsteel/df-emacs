@@ -47,7 +47,7 @@
 ;; flyspell
 (dolist (hook '(text-mode-hook org-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1))))
-(eval-after-load "flyspell" '(diminish 'flyspell-mode))
+(eval-after-load "flyspell" '(diminish 'flyspell-mode ""))
 
 ;; Make scripts executable
 (add-hook 'after-save-hook
@@ -55,6 +55,8 @@
 
 (eval-after-load "hideshow" '(diminish 'hs-minor-mode))
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
+(diminish 'visual-line-mode "")
+(diminish 'auto-revert-mode "")
 
 ;; Cycle spaces
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
