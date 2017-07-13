@@ -143,4 +143,35 @@ From a program takes two point or marker arguments, BEG and END."
       (delete-file old-location))))
 
 
+;; From https://www.emacswiki.org/emacs/CamelCase
+
+(defun mapcar-head (fn-head fn-rest list)
+      "Like MAPCAR, but applies a different function to the first element."
+      (if list
+          (cons (funcall fn-head (car list)) (mapcar fn-rest (cdr list)))))
+
+(defun camelize (s)
+  "Convert under_score string S to CamelCase string."
+  (mapconcat 'identity (mapcar
+                        '(lambda (word) (capitalize (downcase word)))
+                        (split-string s "_")) ""))
+
+(defun camelize-method (s)
+  "Convert under_score string S to camelCase string."
+  (mapconcat 'identity (mapcar-head
+                        '(lambda (word) (downcase word))
+                        '(lambda (word) (capitalize (downcase word)))
+                        (split-string s "_")) ""))
+
+
+(defun edd/snake-to-camel (start end)
+  (interactive "r")
+  (letrec ((snake (buffer-substring start end))
+        (camel (camelize-method snake)))
+    (save-excursion
+      (delete-region start end)
+      (goto-char start)
+      (insert camel))))
+
+
 (provide 'edd-util)
