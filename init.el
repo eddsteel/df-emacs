@@ -480,6 +480,16 @@
    (add-hook 'protobuf-mode-hook
      (lambda () (c-add-style "my-style" my-protobuf-style t))))
 
+
+(use-package gitignore-mode
+  :init
+  ;; CODEOWNERS files use gitignore syntax.
+  (add-to-list 'auto-mode-alist '("CODEOWNERS\\'" . gitignore-mode)))
+
+(use-package hcl-mode
+  :init
+  (add-to-list 'auto-mode-alist '(".tf\\'" . hcl-mode)))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
