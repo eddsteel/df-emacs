@@ -47,7 +47,7 @@
 ;; flyspell
 (dolist (hook '(text-mode-hook org-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1))))
-(eval-after-load "flyspell" '(diminish 'flyspell-mode ""))
+(eval-after-load "flyspell" '(diminish 'flyspell-mode " 💅"))
 
 ;; Make scripts executable
 (add-hook 'after-save-hook
