@@ -6,6 +6,7 @@
   (define-key rust-mode-map (kbd "C-c .") 'edd-rust-ivy-function))
 
 (use-package cargo
+  :diminish (cargo-minor-mode . " 🚢")
   :init
   (add-hook 'rust-mode-hook #'cargo-minor-mode))
 

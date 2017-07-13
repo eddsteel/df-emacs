@@ -58,6 +58,8 @@
 (diminish 'visual-line-mode "")
 (diminish 'auto-revert-mode "")
 
+(eval-after-load "eldoc" '(diminish 'eldoc-mode " 📜"))
+
 ;; Cycle spaces
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
 

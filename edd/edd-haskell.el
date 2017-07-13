@@ -16,16 +16,15 @@
    haskell-process-type 'cabal-repl
    haskell-process-log t)
   :config
-  (progn
-    (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-    (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-    (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
-    (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
-    (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
-    (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
-    (define-key haskell-mode-map (kbd "C-c DEL") 'haskell-hoogle)
-    (add-hook 'haskell-mode-hook (lambda () (helm-dash-activate-docset 'Haskell)))
-    )
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+  (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
+  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
+  (define-key haskell-mode-map (kbd "C-c DEL") 'haskell-hoogle)
+  (eval-after-load "haskell-doc" '(diminish 'haskell-doc-mode " 📜"))
+  (eval-after-load "hi2" '(diminish 'hi2-mode))
   :bind
   ("C-c h h" . switch-to-haskell))
 
@@ -36,6 +35,7 @@
 
 (use-package "intero"
   :commands (intero-mode intero-mode-blacklist)
+  :diminish " ⁉"
   :init
   (setq intero-blacklist (list (expand-file-name "~/.xmonad")))
   (add-hook 'haskell-mode-hook 'intero-mode)

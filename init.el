@@ -83,7 +83,7 @@
   (add-hook 'text-mode-hook #'projectile-mode)
   (add-hook 'prog-mode-hook #'projectile-mode)
   (setq projectile-mode-line
-        '(:eval (format " 📋%s" (projectile-project-name)))))
+        '(:eval (format " 🔖%s" (projectile-project-name)))))
 
 ;; utilities that are too small to live alone
 ;;
@@ -462,6 +462,7 @@
   (defun edd/idris-next-hole ()
       (interactive)
       (search-forward " ?" nil t))
+  (eval-after-load "idris-simple-indent" '(diminish 'idris-simple-indent-mode))
   :bind
   (:map idris-mode-map
         ("C-c C-j" . idris-pop-to-repl)
