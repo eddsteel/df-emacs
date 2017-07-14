@@ -72,7 +72,7 @@
 ;; Mode line I like.
 (display-time-mode 1)
 (setq display-time-string-forms
-      '((propertize (concat day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load))))
+      '((propertize (concat "📆 " day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load))))
 (display-battery-mode t)
 (setq battery-mode-line-format " %b%p%%")
 
