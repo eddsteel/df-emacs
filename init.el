@@ -30,17 +30,16 @@
   :ensure nil
   :if (eq 'darwin system-type))
 
-
 (use-package edd-linux
   :ensure nil
   :if (not (eq 'darwin system-type)))
-
 
 ;; nyan nyan
 ;;
 (use-package nyan-mode
   :config
-  (nyan-mode))
+  (setq nyan-wavy-trail 1)
+  (nyan-mode 1))
 
 ;; whitespace
 ;;
