@@ -37,8 +37,20 @@
 ;; nyan nyan
 ;;
 (use-package nyan-mode
+  :require midnight-mode
+  :require time-date
+  :init
+  (midnight-mode)
   :config
   (setq nyan-wavy-trail 1)
+  ;; animate on Wednesdays
+  (add-hook 'midnight-hook
+            (lambda ()
+              (if
+                  (string-match-p "Wed.*"
+                                  (current-time-string))
+                  (nyan-start-animation)
+                (nyan-stop-animation))))
   (nyan-mode 1))
 
 ;; whitespace
