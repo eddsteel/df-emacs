@@ -423,6 +423,8 @@
   (emms-all)
   (emms-default-players)
   (setq emms-source-file-default-directory (expand-file-name "~/media/music"))
+  (setq emms-playing-time-display-format " %s")
+  (setq emms-playing-time-display-short-p 1)
 
   (require 'emms-tag-editor)
   (require 'emms-info)
@@ -431,8 +433,16 @@
   (require 'emms-info-libtag)
   (setq emms-info-functions '(emms-info-libtag))
   (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
-  (setq emms-volume-change-function 'emms-volume-pulse-change))
+  (setq emms-volume-change-function 'emms-volume-pulse-change)
 
+  :config
+  (defun edd/emms-modeline ()
+    (concat " 🎜 "
+            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
+                                     (emms-mode-line-playlist-current))))
+              (substring s
+                         0 (min 20 (length s))))))
+  (setq emms-mode-line-mode-line-function 'edd/emms-modeline))
 
 (use-package dumb-jump
   :bind (("M-g o" . dumb-jump-go-other-window)
