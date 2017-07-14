@@ -22,6 +22,10 @@
   (setq smtpmail-queue-mail nil
         stmpmail-queue-dir "~/spool/queue/cur/")
   (setq mail-user-agent 'mu4e-user-agent)
+  (add-hook 'message-mode-hook
+            '(lambda ()
+               (edd-with-secrets "mail"
+                                 (setq user-mail-address edd-home-mail-address))))
   :config
   (edd-with-secrets "mail"
                     (setq mu4e-contexts
