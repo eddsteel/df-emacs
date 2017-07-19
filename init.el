@@ -507,7 +507,6 @@
 
 (use-package multiple-cursors
   :bind (("C-c *" . mc/mark-all-dwim)
-         ("C-_" . mc/mark-previous-like-this-symbol)
          ("C-c <" . mc/mark-previous-like-this-symbol)
          ("C-+" . mc/mark-next-like-this-symbol)
          ("C-c >" . mc/mark-next-like-this-symbol)
