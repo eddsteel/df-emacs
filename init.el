@@ -511,6 +511,10 @@
   :init
   (add-to-list 'auto-mode-alist '(".tf\\'" . hcl-mode)))
 
+(use-package dired-collapse
+  :init
+  (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
