@@ -58,6 +58,8 @@
             (put 'default-frame-alist 'alpha '(100 80)))
         (progn
           (set-face-attribute 'default nil :font "Fira Mono-13")
+          (when (member "Symbola" (font-family-list))
+            (set-fontset-font t nil "Symbola"))
           (when (member "Noto Emoji" (font-family-list))
             (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
           ;; don't fade, WM will do that on everything.

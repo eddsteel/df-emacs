@@ -116,5 +116,4 @@
   (bind-key (kbd "C-c C-n") 'edd/ledger-next-unknown ledger-mode-map))
 
 
-
 (provide 'edd-ledger)

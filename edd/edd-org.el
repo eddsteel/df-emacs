@@ -1,10 +1,10 @@
-(use-package org
+(use-package org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
-  :ensure org-plus-contrib
   :ensure graphviz-dot-mode
   :ensure htmlize
   :ensure org-download
   :ensure org-bullets
+  :pin "org"
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook (lambda () (hl-line-mode t)))

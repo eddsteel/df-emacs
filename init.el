@@ -234,7 +234,8 @@
 
 (use-package git-timemachine)
 
-(use-package markdown-mode+)
+(use-package markdown-mode+
+  :mode (("\\.apib\\$" . markdown-mode)))
 
 (use-package imenu-anywhere
   :config (defun jcs-use-package ()
@@ -296,15 +297,19 @@
   (add-hook 'latex-mode-hook 'wrap-region-mode)
   (add-hook 'prog-mode-hook 'wrap-region-mode))
 
-;; "Then Emacs will understand path like /vcsh:zsh:."
-(add-to-list 'tramp-methods '("vcsh"
+(use-package tramp
+  :config
+
+  ;; "Then Emacs will understand path like /vcsh:zsh:."
+  (add-to-list 'tramp-methods '("vcsh"
                               (tramp-login-program "vcsh")
                               (tramp-login-args
                                (("enter")
                                 ("%h")))
                               (tramp-remote-shell "/bin/sh")
                               (tramp-remote-shell-args
-                               ("-c"))))
+                               ("-c")))))
+
 
 (use-package docker
   :diminish " 🐳"
@@ -469,7 +474,7 @@
 
 (use-package edd-rss :ensure nil)
 
-(use-package csv-mode)
+(use-package csv)
 (use-package elm-mode)
 (use-package gradle-mode)
 (use-package groovy-mode)
@@ -501,19 +506,25 @@
    (add-hook 'protobuf-mode-hook
      (lambda () (c-add-style "my-style" my-protobuf-style t))))
 
-
 (use-package gitignore-mode
-  :init
-  ;; CODEOWNERS files use gitignore syntax.
-  (add-to-list 'auto-mode-alist '("CODEOWNERS\\'" . gitignore-mode)))
+  :mode ("CODEOWNERS$" . gitignode-mode))
 
 (use-package hcl-mode
-  :init
-  (add-to-list 'auto-mode-alist '(".tf\\'" . hcl-mode)))
+  :mode ("\\.tf$" . hcl-mode))
 
 (use-package dired-collapse
-  :init
+  :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
+
+(use-package multiple-cursors
+  :bind (("C-c *" . mc/mark-all-dwim)
+         ("C-_" . mc/mark-previous-like-this-symbol)
+         ("C-c <" . mc/mark-previous-like-this-symbol)
+         ("C-+" . mc/mark-next-like-this-symbol)
+         ("C-c >" . mc/mark-next-like-this-symbol)
+         ("C-c m C-e" . mc/edit-ends-of-lines)
+         ("C-c m C-a" . mc/edit-beginnings-of-lines)
+         ("C-c m *" . mc/mark-all-symbols-like-this-in-defun)))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

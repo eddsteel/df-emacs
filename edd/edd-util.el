@@ -26,20 +26,6 @@
       (find-file initial-buffer-choice)
     (switch-to-buffer "*scratch*")))
 
-(defun edd-term (pfx)
-  (interactive "p")
-  "Open my currently favourite kind of terminal, smartly.
-
-   With the prefix argument, opens term.
-   If the current buffer is an ansi-term, opens a new one.
-   If there's no ansi-term, open a new one.
-   Otherwise will switch to *ansi-term*"
-  (let ((bn (buffer-name))
-        (tl "*ansi-term*")
-        (newterm (lambda () (ansi-term "bash"))))
-    (if (and (<= pfx 1) (get-buffer tl) (not (string-prefix-p tl bn)))
-        (switch-to-buffer tl)
-      (funcall newterm))))
 
 (defun edd-hex-encode (start end)
   (interactive "r")
@@ -153,7 +139,7 @@ From a program takes two point or marker arguments, BEG and END."
 (defun camelize (s)
   "Convert under_score string S to CamelCase string."
   (mapconcat 'identity (mapcar
-                        '(lambda (word) (capitalize (downcase word)))
+                        #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
 
 (defun camelize-method (s)
@@ -172,6 +158,5 @@ From a program takes two point or marker arguments, BEG and END."
       (delete-region start end)
       (goto-char start)
       (insert camel))))
-
 
 (provide 'edd-util)
