@@ -35,4 +35,9 @@
 ;; let's use chromium
 (setq browse-url-browser-function 'browse-url-chromium)
 
+(use-package pinentry
+  :init
+  (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+  (pinentry-start))
+
 (provide 'edd-linux)
