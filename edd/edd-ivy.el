@@ -22,11 +22,6 @@
     (ivy-mode 1))
   (ivy-mode 1)
 
-  (defun edd-theme-ivy ()
-    (let ((func (face-foreground 'font-lock-function-name-face)))
-      (message func)
-      (set-face-attribute 'minibuffer-prompt nil :foreground func)))
-
   :config
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
   (setq ivy-use-virtual-buffers t)
@@ -58,9 +53,7 @@
   (eval-after-load 'imenu-anywhere
     '(global-set-key (kbd "C-c ,") 'ivy-imenu-anywhere))
 
-  (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
-  (add-hook 'edd-load-theme-hook 'edd-theme-ivy)
-  (edd-theme-ivy))
+  (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch))
 
 ;; Need to use
 ;; https://raw.githubusercontent.com/abo-abo/helm-make/master/helm-make.el

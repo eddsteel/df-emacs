@@ -6,10 +6,14 @@
 
 ;; theme
 ;;
-(defvar edd-theme)
 (use-package darkokai-theme
   :init
-  (setq edd-theme 'darkokai))
+  (load-theme 'darkokai t))
+
+(use-package base16-theme
+  :disabled
+  :config
+  (load-theme 'base16-monokai t))
 
 ;; Do this stuff early to avoid flicker
 ;;
@@ -151,21 +155,7 @@
   :commands (company-mode)
   :diminish (company-search-mode company-mode)
   :config
-  (defun edd-theme-company ()
-    (let ((mode-bg (face-background 'mode-line))
-          (imode-fg (face-foreground 'mode-line-inactive)))
-      (set-face-attribute 'company-preview nil :background mode-bg :foreground "light sky blue")
-      (set-face-attribute 'company-preview-search nil :inherit 'company-preview)
-      (set-face-attribute 'company-scrollbar-bg nil :inherit 'company-tooltip)
-      (set-face-attribute 'company-tooltip nil :background "#363A3F" :foreground "#66D9EF")
-      (set-face-attribute 'company-tooltip-annotation nil :inherit 'company-tooltip :foreground "#666")
-      (set-face-attribute 'company-tooltip-common nil :inherit 'company-tooltip :foreground imode-fg)
-      (set-face-attribute 'company-tooltip-common-selection nil :inherit 'company-tooltip-selection)
-      (set-face-attribute 'company-tooltip-selection nil :inherit 'company-tooltip :background "#666666")))
-  (add-hook 'edd-load-theme-hook 'edd-theme-company)
-  (add-hook 'haskell-mode-hook 'company-mode)
-  (edd-theme-company)
-(progn
+  (progn
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 

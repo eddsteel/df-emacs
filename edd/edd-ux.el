@@ -20,31 +20,10 @@
 
 (add-hook 'prog-mode-hook (lambda () (hl-line-mode t)))
 
-;; use when themese don't set hl-line
+;; use when themes don't set hl-line
 (defun edd-fix-hl-line-mode ()
   (interactive)
   (set-face-background 'hl-line (face-background 'highlight)))
-
-;; Theme stuff
-(defvar edd-load-theme-hook '()
-  "Hook to run when theme is changed with `edd-load-theme'")
-
-;; theme loader that side-steps the load/enable distinction and has a hook.
-(defun edd-load-theme (my-theme)
-  "Load and enable a theme in one operation, then run configured hooks"
-  (interactive "Stheme: ")
-  (edd-do-load-theme my-theme))
-
-(defun edd-do-load-theme (my-theme)
-  (progn
-    (unless (eq my-theme (car custom-enabled-themes))
-      (if (not (member my-theme custom-enabled-themes))
-          (load-theme my-theme 1)
-        (enable-theme my-theme)))
-    (run-hooks 'edd-load-theme-hook)))
-
-(defun edd-load-default-theme ()
-  (edd-load-theme edd-theme))
 
 ;; use that font I like.
 (defun edd-prep-frame (frame)
@@ -63,8 +42,7 @@
           (when (member "Noto Emoji" (font-family-list))
             (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
           ;; don't fade, WM will do that on everything.
-          (set-face-background 'default "#222222")
-          (edd-load-default-theme))))))
+          (set-face-background 'default "#222222"))))))
 
 
 ;; if we're loading non-daemon set up frame. Otherwise the hook will get it.

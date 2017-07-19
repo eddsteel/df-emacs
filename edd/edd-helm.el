@@ -1,31 +1,9 @@
-(use-package helm
+S(use-package helm
   :ensure helm-ag
   :ensure helm-company
   :ensure helm-projectile
   :ensure swiper-helm
   :diminish helm-mode
-  :init
-  (defun edd-theme-helm ()
-    (let ((string (face-foreground 'font-lock-string-face))
-          (builtin (face-foreground 'font-lock-builtin-face))
-          (function (face-foreground 'font-lock-function-name-face))
-          (variable (face-foreground 'font-lock-variable-name-face))
-          (keyword (face-foreground 'font-lock-keyword-face))
-          (background (face-background 'default))
-          (highlight (face-background 'highlight))
-          (mode-bg (face-background 'mode-line))
-          (imode-fg (face-foreground 'mode-line-inactive)))
-      (set-face-attribute 'helm-candidate-number nil :background string :foreground background)
-      (set-face-attribute 'helm-grep-file nil :foreground builtin :underline t)
-;;      (set-face-attribute 'helm-grep-finish nil :foreground function)
-;;    (set-face-attribute 'helm-grep-lineno nil :foreground variable)
-;;    (set-face-attribute 'helm-grep-match nil :foreground string)
-;;    (set-face-attribute 'helm-grep-running nil :foreground variable)
-      (set-face-attribute 'helm-prefarg nil :foreground function)
-      (set-face-attribute 'helm-selection nil :background highlight :foreground keyword :underline t)
-      (set-face-attribute 'helm-source-header nil :background background :foreground imode-fg :weight 'bold :height 1.3 :family "Sans Serif")
-      (set-face-attribute 'helm-visible-mark nil :background imode-fg)))
-  (add-hook 'edd-load-theme-hook 'edd-theme-helm)
   :config
   (eval-after-load 'company
     '(progn
@@ -38,7 +16,6 @@
   (eval-after-load 'imenu-anywhere
     '(global-set-key (kbd "C-c ,") 'helm-imenu-anywhere))
   (helm-mode 1)
-  (edd-theme-helm)
   :bind
   (("C-x b" . helm-mini)
    ("C-M-y" . helm-show-kill-ring)
