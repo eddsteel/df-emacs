@@ -14,7 +14,7 @@
 ;;   most :config replaced with edd-org-options
   :config
   (setq org-bullets-bullet-list
-        '("🍣" "🐸" "🐳" "🐻" "◉" "○" "✸" "✿"))
+        '("🐺" "🐸" "🐳" "🐻" "🐬" "🐤" "🐷" "🐴"))
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
