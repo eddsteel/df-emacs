@@ -48,6 +48,10 @@
   (require 'time-date)
   (setq nyan-wavy-trail 1)
   ;; animate on Wednesdays
+  (when
+      (string-match-p "Wed.*" (current-time-string))
+    (nyan-start-animation))
+  ;; animate on Wednesdays without restart
   (add-hook
    'midnight-hook
    (lambda ()
