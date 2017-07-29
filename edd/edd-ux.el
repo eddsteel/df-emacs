@@ -8,9 +8,6 @@
 (setq visible-bell nil) ;; The default
 (setq ring-bell-function 'ignore)
 
-;; don't distract.
-(setq inhibit-startup-message t)
-
 ;; don't insist.
 (defalias 'yes-or-no-p 'y-or-n-p)
 
