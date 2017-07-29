@@ -39,6 +39,8 @@
   :init
   (setq intero-blacklist (list (expand-file-name "~/.xmonad")))
   (add-hook 'haskell-mode-hook 'intero-mode)
-  (add-hook 'haskell-mode-hook 'intero-mode-blacklist))
+  (add-hook 'haskell-mode-hook 'intero-mode-blacklist)
+  :bind
+  ("C-c C-j" . intero-repl))
 
 (provide 'edd-haskell)
