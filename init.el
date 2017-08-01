@@ -174,8 +174,7 @@
         message-send-mail-function 'message-send-mail-with-sendmail)
   :bind ("C-c n" . edd-mailbox))
 
-(use-package pdf-tools)
-;; (use-package edd-pdf)
+(use-package edd-pdf :ensure nil)
 
 (use-package edd-scala :ensure nil)
 
