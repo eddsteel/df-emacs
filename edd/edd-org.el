@@ -10,11 +10,9 @@
   (add-hook 'org-mode-hook (lambda () (hl-line-mode t)))
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'org-mode-hook (lambda () (org-display-inline-images t t)))
-
-;;   most :config replaced with edd-org-options
-  :config
   (setq org-bullets-bullet-list
         '("🐺" "🐸" "🐳" "🐻" "🐬" "🐤" "🐷" "🐴"))
+
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
@@ -84,8 +82,8 @@
                '((shell . t))))
 
 (use-package edd-gtd
-  :demand
   :ensure nil
+  :commands (edd/go-home)
   :bind
   (("C-c w" . edd/go-to-work)))
 

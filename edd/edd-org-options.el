@@ -1,5 +1,4 @@
 ;; org config that doesn't load packages
-
 (require 'org)
 (require 'org-element)
 (require 'ob-http)
