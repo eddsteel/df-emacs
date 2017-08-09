@@ -7,8 +7,12 @@
         sp-backward-delete-char
         sp-delete-char
         sp-forward-sexp
+
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        org-end-of-line
+        sp-backward-delete-char
+        sp-forward-barf-sexp
         ))
