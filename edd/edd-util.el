@@ -159,4 +159,12 @@ From a program takes two point or marker arguments, BEG and END."
       (goto-char start)
       (insert camel))))
 
+
+(require 's)
+(require 'browse-url)
+
+(defun edd/browse-gwl-root ()
+  (interactive)
+  (browse-url (s-trim (shell-command-to-string "git web-link origin"))))
+
 (provide 'edd-util)
