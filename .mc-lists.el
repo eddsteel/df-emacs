@@ -3,11 +3,14 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        c-electric-brace
+        c-electric-colon
+        c-electric-delete-forward
+        c-electric-paren
         haskell-indentation-common-electric-command
         sp-backward-delete-char
         sp-delete-char
         sp-forward-sexp
-
         ))
 
 (setq mc/cmds-to-run-once
