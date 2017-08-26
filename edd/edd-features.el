@@ -185,4 +185,10 @@
 ;;
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+
+(use-package autorevert
+  :init
+  (global-auto-revert-mode 1))
+
+
 (provide 'edd-features)
