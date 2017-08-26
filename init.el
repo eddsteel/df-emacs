@@ -445,7 +445,7 @@
 
   :config
   (defun edd/emms-modeline ()
-    (concat " 🎜 "
+    (concat " 🎶 "
             (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
                                      (emms-mode-line-playlist-current))))
               (substring s
