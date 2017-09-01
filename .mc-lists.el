@@ -7,14 +7,18 @@
         c-electric-colon
         c-electric-delete-forward
         c-electric-paren
+        ensime-company-complete-or-indent
         haskell-indentation-common-electric-command
         sp-backward-delete-char
         sp-delete-char
         sp-forward-sexp
+        sp-kill-hybrid-sexp
+        sp-kill-word
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        ensime-mouse-motion
         org-end-of-line
         sp-backward-delete-char
         sp-forward-barf-sexp
