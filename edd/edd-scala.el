@@ -17,13 +17,13 @@
                                     (local-set-key (kbd "C-c C-v C-t") 'edd-sbt-test-only)
                                     (local-set-key (kbd "C-c C-b C-l") 'sbt-run-previous-command))))
   (add-hook 'scala-mode-hook (lambda () (setq-local prettify-symbols-alist
-                                               '(
-                                                 ("<=" . 8804)
+                                               '(("<=" . 8804)
                                                  (">=" . 8805)
                                                  ("==" . 8801)
                                                  ("===" . 8803)
                                                  ("!" . 172)
                                                  ("!=" . 8802)
+                                                 ("=!=" . 8813)
                                                  ("&&" . 8743)
                                                  ("||" . 8744)
                                                  ("true" . 8868)
