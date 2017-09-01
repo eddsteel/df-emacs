@@ -30,18 +30,15 @@
         (when (member "Noto Emoji" (font-family-list))
           (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
         (if (eq 'darwin system-type)
-            (progn
-              (set-frame-font "-*-Fira Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" 't)
-              ;; fade when inactive
-              (set-frame-parameter (selected-frame) 'alpha '(100 80))
-              (put 'default-frame-alist 'alpha '(100 80)))
           (progn
-            (set-face-attribute 'default nil :font "Fira Mono-13")
-            (when (member "Symbola" (font-family-list))
-              (set-fontset-font t nil "Symbola"))
-
-            ;; don't fade, WM will do that on everything.
-            (set-face-background 'default "#222222")))))))
+            (set-frame-font "-*-Fira Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" 't)
+            ;; fade when inactive
+            (set-frame-parameter (selected-frame) 'alpha '(100 80))
+            (put 'default-frame-alist 'alpha '(100 80)))
+        (progn
+          (set-face-attribute 'default nil :font "Fira Mono-11")
+          ;; don't fade, WM will do that on everything.
+          (set-face-background 'default "#222222")))))))
 
 
 ;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
