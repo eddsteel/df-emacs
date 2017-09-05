@@ -9,6 +9,8 @@
         c-electric-paren
         ensime-company-complete-or-indent
         haskell-indentation-common-electric-command
+        indent-for-tab-command
+        kill-region-or-backward-kill-word
         sp-backward-delete-char
         sp-delete-char
         sp-forward-sexp
@@ -19,6 +21,7 @@
 (setq mc/cmds-to-run-once
       '(
         ensime-mouse-motion
+        anzu-query-replace
         org-end-of-line
         sp-backward-delete-char
         sp-forward-barf-sexp
