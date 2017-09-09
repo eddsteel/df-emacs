@@ -40,6 +40,8 @@
           ;; don't fade, WM will do that on everything.
           (set-face-background 'default "#222222")))))))
 
+(edd-prep-frame (window-frame))
+
 
 ;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
 (when (not (daemonp)) (edd-prep-frame (selected-frame)))
