@@ -345,12 +345,12 @@
        ,@(loop for (key . val) in pairs
                collect
                `(defun ,(read (concat
-                               "edd/wrap-with-"
+                               "edd/rewrap-with-"
                                (prin1-to-string key)
                                "s"))
                     (&optional arg)
                   (interactive "p")
-                  (sp-wrap-with-pair ,val)))))
+                  (sp-rewrap-with-pair ,val)))))
 
   (def-pairs ((paren . "(")
               (bracket . "[")
@@ -358,6 +358,15 @@
               (single-quote . "'")
               (double-quote . "\"")
               (back-quote . "`")))
+
+  (sp-pair "(" ")" :wrap "C-c (")
+  (sp-pair "[" "]" :wrap "C-c [")
+  (sp-pair "{" "}" :wrap "C-c {")
+  (sp-pair "'" "'" :wrap "C-c '")
+  (sp-pair "\"" "\"" :wrap "C-c \"")
+  (sp-pair "_" "_" :wrap "C-c _")
+  (sp-pair "_" "_" :wrap "C-c _")
+
   :bind
   (:map smartparens-mode-map
         ("C-M-a" . sp-beginning-of-sexp)
@@ -392,16 +401,10 @@
 
         ("M-[" . sp-backward-unwrap-sexp)
         ("M-]" . sp-unwrap-sexp)
-
-        ("C-x C-t" . sp-transpose-hybrid-sexp)
-
-        ("C-c ("  . edd/wrap-with-parens)
-        ("C-c ["  . edd/wrap-with-brackets)
-        ("C-c {"  . edd/wrap-with-braces)
-        ("C-c '"  . edd/wrap-with-single-quotes)
-        ("C-c \"" . edd/wrap-with-double-quotes)
-        ("C-c _"  . edd/wrap-with-underscores)
-        ("C-c `"  . edd/wrap-with-back-quotes)))
+        ("C-c )"  . edd/rewrap-with-parens)
+        ("C-c ]"  . edd/rewrap-with-brackets)
+        ("C-c }"  . edd/rewrap-with-braces)
+        ("C-x C-t" . sp-transpose-hybrid-sexp)))
 
 (use-package engine-mode
   :init
@@ -518,6 +521,9 @@
          ("C-c m *" . mc/mark-all-symbols-like-this-in-defun)))
 
 (edd/maybe-load-config "local.el")
+(eval-after-load "enriched"
+    '(defun enriched-decode-display-prop (start end &optional param)
+       (list start end)))
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
