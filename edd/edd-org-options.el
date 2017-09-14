@@ -2,7 +2,6 @@
 (require 'org)
 (require 'org-element)
 (require 'ob-http)
-(require 'ox-deck)
 (setq org-html-validation-link nil)
 (setq org-html-head-include-default-style nil)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))

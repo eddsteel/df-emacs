@@ -1,4 +1,7 @@
 (package-initialize)
+(eval-after-load "enriched"
+    '(defun enriched-decode-display-prop (start end &optional param)
+       (list start end)))
 
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (require 'edd-bootstrap)
@@ -521,9 +524,7 @@
          ("C-c m *" . mc/mark-all-symbols-like-this-in-defun)))
 
 (edd/maybe-load-config "local.el")
-(eval-after-load "enriched"
-    '(defun enriched-decode-display-prop (start end &optional param)
-       (list start end)))
+
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
