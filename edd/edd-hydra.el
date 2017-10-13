@@ -9,9 +9,9 @@
   ;; possible to do generic dev:
   ;; - build shell
   ;; - repl
-  ;; - compile
-  ;; - test
-  ;; - build executable
+  ;; - compile - projectile supports it but want to override based on project type
+  ;; - test - ditto
+  ;; - run
   ;; - search docs
   ;; ???
 
@@ -43,7 +43,9 @@
     ("E"   project-find-regexp "find regexp (any file under root)")
     ("f"   projectile-find-file "find file")
     ("F"   projectile-find-file-other-window "find file other window")
-    ("g"   projectile-vc "VC")
+    ("g"
+     (lambda ()(interactive)(progn (magit-status)(call-interactively #'magit-fetch-from-upstream)))
+     "git fetch")
     ("h"   projectile-dired "dired")
     ("i"   projectile-project-info "info")
     ("kc"  projectile-invalidate-cache "invalidate cache")
@@ -61,10 +63,8 @@
     ("r"   projectile-recentf "recent files")
     ("s"   projectile-multi-occur "occur")
     ("S"   projectile-replace "replace")
-    ("t"   projectile-find-tag "find tag")
-    ("T"   projectile-regenerate-tags "generate tags")
-    ("u"   projectile-find-test-file "find test file")
-    ("U"   projectile-test-project "test project")
+    ("T"   projectile-find-test-file "find test file")
+    ("t"   projectile-test-project "test project")
     ("v"   projectile-display-buffer "display buffer")
     ("V"   projectile-ibuffer "ibuffer")
     ("X"   (lambda ()(interactive)(projectile-run-term "/bin/bash")) "term")

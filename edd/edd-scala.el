@@ -32,9 +32,9 @@
                                                  ("empty" . 8709)
                                                  ("sum" . 8721)
                                                  ("product" . 8719)
-;                                                 ("contains" . 8717)
-;                                                 ("forall" . 8704)
-;                                                 ("any" . 8707)
+;;                                               ("contains" . 8717)
+;;                                               ("forall" . 8704)
+;;                                               ("any" . 8707)
                                                  ("intersect" . 8745)
                                                  ("union" . 8746)
                                                  ("diff" . 8783)
@@ -64,7 +64,8 @@
                                                  ("bind" . 10524)
                                                  (">>" . 8811)
                                                  ("followedBy" . 8811)
-                                                 ("<+>" . 8853)))
+                                                 ("<+>" . 8853)
+                                                 ("_root_." . 46)))
                                (prettify-symbols-mode)))
   (defun edd-run-scala ()
     (interactive)
@@ -193,9 +194,9 @@
 
   (add-hook 'scala-mode-hook #'edd-ensime-scala-mode-hook)
   :config
-  (setq ensime-goto-test-config-defaults
-        (plist-put ensime-goto-test-config-defaults
-                   :test-template-fn 'edd-ensime-test-template))
+;  (setq ensime-goto-test-config-defaults
+;        (plist-put ensime-goto-test-config-defaults
+;                   :test-template-fn 'edd-ensime-test-template))
   (setq ensime-use-helm nil)
   (setq ensime-graphical-tooltips 't)
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)

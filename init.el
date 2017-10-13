@@ -96,14 +96,16 @@
 
 
 ;; projectile
+;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
 ;;
 (use-package projectile
   :init
-  (setq projectile-keymap-prefix (kbd "C-c C-p"))
+  (setq projectile-keymap-prefix (kbd "C-x p"))
 
   :config
   (add-hook 'text-mode-hook #'projectile-mode)
   (add-hook 'prog-mode-hook #'projectile-mode)
+
   (setq projectile-mode-line
         '(:eval (format " 🔖%s" (projectile-project-name)))))
 
@@ -336,7 +338,7 @@
 (use-package multi-term)
 
 (use-package smartparens
-  :diminish " 😎"
+  :diminish " 🎷"
   :config
   :init
   (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
@@ -522,6 +524,12 @@
          ("C-c m C-e" . mc/edit-ends-of-lines)
          ("C-c m C-a" . mc/edit-beginnings-of-lines)
          ("C-c m *" . mc/mark-all-symbols-like-this-in-defun)))
+
+(use-package edd-sow
+  :demand
+  :ensure nil
+  :config
+  (edd-sow-mode 1))
 
 (edd/maybe-load-config "local.el")
 

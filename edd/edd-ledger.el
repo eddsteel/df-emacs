@@ -1,12 +1,14 @@
 ;; Process is:
-;; - Paste from online banking site
+;; - Paste from online banking sites
 ;; - Remove "exchange amount" if appropriate
 ;; - Run appropriate clean function on each line (use macros)
 ;; - Clear out text like Preauthorized etc
-;; - Run `tac' on the paragraph
+;; - Run clean entries
+;; - Run `tac' on the paragraphs
 ;; - Initialize counter (using function)
 ;; - Convert each line to an item using function
 ;; - Convert each item to be sortable
+;; - replace '    <acct>' with actual account.
 ;;
 ;; For each site, use a different account no for the sorting
 ;;
@@ -14,6 +16,7 @@
 ;; Then paste into ledger file and use next-unknown to fill out details.
 ;;
 ;;
+(require 'dash)
 
 (defun edd/ledger-clean-vancity (month)
   "Clean an entry pasted from Vancity website
@@ -112,8 +115,27 @@
     (replace-match "\\1")))
 
 
+(defun edd/ledger-clean-entries ()
+  (-map
+   (lambda (pair) (beginning-of-buffer)(while (search-forward (car pair) nil 't)(replace-match (cdr pair))))
+   '(
+     ("Funds Transfer-Online" . "Transfer")
+     ("Preauthorized Payment" . "Payment")
+     ("Point Of Sale " . "")
+     ("Preauthorized Credit " . "")
+     ("Preauthorized Payment " . "")
+     ("Atm Withdrawal-Interac ." . "ATM")
+     (" Jj " . " JJ ")
+     (" - THANK" . "")
+     ("Www." . "www.")
+     ("Sq *" . "")
+     ("'S" . "'s")
+     )))
+
 (eval-after-load "ledger"
   (bind-key (kbd "C-c C-n") 'edd/ledger-next-unknown ledger-mode-map))
+
+
 
 
 (provide 'edd-ledger)
