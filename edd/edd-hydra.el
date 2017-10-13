@@ -24,7 +24,8 @@
     ("n"   emms-next "next track")
     ("p"   emms-previous "previous track")
     ("+"   emms-volume-raise "volume up")
-    ("-"   emms-volume-lower "volume down"))
+    ("-"   emms-volume-lower "volume down")
+    ("P"   emms-playlist-mode-switch-buffer "playlist"))
 
   ;; projectile
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee

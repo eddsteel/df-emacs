@@ -433,7 +433,7 @@
 
 (use-package emms
   :load-path "../src/emms/lisp"
-  :commands emms-smart-browse
+  :commands (emms-smart-browse emms-pause)
   :init
   (require 'emms-setup)
   (emms-all)
@@ -458,7 +458,8 @@
                                      (emms-mode-line-playlist-current))))
               (substring s
                          0 (min 20 (length s))))))
-  (setq emms-mode-line-mode-line-function 'edd/emms-modeline))
+  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
+  :bind (("<f5>" . emms-pause)))
 
 (use-package dumb-jump
   :bind (("M-g o" . dumb-jump-go-other-window)
