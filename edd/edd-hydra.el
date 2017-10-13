@@ -100,20 +100,6 @@
     ("R" counsel-recentf "recentf")
     ("P" hydra-project/body "project >>"))
 
-  (defhydra hydra-scala-dev (:color red :idle 0.3) "scala"
-    ("c" edd-run-scala "run Scala REPL (DWIM)")
-    ("s" sbt-start "run SBT" :exit t)
-    ("e" ensime "run ensime")
-    ("E" ensime-refresh-config "regenerate ensime config")
-
-    ("br" ensime-sbt-do-run "SBT run")
-    ("bc" ensime-sbt-do-compile "SBT compile")
-    ("bl" sbt-run-previous-command "last SBT command")
-    ("ot" edd-sbt-test-only "run open test only")
-    ("ol" edd-sbt-test-only-last "run last test only")
-    ("bt" ensime-sbt-do-test-dwim "SBT test")
-    ("bx" ensime-sbt-do-clean "SBT clean"))
-
   (global-set-key (kbd "C-c u") 'hydra-goto/body)
   (setq projectile-switch-project-action
         (lambda ()
