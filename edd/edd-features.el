@@ -191,4 +191,7 @@
   (global-auto-revert-mode 1))
 
 
+;; full width cursor
+(setq x-stretch-cursor t)
+
 (provide 'edd-features)

@@ -34,7 +34,7 @@
    (python . t)
    (ruby . t)
    (scala . t)
-   (sh . t)
+   (shell . t)
    (sqlite . t)
    (http . t)))
 
