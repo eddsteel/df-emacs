@@ -74,12 +74,7 @@
 (use-package ob-async)
 
 (use-package edd-org-options
-  :ensure nil
-  :config ;; additional
-  (appt-activate 1)
-  (org-babel-do-load-languages
-    'org-babel-load-languages
-               '((shell . t))))
+  :ensure nil)
 
 (use-package edd-gtd
   :ensure nil
