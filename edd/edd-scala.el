@@ -120,6 +120,18 @@
     (funcall 'swiper "\\bdef "))
 
   (define-key scala-mode-map (kbd "C-c .") 'edd-scala-ivy-method)
+
+  (defvar edd-scala/root-package "com.eddsteel" "Common root for scala packages")
+
+  (defvar edd-scala/sort-imports-rules
+    (list
+       (cons (concat "^import " (regexp-quote (concat edd-scala/root-package "."))) "1")
+        (cons "^import scala\\." "6")
+        (cons "^import java\\." "7")
+        (cons "^import javax\\." "8")
+        (cons "^import " "5"))
+    "Rules for sorting imports of the form (REGEXP . PRECEDENCE)")
+
 ;; TODO: support blank lines as both a rule and while traversing
   (defun edd-scala-sort-imports ()
     "Sorts imports according to rules, which are cons pairs of regexp to order"
@@ -147,7 +159,7 @@
                          (search-forward-regexp rule end 't)
                        (replace-match (concat ord "\\&")))
                      (forward-line)))))
-             edd-scala-sort-imports-rules)
+             edd-scala/sort-imports-rules)
             (sort-lines nil start end)
             (goto-char start)
             (while (search-forward-regexp "^\\([0-9]\\)import\\b" nil 't)
@@ -222,10 +234,6 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 
 }")
 
-
-
-
-
 (defun edd-align-sbt-deps ()
   (interactive)
   (align-regexp (region-beginning) (region-end) "\\(\\s-+\\)\\(%%?\\|\"\\)" 1 1 't))
@@ -238,9 +246,48 @@ class %TESTCLASS% extends FlatSpec with Matchers {
   (interactive)
   (call-interactively 'helm-occur "\bdef\ "))
 
-(setq edd-scala-sort-imports-rules
-      '(("^import com\\.hootsuite\\." . "1") ("^import scala\\." . "6") ("^import java\\." . "7") ("^import javax\\." . "8") ("^import " . "5")))
-
 (add-hook 'java-mode-hook 'edd-java-hook)
+
+(require 's)
+
+(defun edd-scala/pkgize-file (file)
+  (s-replace "-" "" (s-replace "/" "." file)))
+
+(defun edd-scala/fileize-pkg (pkg)
+  (s-replace "." "/" pkg))
+
+
+
+;; Gets "package com.eddsteel.project.package.name" from
+;; - project src/main/scala/com/eddsteel/project/package/name/File.scala
+;; - project src/main/scala/project/package/name/File.scala
+;; - project src/main/scala/package/name/File.scala
+;; - project src/com/eddsteel/project/package/name/File.scala
+;; - project src/project/package/name/File.scala
+;; - project src/package/name/File.scala
+;;
+;; Gets "package com.eddsteel.project" from
+;; - project src/main/scala/File.scala
+;; - project src/File.scala
+;;
+(defun edd-scala/guess-package (project relfile)
+    (let*
+      ((root edd-scala/root-package)
+       (projectdir (file-name-as-directory project))
+       (rootpkgdir (file-name-as-directory (edd-scala/fileize-pkg root)))
+       (srcfile (s-chop-prefixes (list "src/" "main/scala/" rootpkgdir projectdir) relfile))
+       (srcdir (if-let ((dir (file-name-directory srcfile)))
+                   (directory-file-name dir))))
+      (concat "package " root "." project (if srcdir (concat "." (edd-scala/pkgize-file srcdir)) ""))))
+
+(defun edd-scala/guess-package-buffer ()
+  "Guess and insert the package for this scala file."
+  (interactive)
+  (if (projectile-project-p)
+      (insert (edd-scala/guess-package
+               (file-name-nondirectory (directory-file-name (projectile-project-root)))
+               (car (projectile-make-relative-to-root (list (buffer-file-name))))))
+    (message "Must be in a projectile project.")))
+
 
 (provide 'edd-scala)
