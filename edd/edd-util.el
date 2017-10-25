@@ -167,4 +167,10 @@ From a program takes two point or marker arguments, BEG and END."
   (interactive)
   (browse-url (s-trim (shell-command-to-string "git web-link origin"))))
 
+(defvar edd/book nil "Relevant book (usually set in dir locals)")
+(defun edd/open-book ()
+  (interactive)
+  (when edd/book (find-file-other-window edd/book))
+  )
+
 (provide 'edd-util)
