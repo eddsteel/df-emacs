@@ -54,18 +54,85 @@
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)))
 
+(use-package server
+  :config
+  (when (and window-system (not (server-running-p)))
+    (add-hook 'after-init-hook 'server-start t)))
+
+(use-package flyspell
+  :diminish " 💅"
+  :config
+  (dolist (hook '(text-mode-hook org-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1)))))
+
+(use-package executable
+  :config
+  (add-hook 'after-save-hook
+  'executable-make-buffer-file-executable-if-script-p))
+
+(use-package hideshow :diminish)
+(use-package yasnippet :diminish 'yas-minor-mode)
+(use-package eldoc :diminish " 📜")
+
+(use-package savehist
+  :init
+  (savehist-mode t)
+  :config
+  (expand-file-name "history" user-emacs-directory))
+
+(use-package goto-addr
+  :config
+  (dolist (hook '(text-mode conf-mode-hook jabber-chat-mode-hook term-mode-hook))
+  (add-hook hook #'goto-address-mode)))
+
+(use-package tramp
+  :config
+  (setq tramp-terminal-type "xterm-256color")
+                                        ;(setq tramp-default-method "scp")
+  )
+
+(use-package ispell
+  :config
+  ;; use english dictionary (there's no canadian or british one)
+  (setq ispell-dictionary "english"))
+
+(use-package imenu
+  :bind
+  ("M-i" . imenu))
+
+(use-package autorevert
+  :diminish 'auto-revert-mode)
+
+;; colorize compilation buffers
+;; From http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
+(use-package ansi-color
+  :config
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  :init
+    (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer)
+  )
+
+(use-package ibuffer
+  :bind
+  ("C-x C-b" . ibuffer))
+
+(use-package autorevert
+  :init
+  (global-auto-revert-mode 1))
+
+
+
+
+;; --- tidy below --
+
 (dolist
     (feature '(upcase-region downcase-region set-goal-column narrow-to-region))
   (put feature 'disabled nil))
 
 (setq make-backup-files nil)
 (winner-mode t)
-
-;; server
-;;
-(require 'server)
-(when (and window-system (not (server-running-p)))
-  (add-hook 'after-init-hook 'server-start t))
 
 ;; text increase
 (global-set-key (kbd "s-<up>") 'text-scale-increase)
@@ -84,39 +151,16 @@
       (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-;; save history
-(setq save-hist-file
-      (expand-file-name "history" user-emacs-directory))
-(savehist-mode t)
-
-;; goto address mode
-(dolist (hook '(text-mode conf-mode-hook jabber-chat-mode-hook term-mode-hook))
-  (add-hook hook #'goto-address-mode))
-
 ;; uniquify buffers
 (setq uniquify-buffer-name-style 'post-forward)
 
-;; flyspell
-(dolist (hook '(text-mode-hook org-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 1))))
-(eval-after-load "flyspell" '(diminish 'flyspell-mode " 💅"))
-
-;; Make scripts executable
-(add-hook 'after-save-hook
-  'executable-make-buffer-file-executable-if-script-p)
-
-(eval-after-load "hideshow" '(diminish 'hs-minor-mode))
-(eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
 (diminish 'visual-line-mode "")
-(diminish 'auto-revert-mode "")
-
-(eval-after-load "eldoc" '(diminish 'eldoc-mode " 📜"))
-
-;; Cycle spaces
-(global-set-key (kbd "M-SPC") 'cycle-spacing)
 
 ;; make C-v M-v symmetrical
 (setq scroll-preserve-screen-position 'always)
+
+;; Cycle spaces
+(global-set-key (kbd "M-SPC") 'cycle-spacing)
 
 ;; use the sensible counter
 (global-set-key (kbd "M-=") 'count-words)
@@ -124,72 +168,18 @@
 ;; make M-x more available
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 
-
-;; bind C-c ! to reload config (like org)
-(defun edd-config-reload ()
-  (interactive)
-  (load user-init-file))
-
-(global-set-key (kbd "C-c !") 'edd-config-reload)
-
-;; ssh is "faster", and ask for dumb prompts.
-(setq tramp-terminal-type "xterm-256color")
-;(setq tramp-default-method "scp")
-
 ;; zap up to char
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
 (global-set-key (kbd "M-Z") 'zap-up-to-char)
 
-;; use english dictionary (there's no canadian or british one)
-(setq ispell-dictionary "english")
-
 ;; next/previous buffers
 (global-set-key (kbd "C-(") 'previous-buffer)
 (global-set-key (kbd "C-)") 'next-buffer)
-
-;; kill current buffer by default
-;; http://irreal.org/blog/?p=5585
-(defun edd-kill-a-buffer (askp)
-  (interactive "P")
-  (if askp
-      (kill-buffer (funcall completing-read-function
-                            "Kill buffer: "
-                            (mapcar #'buffer-name (buffer-list))))
-    (kill-this-buffer)))
-
-(global-set-key (kbd "C-x k") 'edd-kill-a-buffer)
-
 (global-set-key (kbd "M-o") 'other-window)
-
-;; imenu
-(global-set-key (kbd "M-i") 'imenu)
-
-;; diminish autorevert
-(diminish 'auto-revert-mode)
-(diminish 'global-auto-revert-mode)
 
 ;; keep system clipboard in kill ring when overwriting it
 (setq save-interprogram-paste-before-kill t)
-
-;; colorize compilation buffers
-;; From http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
-(ignore-errors
-  (require 'ansi-color)
-  (defun my-colorize-compilation-buffer ()
-    (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
-
-;; Use ibuffer instead of list buffers
-;;
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-
-(use-package autorevert
-  :init
-  (global-auto-revert-mode 1))
-
 
 ;; full width cursor
 (setq x-stretch-cursor t)

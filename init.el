@@ -1,4 +1,5 @@
 (package-initialize)
+;; remove vulnerability
 (eval-after-load "enriched"
     '(defun enriched-decode-display-prop (start end &optional param)
        (list start end)))
@@ -116,7 +117,9 @@
   :bind
   (("C-w" . kill-region-or-backward-kill-word)
    ("C-c M-p" . edd-jump-to-prev-url)
-   ("C-c M-n" . edd-jump-to-next-url)))
+   ("C-c M-n" . edd-jump-to-next-url)
+   ("C-x k". edd-kill-a-buffer)
+   ("C-c !". edd-config-reload)))
 
 
 ;; RE-Builder
@@ -519,6 +522,7 @@
 
 (use-package multiple-cursors
   :bind (("C-c *" . mc/mark-all-dwim)
+
          ("C-c <" . mc/mark-previous-like-this-symbol)
          ("C-+" . mc/mark-next-like-this-symbol)
          ("C-c >" . mc/mark-next-like-this-symbol)
@@ -531,6 +535,8 @@
   :ensure nil
   :config
   (edd-sow-mode 1))
+
+(use-package restart-emacs)
 
 (edd/maybe-load-config "local.el")
 

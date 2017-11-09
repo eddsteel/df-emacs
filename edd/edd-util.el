@@ -173,4 +173,20 @@ From a program takes two point or marker arguments, BEG and END."
   (when edd/book (find-file-other-window edd/book))
   )
 
+;; bind C-c ! to reload config (like org)
+(defun edd-config-reload ()
+  (interactive)
+  (load user-init-file))
+
+;; kill current buffer by default
+;; http://irreal.org/blog/?p=5585
+(defun edd-kill-a-buffer (askp)
+  (interactive "P")
+  (if askp
+      (kill-buffer (funcall completing-read-function
+                            "Kill buffer: "
+                            (mapcar #'buffer-name (buffer-list))))
+    (kill-this-buffer)))
+
+
 (provide 'edd-util)
