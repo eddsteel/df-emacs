@@ -538,6 +538,8 @@
 
 (use-package restart-emacs)
 
+(use-package edd-git-web-link :ensure nil)
+
 (edd/maybe-load-config "local.el")
 
 ;; acknowledgements
