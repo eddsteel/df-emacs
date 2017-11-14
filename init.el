@@ -221,6 +221,12 @@
 
 (use-package magit-filenotify :demand t)
 
+(use-package commit-msg-prefix
+  :config
+  (setq commit-msg-prefix-log-flags " --since='1 week ago' "
+        commit-msg-prefix-input-method 'ivy-read)
+  (add-hook 'git-commit-mode-hook 'commit-msg-prefix))
+
 (use-package ledger-mode
   :mode ("\\.ledger$" "ledger\\.dat$")
   :config
