@@ -191,7 +191,7 @@
 
 (use-package ensime
   ;; :pin melpa-stable
-  :pin melpa
+  :pin melpa-stable
   :init
   (setq ensime-auto-generate-config 't)
   (setq ensime-startup-notification nil)
