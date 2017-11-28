@@ -184,4 +184,10 @@
 ;; full width cursor
 (setq x-stretch-cursor t)
 
+(use-package subword
+  :diminish
+  :init
+  (add-hook 'prog-mode-hook 'subword-mode))
+
+
 (provide 'edd-features)
