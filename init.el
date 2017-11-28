@@ -523,6 +523,18 @@
 
 (use-package iedit)
 
+(use-package wgrep
+  :init
+  (eval-after-load 'grep
+    '(define-key grep-mode-map
+       (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode))
+
+  (eval-after-load 'wgrep
+    '(define-key grep-mode-map
+       (kbd "C-c C-c") 'wgrep-finish-edit)))
+
+
+
 (edd/maybe-load-config "local.el")
 
 ;; acknowledgements
