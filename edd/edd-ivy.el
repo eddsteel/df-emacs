@@ -29,6 +29,8 @@
   (setq ivy-height 10)
   ;; does not count candidates
   (setq ivy-count-format "%d/%d ")
+  ;; allow selecting and using value in prompt
+  (setq ivy-use-selectable-prompt t)
 
   ;; turns out this was the only thing I miss from helm
   (defun edd-ivy-updir ()
