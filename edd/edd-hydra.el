@@ -32,7 +32,7 @@
   ;;
   (defhydra hydra-project (:color blue :idle 0.4 :columns 5) "Projectile"
     ("<ESC>" nil "quit")
-    ("a"   projectile-ripgrep "rg")
+    ("a"   counsel-projectile-rg "rg")
     ("A"   projectile-grep "grep")
     ("b"   counsel-projectile-switch-to-buffer "buffer")
     ("B"   projectile-switch-to-buffer-other-window "buffer other window")
