@@ -303,20 +303,6 @@
   (add-hook 'latex-mode-hook 'wrap-region-mode)
   (add-hook 'prog-mode-hook 'wrap-region-mode))
 
-(use-package tramp
-  :config
-
-  ;; "Then Emacs will understand path like /vcsh:zsh:."
-  (add-to-list 'tramp-methods '("vcsh"
-                              (tramp-login-program "vcsh")
-                              (tramp-login-args
-                               (("enter")
-                                ("%h")))
-                              (tramp-remote-shell "/bin/sh")
-                              (tramp-remote-shell-args
-                               ("-c")))))
-
-
 (use-package docker
   :diminish " 🐳"
   :init
