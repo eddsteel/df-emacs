@@ -51,7 +51,7 @@
     (define-key company-active-map (kbd "C-M-i") 'counsel-company))
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy)
-    (counsel-projectile-on))
+    (counsel-projectile-mode))
   (eval-after-load 'imenu-anywhere
     '(global-set-key (kbd "C-c ,") 'ivy-imenu-anywhere))
 
