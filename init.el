@@ -14,11 +14,6 @@
   :init
   (load-theme 'darkokai t))
 
-(use-package base16-theme
-  :disabled
-  :config
-  (load-theme 'base16-monokai t))
-
 ;; Do this stuff early to avoid flicker
 ;;
 (use-package edd-ux :ensure nil)
