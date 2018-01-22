@@ -16,21 +16,24 @@
   ;; ???
 
   ;; emms
-  (defhydra hydra-music (:color blue :columns 3) "Music"
-    ("a"   emms-browse-by-album "browse (album)")
+  (defhydra hydra-music (:columns 3 :timeout 2)
+    "Music"
+    ("a"   emms-browse-by-album "browse (album)" :exit t)
     ("SPC" emms-pause "play/pause")
     ("i"   emms-show "show info")
-    ("I"   emms-show-all "show tags")
+    ("I"   emms-show-all "show tags" :exit t)
     ("n"   emms-next "next track")
     ("p"   emms-previous "previous track")
     ("+"   emms-volume-raise "volume up")
     ("-"   emms-volume-lower "volume down")
-    ("P"   emms-playlist-mode-switch-buffer "playlist"))
+    ("P"   emms-playlist-mode-switch-buffer "playlist" :exit t))
+
+  (global-set-key (kbd "C-c SPC") 'hydra-music/body)
 
   ;; projectile
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
   ;;
-  (defhydra hydra-project (:color blue :idle 0.4 :columns 5) "Projectile"
+  (defhydra hydra-project (:exit t :idle 0.4 :columns 5) "Project"
     ("<ESC>" nil "quit")
     ("a"   counsel-projectile-rg "rg")
     ("A"   projectile-grep "grep")
@@ -60,7 +63,7 @@
     ("M"   projectile-compile-project "compile")
     ("o"   projectile-find-other-file "find other file")
     ("O"   projectile-find-other-file-other-window "find other file other window")
-    ("p"   projectile-switch-project "switch project >>" :exit t )
+    ("p"   projectile-switch-project "switch project >>")
     ("r"   projectile-recentf "recent files")
     ("s"   projectile-multi-occur "occur")
     ("S"   projectile-replace "replace")
@@ -70,9 +73,47 @@
     ("V"   projectile-ibuffer "ibuffer")
     ("X"   (lambda ()(interactive)(projectile-run-term "/bin/bash")) "term")
     ("x"   projectile-run-shell "shell"))
+  (global-set-key (kbd "C-c p") 'hydra-project/body)
+
+  ;; from wiki
+  (defhydra hydra-goto-line (goto-map ""
+                                      :pre (linum-mode 1)
+                                      :post (linum-mode -1))
+    "goto-line"
+    ("g" goto-line "go")
+    ("m" set-mark-command "mark" :bind nil)
+    ("q" nil "quit"))
+
+
+  (defhydra hydra-mark-modify
+    (:columns 3)  "Move/Modify"
+    ("p" mc/mark-previous-lines "mark previous line (mc)")
+    ("P" mc/mark-previous-like-this-symbol "mark prev match/symbol (mc)")
+    ("n" mc/mark-next-lines "mark next line (mc)")
+    ("N" mc/mark-next-like-this-symbol "mark next match/symbol (mc)")
+
+    ("a" mc/edit-beginnings-of-lines "edit beginnings of lines (mc)" :exit t)
+    ("e" mc/edit-ends-of-lines "edit beginnings of lines (mc)" :exit t)
+
+    ("*" mc/mark-all-symbols-like-this-in-defun "mark all in defun (mc)")
+    ("m" er/expand-region "expand region (er)")
+    (";" er/mark-comment "mark comment (er)")
+    ("{" er/mark-defun "mark defun (er)")
+    ("." er/mark-next-accessor "mark accessor (er)")
+
+    ("(" er/mark-inside-pairs "mark pair contents (er)")
+    (")" er/mark-outside-pairs "mark pair (er)")
+    ("'" er/mark-inside-quotes "mark quote contents (er)")
+    ("\"" er/mark-outside-quotes "mark quote (er)")
+
+    ("#" mc/insert-numbers "insert numbers (mc)")
+
+    ("<SPC>" noop "noop" :exit t))
+
+  (global-set-key (kbd "C-c m") 'hydra-mark-modify/body)
 
   ;; Thanks http://kitchingroup.cheme.cmu.edu/blog/2015/09/28/A-cursor-goto-hydra-for-emacs/
-  (defhydra hydra-goto (:color blue :columns 4) "goto"
+  (defhydra hydra-goto (:exit nil :columns 4) "goto"
 
     ("c" avy-goto-char-2 "2 char")
     ("C" avy-goto-char "char")
@@ -82,14 +123,14 @@
     ("l" avy-goto-line "line")
     ("I" ace-window "window")
 
-    ("i" swiper "swiper")
+    ("i" swiper "swiper" :exit t)
 
     ("s" isearch-forward "search >")
     ("r" isearch-backward "search <")
 
     ("nn" flycheck-next-error "next error")
     ("np" flycheck-previous-error "prev error")
-    ("nl" list-flycheck-errors "error list")
+    ("nl" list-flycheck-errors "error list" :exit t)
     ("nc" flycheck-compile "refresh errors")
 
     ("Nn" git-gutter:next-hunk "next git hunk")
@@ -98,10 +139,12 @@
     ("Ns" git-gutter:popup-hunk "show current git change")
 
     ("b" ivy-switch-buffer "buffer")
-    ("R" counsel-recentf "recentf")
-    ("P" hydra-project/body "project >>"))
+    ("R" counsel-recentf "recentf" :exit t)
+    ("P" hydra-project/body "project >>" :exit t)
 
+    ("SPC" noop "noop" :exit t))
   (global-set-key (kbd "C-c u") 'hydra-goto/body)
+
   (setq projectile-switch-project-action
         (lambda ()
           (progn
@@ -109,14 +152,11 @@
             (hydra-project/body))))
 
   (define-key projectile-mode-map (kbd "C-c p") nil)
-  (global-set-key (kbd "C-c p") 'hydra-project/body)
 
-  (global-set-key (kbd "C-c SPC") 'hydra-music/body)
   (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c SPC") 'hydra-music/body)))
 
-;;  (global-set-key (kbd "C-c s") 'hydra-scala-dev/body))
   (global-set-key (kbd "C-c s") 'sbt-hydra))
 
 (provide 'edd-hydra)
