@@ -295,6 +295,7 @@
 (use-package docker
   :diminish " 🐳"
   :init
+  (setq docker-keymap-prefix "C-c C-d")
   (docker-global-mode))
 
 (use-package docker-tramp)
@@ -328,25 +329,6 @@
   (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
   (require 'smartparens-config)
-  ;; https://ebzzry.io/en/emacs-pairs/#keys
-  (defmacro def-pairs (pairs)
-    `(progn
-       ,@(loop for (key . val) in pairs
-               collect
-               `(defun ,(read (concat
-                               "edd/rewrap-with-"
-                               (prin1-to-string key)
-                               "s"))
-                    (&optional arg)
-                  (interactive "p")
-                  (sp-rewrap-with-pair ,val)))))
-
-  (def-pairs ((paren . "(")
-              (bracket . "[")
-              (brace . "{")
-              (single-quote . "'")
-              (double-quote . "\"")
-              (back-quote . "`")))
 
   (sp-pair "(" ")" :wrap "C-c (")
   (sp-pair "[" "]" :wrap "C-c [")
@@ -354,7 +336,21 @@
   (sp-pair "'" "'" :wrap "C-c '")
   (sp-pair "\"" "\"" :wrap "C-c \"")
   (sp-pair "_" "_" :wrap "C-c _")
-  (sp-pair "_" "_" :wrap "C-c _")
+
+  (defun edd/rww-paren (&optional arg)
+    "rewrap with ()"
+    (interactive "p")
+    (sp-rewrap-sexp '("(" . ")")))
+
+  (defun edd/rww-bracket (&optional arg)
+    "rewrap with []"
+    (interactive "p")
+    (sp-rewrap-sexp '("[" . "]")))
+
+  (defun edd/rww-brace (&optional arg)
+    "rewrap with {}"
+    (interactive "p")
+    (sp-rewrap-sexp '("{" . "}")))
 
   :bind
   (:map smartparens-mode-map
@@ -390,21 +386,11 @@
 
         ("M-[" . sp-backward-unwrap-sexp)
         ("M-]" . sp-unwrap-sexp)
-        ("C-c )"  . edd/rewrap-with-parens)
-        ("C-c ]"  . edd/rewrap-with-brackets)
-        ("C-c }"  . edd/rewrap-with-braces)
-        ("C-x C-t" . sp-transpose-hybrid-sexp)))
 
-(use-package engine-mode
-  :init
-  (engine-mode 1)
-  :config
-  (engine/set-keymap-prefix (kbd "C-x g"))
-  (defengine google
-    "https://google.com/search?q=%s"
-    :keybinding "g"
-    :browser 'eww-browse-url)
-  :commands engine-mode)
+        ("C-c )"  . edd/rww-paren)
+        ("C-c ]"  . edd/rww-bracket)
+        ("C-c }"  . edd/rww-brace)
+        ("C-x C-t" . sp-transpose-hybrid-sexp)))
 
 (use-package anzu
   :diminish anzu-mode
@@ -501,15 +487,7 @@
   :config
   (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
 
-(use-package multiple-cursors
-  :bind (("C-c *" . mc/mark-all-dwim)
-
-         ("C-c <" . mc/mark-previous-like-this-symbol)
-         ("C-+" . mc/mark-next-like-this-symbol)
-         ("C-c >" . mc/mark-next-like-this-symbol)
-         ("C-c m C-e" . mc/edit-ends-of-lines)
-         ("C-c m C-a" . mc/edit-beginnings-of-lines)
-         ("C-c m *" . mc/mark-all-symbols-like-this-in-defun)))
+(use-package multiple-cursors)
 
 (use-package edd-sow
   :demand
@@ -532,7 +510,6 @@
   (eval-after-load 'wgrep
     '(define-key grep-mode-map
        (kbd "C-c C-c") 'wgrep-finish-edit)))
-
 
 
 (edd/maybe-load-config "local.el")
