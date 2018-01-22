@@ -9,6 +9,16 @@
         c-electric-paren
         ensime-company-complete-or-indent
         haskell-indentation-common-electric-command
+        hydra-mark-modify/body
+        hydra-mark-modify/mc/edit-beginnings-of-lines
+        hydra-mark-modify/mc/edit-beginnings-of-lines-and-exit
+        hydra-mark-modify/mc/insert-numbers
+        hydra-mark-modify/mc/mark-next-like-this
+        hydra-mark-modify/mc/mark-next-like-this-symbol
+        hydra-mark-modify/mc/mark-previous-like-this-and-exit
+        hydra-mark-modify/mc/mark-previous-like-this-symbol
+        hydra-mark-modify/mc/mark-previous-lines-and-exit
+        hydra-mark-modify/noop-and-exit
         indent-for-tab-command
         kill-region-or-backward-kill-word
         sp-backward-delete-char
@@ -20,8 +30,17 @@
 
 (setq mc/cmds-to-run-once
       '(
-        ensime-mouse-motion
         anzu-query-replace
+        counsel-M-x
+        ensime-mouse-motion
+        flycheck-next-error
+        hydra-mark-modify/mc/mark-next-like-this-and-exit
+        hydra-mark-modify/mc/mark-next-lines
+        hydra-mark-modify/mc/mark-next-lines-and-exit
+        hydra-mark-modify/mc/mark-previous-like-this
+        hydra-mark-modify/mc/mark-previous-lines
+        iedit-switch-to-mc-mode
+        mark-sexp
         org-end-of-line
         sp-backward-delete-char
         sp-forward-barf-sexp
