@@ -68,4 +68,7 @@
       (set-face-attribute 'default (selected-frame) :height 140)
     (set-face-attribute 'default (selected-frame) :height 120)))
 
+;; let's turn this off.
+(mac-toggle-tab-bar)
+
 (provide 'edd-mac)
