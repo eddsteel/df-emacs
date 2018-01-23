@@ -18,6 +18,7 @@
         hydra-mark-modify/mc/mark-previous-like-this-and-exit
         hydra-mark-modify/mc/mark-previous-like-this-symbol
         hydra-mark-modify/mc/mark-previous-lines-and-exit
+        hydra-mark-modify/nil
         hydra-mark-modify/noop-and-exit
         indent-for-tab-command
         kill-region-or-backward-kill-word
@@ -34,6 +35,7 @@
         counsel-M-x
         ensime-mouse-motion
         flycheck-next-error
+        hydra-mark-modify/er/mark-outside-quotes
         hydra-mark-modify/mc/mark-next-like-this-and-exit
         hydra-mark-modify/mc/mark-next-lines
         hydra-mark-modify/mc/mark-next-lines-and-exit

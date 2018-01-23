@@ -92,8 +92,8 @@
     ("n" mc/mark-next-lines "mark next line (mc)")
     ("N" mc/mark-next-like-this-symbol "mark next match/symbol (mc)")
 
-    ("a" mc/edit-beginnings-of-lines "edit beginnings of lines (mc)" :exit t)
-    ("e" mc/edit-ends-of-lines "edit beginnings of lines (mc)" :exit t)
+    ("a" mc/edit-beginnings-of-lines "edit beginnings of lines (mc)")
+    ("e" mc/edit-ends-of-lines "edit beginnings of lines (mc)")
 
     ("*" mc/mark-all-symbols-like-this-in-defun "mark all in defun (mc)")
     ("m" er/expand-region "expand region (er)")
@@ -106,9 +106,7 @@
     ("'" er/mark-inside-quotes "mark quote contents (er)")
     ("\"" er/mark-outside-quotes "mark quote (er)")
 
-    ("#" mc/insert-numbers "insert numbers (mc)")
-
-    ("<SPC>" noop "noop" :exit t))
+    ("#" mc/insert-numbers "insert numbers (mc)"))
 
   (global-set-key (kbd "C-c m") 'hydra-mark-modify/body)
 
@@ -140,9 +138,8 @@
 
     ("b" ivy-switch-buffer "buffer")
     ("R" counsel-recentf "recentf" :exit t)
-    ("P" hydra-project/body "project >>" :exit t)
+    ("P" hydra-project/body "project >>" :exit t))
 
-    ("SPC" noop "noop" :exit t))
   (global-set-key (kbd "C-c u") 'hydra-goto/body)
 
   (setq projectile-switch-project-action
