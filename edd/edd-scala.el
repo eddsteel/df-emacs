@@ -212,10 +212,17 @@
   (setq ensime-use-helm nil)
   (setq ensime-graphical-tooltips 't)
   (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
+  ;; dumb jump if ensime jump fails
+  (defadvice ensime-edit-definition (after dumb-jump-after-ensime)
+    (when (not ad-return-value)
+      (call-interactively #'dumb-jump-go)))
+  (ad-activate 'ensime-edit-definition)
+
   :commands
   (ensime-scala-mode-hook ensime-config-find-file ensime-connection-or-nil)
   :bind
-  ("C-c e" . ensime))
+  (:map scala-mode-map
+        ("C-c e" . ensime)))
 
 ;; Extra mode for .sbt files to stop them being covered in errors.
 ;;
