@@ -86,4 +86,8 @@
   :config
   (setq interleave-org-notes-dir-list '("." "~/txt/notes")))
 
+(use-package org-journal
+  :init
+  (setq org-journal-dir "~/txt/journal"))
+
 (provide 'edd-org)
