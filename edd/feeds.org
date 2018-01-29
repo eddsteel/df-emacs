@@ -145,4 +145,4 @@
 *** http://what-if.xkcd.com/feed.atom
 ** Keeping track                                                  :mustread:
 *** http://www.google.com/support/forum/p/Calendar/rss_v2_0_msgs.xml?tid=79a3df858265c722&hl=en
-*** https://sites.google.com/site/pennysbulletins/updates-on-Penny/posts.xml :family:
+*** https://sites.google.com/site/pennysbulletins/updates-on-Penny/posts.xml
