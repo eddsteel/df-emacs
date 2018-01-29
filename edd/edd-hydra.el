@@ -28,8 +28,6 @@
     ("-"   emms-volume-lower "volume down")
     ("P"   emms-playlist-mode-switch-buffer "playlist" :exit t))
 
-  (global-set-key (kbd "C-c SPC") 'hydra-music/body)
-
   ;; projectile
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
   ;;
@@ -73,7 +71,6 @@
     ("V"   projectile-ibuffer "ibuffer")
     ("X"   (lambda ()(interactive)(projectile-run-term "/bin/bash")) "term")
     ("x"   projectile-run-shell "shell"))
-  (global-set-key (kbd "C-c p") 'hydra-project/body)
 
   ;; from wiki
   (defhydra hydra-goto-line (goto-map ""
@@ -108,7 +105,6 @@
 
     ("#" mc/insert-numbers "insert numbers (mc)"))
 
-  (global-set-key (kbd "C-c m") 'hydra-mark-modify/body)
 
   ;; Thanks http://kitchingroup.cheme.cmu.edu/blog/2015/09/28/A-cursor-goto-hydra-for-emacs/
   (defhydra hydra-goto (:exit nil :columns 4) "goto"
@@ -140,8 +136,6 @@
     ("R" counsel-recentf "recentf" :exit t)
     ("P" hydra-project/body "project >>" :exit t))
 
-  (global-set-key (kbd "C-c u") 'hydra-goto/body)
-
   (setq projectile-switch-project-action
         (lambda ()
           (progn
@@ -154,6 +148,10 @@
           (lambda ()
             (local-set-key (kbd "C-c SPC") 'hydra-music/body)))
 
-  (global-set-key (kbd "C-c s") 'sbt-hydra))
+  (global-set-key (kbd "C-c SPC") 'hydra-music/body)
+  (global-set-key (kbd "C-c m") 'hydra-mark-modify/body)
+  (global-set-key (kbd "C-c p") 'hydra-project/body)
+  (global-set-key (kbd "C-c s") 'sbt-hydra)
+  (global-set-key (kbd "C-c u") 'hydra-goto/body))
 
 (provide 'edd-hydra)
