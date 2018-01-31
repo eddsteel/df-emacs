@@ -8,6 +8,7 @@
         c-electric-delete-forward
         c-electric-paren
         ensime-company-complete-or-indent
+        forward-sexp
         haskell-indentation-common-electric-command
         hydra-mark-modify/body
         hydra-mark-modify/mc/edit-beginnings-of-lines
@@ -42,6 +43,7 @@
         hydra-mark-modify/mc/mark-previous-like-this
         hydra-mark-modify/mc/mark-previous-lines
         iedit-switch-to-mc-mode
+        mac-mwheel-scroll
         mark-sexp
         org-end-of-line
         sp-backward-delete-char
