@@ -513,6 +513,8 @@
        (kbd "C-c C-c") 'wgrep-finish-edit)))
 
 
+(use-package ivy-lobsters)
+(use-package direnv)
 (edd/maybe-load-config "local.el")
 
 ;; acknowledgements
