@@ -70,5 +70,7 @@
 
 ;; let's turn this off.
 (mac-toggle-tab-bar)
+(mac-set-frame-tab-group-property nil :tab-bar-visible-p nil)
+
 
 (provide 'edd-mac)
