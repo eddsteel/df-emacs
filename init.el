@@ -109,6 +109,7 @@
 ;;
 (use-package edd-util
   :ensure nil
+  :demand t
   :bind
   (("C-w" . kill-region-or-backward-kill-word)
    ("C-c M-p" . edd-jump-to-prev-url)
