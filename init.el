@@ -103,7 +103,13 @@
   (add-hook 'prog-mode-hook #'projectile-mode)
 
   (setq projectile-mode-line
-        '(:eval (format " 🔖%s" (projectile-project-name)))))
+        '(:eval (format " 🔖%s" (projectile-project-name))))
+
+  :bind
+  ("C-c r" .
+   (lambda () (interactive)
+     (projectile-with-default-dir (projectile-project-root)
+       (call-interactively 'comint-run)))))
 
 ;; utilities that are too small to live alone
 ;;

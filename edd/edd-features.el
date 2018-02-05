@@ -184,6 +184,9 @@
 (global-set-key (kbd "C-)") 'next-buffer)
 (global-set-key (kbd "M-o") 'other-window)
 
+;; comint should be easy to run
+(global-set-key (kbd "C-c r") 'comint-run)
+
 ;; keep system clipboard in kill ring when overwriting it
 (setq save-interprogram-paste-before-kill t)
 
