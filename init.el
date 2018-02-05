@@ -521,6 +521,10 @@
 
 (use-package ivy-lobsters)
 (use-package direnv)
+
+(use-package browse-at-remote)
+(use-package atomic-chrome)
+(use-package gh)
 (edd/maybe-load-config "local.el")
 
 ;; acknowledgements
