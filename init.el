@@ -504,7 +504,9 @@
 
 (use-package restart-emacs)
 
-(use-package edd-git-web-link :ensure nil)
+(use-package edd-git-web-link :ensure nil
+  :bind
+  ("C-c g" . hydra-edd-git-web-link/body))
 
 (use-package iedit)
 
