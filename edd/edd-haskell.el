@@ -25,6 +25,11 @@
   (define-key haskell-mode-map (kbd "C-c DEL") 'haskell-hoogle)
   (eval-after-load "haskell-doc" '(diminish 'haskell-doc-mode " 📜"))
   (eval-after-load "hi2" '(diminish 'hi2-mode))
+  (when (not (string-match-p (regexp-quote (expand-file-name "~/.local/bin")) (getenv "PATH")))
+    (setenv "PATH"
+            (concat
+             (getenv "PATH") ":" (expand-file-name "~/.local/bin") )))
+
   :bind
   ("C-c h h" . switch-to-haskell))
 
@@ -42,6 +47,5 @@
   (add-hook 'haskell-mode-hook 'intero-mode-blacklist)
   :bind (:map intero-mode-map
               ("C-c C-j" . intero-repl)))
-
 
 (provide 'edd-haskell)
