@@ -23,10 +23,17 @@
         hydra-mark-modify/noop-and-exit
         indent-for-tab-command
         kill-region-or-backward-kill-word
+        org-beginning-of-line
+        org-return
+        org-self-insert-command
         sp-backward-delete-char
+        sp-backward-sexp
+        sp-backward-unwrap-sexp
         sp-delete-char
         sp-forward-sexp
+        sp-forward-slurp-sexp
         sp-kill-hybrid-sexp
+        sp-kill-sexp
         sp-kill-word
         ))
 
