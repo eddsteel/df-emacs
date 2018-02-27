@@ -24,6 +24,7 @@
         indent-for-tab-command
         kill-region-or-backward-kill-word
         org-beginning-of-line
+        org-delete-char
         org-return
         org-self-insert-command
         sp-backward-delete-char
@@ -44,6 +45,7 @@
         ensime-mouse-motion
         flycheck-next-error
         hydra-mark-modify/er/mark-outside-quotes
+        hydra-mark-modify/mc/edit-ends-of-lines
         hydra-mark-modify/mc/mark-next-like-this-and-exit
         hydra-mark-modify/mc/mark-next-lines
         hydra-mark-modify/mc/mark-next-lines-and-exit
