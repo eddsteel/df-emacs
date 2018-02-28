@@ -36,12 +36,7 @@
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (put 'default-frame-alist 'alpha '(100 80)))
         (progn
-          (set-face-attribute 'default nil :font "Fira Mono-11")
-          ;; don't fade, WM will do that on everything.
-          (set-face-background 'default "#222222")))))))
-
-
-
+          (set-face-attribute 'default nil :font "Fira Mono-11")))))))
 
 ;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
 (when (not (daemonp)) (edd-prep-frame (selected-frame)))
@@ -74,6 +69,30 @@
                 mode-line-position
                 (vc-mode edd-vc-mode)
                 " " mode-line-modes mode-line-end-spaces))
+
+(use-package "basic-theme"
+  :commands edd-ux/basic-mode
+  :config
+  (defun edd-ux/basic-mode ()
+    "Get super basic"
+    (interactive)
+    (enable-theme 'basic)
+    (setq-default mode-line-format "")
+    (setq mode-line-format "")
+    (let ((faces-to-toggle '(mode-line mode-line-inactive mode-line-highlight mode-line-emphasis)))
+      (mapcar (lambda (face)
+                (set-face-attribute face nil :height 100))
+              faces-to-toggle))
+    (let* ((sans-font (cond ((x-list-fonts "Lucida Grande") '(:font "Lucida Grande"))
+                            ((x-list-fonts "Verdana") '(:font "Verdana"))
+                            ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))))
+           (background-color (face-background 'default nil 'default))
+           (padding `(:line-width 5 :color ,background-color)))
+      (custom-theme-set-faces 'org-beautify
+                              `(org-level-3 ((t (:box ,padding))))
+                              `(org-level-2 ((t (:box ,padding))))
+                              `(org-level-1 ((t (:box ,padding))))))
+    (remove-hook 'prog-mode-hook (lambda() (hl-line-mode t)))))
 
 ;; comfortable bindings
 ;; C-h for delete

@@ -7,11 +7,11 @@
   :pin "org"
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (add-hook 'org-mode-hook (lambda () (hl-line-mode t)))
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'org-mode-hook (lambda () (org-display-inline-images t t)))
   (setq org-bullets-bullet-list
-        '("🐺" "🐸" "🐳" "🐻" "🐬" "🐤" "🐷" "🐴"))
+        '("​" "​" "​" "​" "​" "​" "​" "​"))
+;;        '("🐺" "🐸" "🐳" "🐻" "🐬" "🐤" "🐷" "🐴"))
 
   :bind
   (("C-c l" . org-store-link)
@@ -89,5 +89,9 @@
 (use-package org-journal
   :init
   (setq org-journal-dir "~/txt/journal"))
+
+(use-package org-beautify-theme
+  :init
+  (load-theme 'org-beautify))
 
 (provide 'edd-org)
