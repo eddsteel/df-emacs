@@ -8,19 +8,27 @@
   :ensure rg
   :diminish " 🌱"
   :bind
-  ("C-'" . avy-goto-char-timer)
-  ("M-x" . counsel-M-x)
-  ("C-x C-m" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("C-M-." . counsel-grep-or-swiper)
-  ("C-M-y" . counsel-yank-pop)
-  ("M-i" . counsel-imenu)
+  (("C-'" . avy-goto-char-timer)
+   ("M-x" . counsel-M-x)
+   ("C-x C-m" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file)
+   ("C-M-." . counsel-grep-or-swiper)
+   ("C-M-y" . counsel-yank-pop)
+   ("M-i" . counsel-imenu)
+   ("C-c r" . ivy-resume)
+   ("C-c u" . counsel-unicode-char)
+   ("<f1> f" . counsel-describe-function)
+   ("<f1> v" . counsel-describe-variable)
+   ("<f1> S" . counsel-info-lookup-symbol)
+   :map minibuffer-local-map
+   ("C-r" . counsel-minibuffer-history))
   :init
   (with-eval-after-load 'ido
     (ido-mode -1)
     ;; Enable ivy
     (ivy-mode 1))
   (ivy-mode 1)
+  (setq enable-recursive-minibuffers t)
 
   :config
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.

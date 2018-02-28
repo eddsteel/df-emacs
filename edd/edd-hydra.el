@@ -152,6 +152,6 @@
   (global-set-key (kbd "C-c m") 'hydra-mark-modify/body)
   (global-set-key (kbd "C-c p") 'hydra-project/body)
   (global-set-key (kbd "C-c s") 'sbt-hydra)
-  (global-set-key (kbd "C-c u") 'hydra-goto/body))
+  (global-set-key (kbd "C-c o") 'hydra-goto/body))
 
 (provide 'edd-hydra)
