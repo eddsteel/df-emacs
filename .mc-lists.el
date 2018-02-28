@@ -13,6 +13,7 @@
         hydra-mark-modify/body
         hydra-mark-modify/mc/edit-beginnings-of-lines
         hydra-mark-modify/mc/edit-beginnings-of-lines-and-exit
+        hydra-mark-modify/mc/edit-ends-of-lines
         hydra-mark-modify/mc/insert-numbers
         hydra-mark-modify/mc/mark-next-like-this
         hydra-mark-modify/mc/mark-next-like-this-symbol
