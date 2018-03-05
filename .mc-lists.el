@@ -7,6 +7,7 @@
         c-electric-colon
         c-electric-delete-forward
         c-electric-paren
+        cycle-spacing
         ensime-company-complete-or-indent
         forward-sexp
         haskell-indentation-common-electric-command
