@@ -31,12 +31,12 @@
           (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
         (if (eq 'darwin system-type)
           (progn
-            (set-frame-font "-*-Fira Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" 't)
+            (set-frame-font "-*-Fira Code Retina-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" 't)
             ;; fade when inactive
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (put 'default-frame-alist 'alpha '(100 80)))
         (progn
-          (set-face-attribute 'default nil :font "Fira Mono-11")))))))
+          (set-face-attribute 'default nil :font "Fira Code-11")))))))
 
 ;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
 (when (not (daemonp)) (edd-prep-frame (selected-frame)))
