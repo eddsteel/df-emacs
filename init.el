@@ -527,6 +527,12 @@
 (use-package browse-at-remote)
 (use-package atomic-chrome)
 (use-package gh)
+
+(use-package mode-icons
+  :init
+  (mode-icons-mode)
+  )
+
 (edd/maybe-load-config "local.el")
 
 ;; acknowledgements
