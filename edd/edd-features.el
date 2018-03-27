@@ -193,6 +193,10 @@
 ;; full width cursor
 (setq x-stretch-cursor t)
 
+;; hurt me plenty
+(setq
+ large-file-warning-threshold 100000000)
+
 (use-package subword
   :diminish
   :init
