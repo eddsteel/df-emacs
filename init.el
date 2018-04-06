@@ -443,6 +443,11 @@
          ("M-g j" . dumb-jump-go)
          ("M-g q" . dumb-jump-quick-look))
   :config
+  (with-eval-after-load 'dumb-jump
+    (define-key global-map [remap xref-find-definitions] 'dumb-jump-go)
+    (define-key global-map [remap xref-pop-marker-stack] 'dumb-jump-back)
+    )
+
   (setq dumb-jump-selector 'ivy))
 
 (use-package helm-make
