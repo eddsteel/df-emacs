@@ -533,9 +533,16 @@
 (use-package atomic-chrome)
 (use-package gh)
 
+
 (use-package mode-icons
   :init
   (mode-icons-mode)
+
+(use-package python-mode)
+(use-package virtualenvwrapper
+  :config
+  (venv-initialize-interactive-shells)
+  (setq venv-dirlookup-names '(".venv" "pyenv" ".virtual" ".env"))
   )
 
 (edd/maybe-load-config "local.el")
