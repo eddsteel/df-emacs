@@ -1,9 +1,4 @@
 (package-initialize)
-;; remove vulnerability
-(eval-after-load "enriched"
-    '(defun enriched-decode-display-prop (start end &optional param)
-       (list start end)))
-
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
@@ -536,7 +531,7 @@
 
 (use-package mode-icons
   :init
-  (mode-icons-mode)
+  (mode-icons-mode))
 
 (use-package python-mode)
 (use-package virtualenvwrapper
