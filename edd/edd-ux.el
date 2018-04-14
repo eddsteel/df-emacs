@@ -36,7 +36,7 @@
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (put 'default-frame-alist 'alpha '(100 80)))
         (progn
-          (set-face-attribute 'default nil :font "Fira Code-11")))))))
+          (set-face-attribute 'default nil :font "Fira Mono-11")))))))
 
 ;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
 (when (not (daemonp)) (edd-prep-frame (selected-frame)))
