@@ -337,7 +337,6 @@
   (sp-pair "{" "}" :wrap "C-c {")
   (sp-pair "'" "'" :wrap "C-c '")
   (sp-pair "\"" "\"" :wrap "C-c \"")
-  (sp-pair "_" "_" :wrap "C-c _")
 
   (defun edd/rww-paren (&optional arg)
     "rewrap with ()"
@@ -460,6 +459,7 @@
 (use-package play-routes-mode)
 (use-package projectile-ripgrep)
 (use-package rjsx-mode)
+(use-package less-css-mode)
 (use-package yaml-mode)
 (use-package idris-mode
   :config
@@ -537,8 +537,12 @@
 (use-package virtualenvwrapper
   :config
   (venv-initialize-interactive-shells)
-  (setq venv-dirlookup-names '(".venv" "pyenv" ".virtual" ".env"))
-  )
+  (setq venv-dirlookup-names '(".venv" "pyenv" ".virtual" ".env")))
+
+(use-package editorconfig
+  :diminish " 📋"
+  :config
+  (editorconfig-mode 1))
 
 (edd/maybe-load-config "local.el")
 
