@@ -41,7 +41,7 @@
 
 (global-set-key (kbd "<f10>") 'toggle-frame-fullscreen)
 
-;; HYPER
+;; HYPER - this does nothing on new macbooks
 ;;
 (setq ns-function-modifier 'hyper)
 
@@ -72,5 +72,9 @@
 (mac-toggle-tab-bar)
 (mac-set-frame-tab-group-property nil :tab-bar-visible-p nil)
 
+
+;; use coreutils ls
+(let ((gls "/usr/local/bin/gls"))
+  (if (file-exists-p gls) (setq insert-directory-program gls)))
 
 (provide 'edd-mac)
