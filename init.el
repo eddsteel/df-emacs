@@ -460,7 +460,8 @@
 (use-package projectile-ripgrep)
 (use-package rjsx-mode
   :config
-  (setq js2-strict-missing-semi-warning nil))
+  (setq js2-strict-missing-semi-warning nil)
+  (setq js2-strict-trailing-comma-warning nil))
 (use-package less-css-mode)
 (use-package yaml-mode)
 (use-package idris-mode
