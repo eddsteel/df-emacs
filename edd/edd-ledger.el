@@ -1,6 +1,6 @@
 ;; Process is:
 ;; - Paste from online banking sites
-;; - Remove "exchange amount" if appropriate
+;; - Remove "exchange amount" if appropriate (M-x delete-matching-lines)
 ;; - Run appropriate clean function on each line (use macros)
 ;; - Clear out text like Preauthorized etc
 ;; - Run clean entries
@@ -8,7 +8,6 @@
 ;; - Initialize counter (using function)
 ;; - Convert each line to an item using function
 ;; - Convert each item to be sortable
-;; - replace '    <acct>' with actual account.
 ;;
 ;; For each site, use a different account no for the sorting
 ;;
@@ -33,7 +32,7 @@
     (backward-char)
     (kill-line)
     (beginning-of-line)
-    (insert "2017-" month "-")
+    (insert "2018-" month "-")
     (forward-char 2)
     (let ((beg (point)))
       (search-forward "	")
@@ -130,6 +129,7 @@
      ("Www." . "www.")
      ("Sq *" . "")
      ("'S" . "'s")
+     ("Charges Applied to Account Periodic Flat Feecapitalise" . "Fee")
      )))
 
 (eval-after-load "ledger"
