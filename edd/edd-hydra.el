@@ -61,7 +61,7 @@
     ("M"   projectile-compile-project "compile")
     ("o"   projectile-find-other-file "find other file")
     ("O"   projectile-find-other-file-other-window "find other file other window")
-    ("p"   counsel-projectile-switch-project "switch project >>")
+    ("p"   projectile-switch-project "switch project >>")
     ("r"   projectile-recentf "recent files")
     ("s"   projectile-multi-occur "occur")
     ("S"   projectile-replace "replace")
