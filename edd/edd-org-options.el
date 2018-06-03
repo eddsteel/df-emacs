@@ -15,7 +15,7 @@
   "<h1>%t</h1>
 <h2>%a</h2>")
 (setq org-export-allow-bind-keywords t)
-(defun edd-org-babel-code-properties
+(defun edd-org-babel-code-properties ()
     "inserts some default properties for org-babel. Note you still need :exports per block for github support"
     (interactive)
     (insert "#+PROPERTY:header-args :results output :session :cache yes :tangle yes :comments org :exports both"))

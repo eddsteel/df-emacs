@@ -35,9 +35,4 @@
 ;; let's use firefox
 (setq browse-url-browser-function 'browse-url-firefox)
 
-(use-package pinentry
-  :init
-  (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
-  (pinentry-start))
-
 (provide 'edd-linux)

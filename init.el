@@ -140,10 +140,16 @@
    ("C-c v v" . vagrant-ssh)
    ("C-c v e" . edd-vagrant-edit)))
 
-;; pretty lambda
-(use-package pretty-lambdada
-  :init (add-hook 'geiser-hook 'pretty-lambda)
-  :config (pretty-lambda-for-modes))
+;; prety lambda, used to be a package
+(defun my-pretty-lambda ()
+  "make some word or string show as pretty Unicode symbols"
+  (setq prettify-symbols-alist
+        '(
+          ("lambda" . 955) ; λ
+          )))
+(add-hook 'scheme-mode-hook 'my-pretty-lambda)
+(add-hook 'elisp-mode-hook 'my-pretty-lambda)
+(global-prettify-symbols-mode 1)
 
 ;; secret config -- used below.
 (use-package edd-secrets
@@ -406,6 +412,7 @@
   :load-path "../src/emms/lisp"
   :commands (emms-smart-browse emms-pause)
   :init
+  (setq default-major-mode 'fundamental-mode) ;; shim for emms to work
   (require 'emms-setup)
   (emms-all)
   (emms-default-players)
