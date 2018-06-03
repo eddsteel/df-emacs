@@ -26,8 +26,8 @@
     (setq package-enable-at-startup nil
           use-package-always-ensure 't
           use-package-always-pin "melpa")))
-(require 'diminish)
-(require 'bind-key)
+(use-package diminish)
+(use-package bind-key)
 
 (defun edd/maybe-load-config (name)
   (let ((conf (locate-user-emacs-file name)))
