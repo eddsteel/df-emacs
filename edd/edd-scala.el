@@ -263,6 +263,11 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 (defun edd-scala/fileize-pkg (pkg)
   (s-replace "." "/" pkg))
 
+(defun edd-scala/fix-sbt-root ()
+  (interactive)
+  (setq sbt:buffer-project-root (sbt:find-root))
+  )
+
 
 
 ;; Gets "package com.eddsteel.project.package.name" from

@@ -7,6 +7,7 @@
         c-electric-colon
         c-electric-delete-forward
         c-electric-paren
+        c-electric-slash
         cycle-spacing
         ensime-company-complete-or-indent
         forward-sexp

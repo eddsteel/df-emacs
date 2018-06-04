@@ -78,6 +78,10 @@
   (interactive)
   (browse-url (edd-git-web-link-current-region "-b" "master")))
 
+(defun edd-git-review ()
+  (interactive)
+  (git-gutter:set-start-revision "origin/master"))
+
 ;; TODO: how to jump out to s
 (defhydra hydra-edd-git-web-link (:exit nil :columns 3)
   ("l" edd-git-web-link-browse-current-line "browse current line")
@@ -85,6 +89,7 @@
   ("r" edd-git-web-link-browse-current-region "browse current line")
   ("L" edd-git-web-link-browse-current-line-master "browse current line on master")
   ("F" edd-git-web-link-browse-current-file-master "browse current file on master")
-  ("R" edd-git-web-link-browse-current-region-master "browse current line on master"))
+  ("R" edd-git-web-link-browse-current-region-master "browse current line on master")
+  ("c" edd-git-review "code review"))
 
 (provide 'edd-git-web-link)

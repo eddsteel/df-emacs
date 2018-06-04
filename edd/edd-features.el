@@ -129,9 +129,11 @@
   (global-auto-revert-mode 1))
 
 
-
-
 ;; --- tidy below --
+
+;; do sentences like a normal person
+(setq sentence-end-double-space nil)
+
 
 (dolist
     (feature '(upcase-region downcase-region set-goal-column narrow-to-region))
