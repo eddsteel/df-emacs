@@ -2,6 +2,8 @@
   :ensure sbt-mode
   :mode ("\\.scala\\'" . scala-mode)
 
+  :bind
+  (("C-c h s" . edd-run-scala))
   :config
   (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters nil)
