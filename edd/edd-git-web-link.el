@@ -7,6 +7,7 @@
   ""
   (let
       ((cmd (apply #'concat (-interpose " " (cons "git web-link" args)))) )
+    (message cmd)
     (substring
      (shell-command-to-string cmd) 0 -1)))
 
@@ -28,12 +29,12 @@
 (defun edd-git-web-link-browse-current-file ()
   "Open current file in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-file)))
+  (browse-url (edd-git-web-link-current-file "-d")))
 
 (defun edd-git-web-link-browse-current-file-master ()
   "Open current file in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-file "-b" "master")))
+  (browse-url (edd-git-web-link-current-file "-b" "master" "-d")))
 
 
 (defun edd-git-web-link-current-line (&rest args)
@@ -49,12 +50,12 @@
 (defun edd-git-web-link-browse-current-line ()
   "Open current line in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-line)))
+  (browse-url (edd-git-web-link-current-line "-d")))
 
 (defun edd-git-web-link-browse-current-line-master ()
   "Open current line in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-line "-b" "master")))
+  (browse-url (edd-git-web-link-current-line "-b" "master" "-d")))
 
 
 (defun edd-git-web-link-current-region (&rest args)
@@ -71,12 +72,12 @@
 (defun edd-git-web-link-browse-current-region ()
   "Open current region in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-region)))
+  (browse-url (edd-git-web-link-current-region "-d")))
 
 (defun edd-git-web-link-browse-current-region-master ()
   "Open current region in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-region "-b" "master")))
+  (browse-url (edd-git-web-link-current-region "-b" "master" "-d")))
 
 (defun edd-git-review ()
   (interactive)
