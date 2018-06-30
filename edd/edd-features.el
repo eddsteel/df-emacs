@@ -205,7 +205,7 @@
   (add-hook 'prog-mode-hook 'subword-mode))
 
 
-(global-set-key (kbd "C-c - m") (lambda () (interactive)(insert "—")))
-(global-set-key (kbd "C-c - n") (lambda () (interactive)(insert "–")))
+(global-set-key (kbd "C-c / m") (lambda () (interactive)(insert "—")))
+(global-set-key (kbd "C-c / n") (lambda () (interactive)(insert "–")))
 
 (provide 'edd-features)

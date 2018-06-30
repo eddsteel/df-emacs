@@ -10,6 +10,8 @@
         c-electric-slash
         cycle-spacing
         ensime-company-complete-or-indent
+        evil-numbers/dec-at-pt
+        evil-numbers/inc-at-pt
         forward-sexp
         haskell-indentation-common-electric-command
         hydra-mark-modify/body

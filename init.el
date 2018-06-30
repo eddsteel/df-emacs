@@ -235,8 +235,6 @@
   :config (bbdb-initialize)
   :commands bbdb)
 
-(use-package git-timemachine)
-
 (use-package markdown-mode+
   :mode (("\\.apib\\$" . markdown-mode)))
 
@@ -553,6 +551,11 @@
   :diminish " 📋"
   :config
   (editorconfig-mode 1))
+
+(use-package evil-numbers
+  :bind
+  ("C-c +" . 'evil-numbers/inc-at-pt)
+  ("C-c -" . 'evil-numbers/dec-at-pt))
 
 (edd/maybe-load-config "local.el")
 

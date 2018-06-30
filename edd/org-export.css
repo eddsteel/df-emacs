@@ -9,6 +9,10 @@ ul {
     padding-left: 0px;
 }
 
+li ul {
+    padding-left: 1em;
+}
+
 * {
     font-family: "Charter", serif
 }
