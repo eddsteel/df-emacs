@@ -17,6 +17,9 @@
 
 (add-hook 'prog-mode-hook (lambda () (hl-line-mode t)))
 
+(add-to-list 'default-frame-alist '(height . 124))
+(add-to-list 'default-frame-alist '(width . 82))
+
 ;; use when themes don't set hl-line
 (defun edd-fix-hl-line-mode ()
   (interactive)
@@ -70,6 +73,12 @@
                 (vc-mode edd-vc-mode)
                 " " mode-line-modes mode-line-end-spaces))
 
+;; comfortable bindings
+;; C-h for delete
+(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+;; C-z for help, in exchange
+(define-key key-translation-map (kbd "C-z") (kbd "<help>"))
+
 (use-package "basic-theme"
   :commands edd-ux/basic-mode
   :config
@@ -94,11 +103,13 @@
                               `(org-level-1 ((t (:box ,padding))))))
     (remove-hook 'prog-mode-hook (lambda() (hl-line-mode t)))))
 
-;; comfortable bindings
-;; C-h for delete
-(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
-;; C-z for help, in exchange
-(define-key key-translation-map (kbd "C-z") (kbd "<help>"))
+(use-package mode-icons
+  :init
+  (mode-icons-mode))
 
+(use-package doom-modeline
+      :ensure t
+      :defer t
+      :hook (after-init . doom-modeline-init))
 
 (provide 'edd-ux)

@@ -301,8 +301,7 @@
 (use-package docker
   :diminish " 🐳"
   :init
-  (setq docker-keymap-prefix "C-c C-d")
-  (docker-global-mode))
+  (setq docker-keymap-prefix "C-c C-d"))
 
 (use-package docker-tramp)
 (use-package dockerfile-mode)
@@ -536,11 +535,6 @@
 (use-package atomic-chrome)
 (use-package gh)
 
-
-(use-package mode-icons
-  :init
-  (mode-icons-mode))
-
 (use-package python-mode)
 (use-package virtualenvwrapper
   :config
@@ -558,7 +552,6 @@
   ("C-c -" . 'evil-numbers/dec-at-pt))
 
 (edd/maybe-load-config "local.el")
-
 ;; acknowledgements
 ;;
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html

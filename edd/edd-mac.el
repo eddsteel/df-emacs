@@ -2,6 +2,7 @@
 ;;
 (setq mac-option-modifier 'meta
       mac-command-modifier 'super)
+(setq ns-function-modifier 'hyper)
 
 ;; Mac OS requires messing with the path
 ;;
@@ -10,12 +11,10 @@
     (setenv "PATH" (concat (expand-file-name dir) ":" (getenv "PATH")))
     (add-to-list 'exec-path (expand-file-name dir))))
 
-
 ;; Use the mac gpg2 equiv
 ;;
 (when (executable-find "gpg2")
   (setq epg-gpg-program "gpg2"))
-
 
 ;; Use homebrew's scalastyle
 ;;
@@ -41,12 +40,7 @@
 
 (global-set-key (kbd "<f10>") 'toggle-frame-fullscreen)
 
-;; HYPER - this does nothing on new macbooks
-;;
-(setq ns-function-modifier 'hyper)
-
 ;; use my m helper
-
 (with-eval-after-load "emms"
     (defun edd-emms-volume-m-change (amount)
       "Change m volume by AMOUNT"
@@ -71,7 +65,6 @@
 ;; let's turn this off.
 (mac-toggle-tab-bar)
 (mac-set-frame-tab-group-property nil :tab-bar-visible-p nil)
-
 
 ;; use coreutils ls
 (let ((gls "/usr/local/bin/gls"))
