@@ -30,8 +30,10 @@
         kill-region-or-backward-kill-word
         org-beginning-of-line
         org-delete-char
+        org-force-self-insert
         org-return
         org-self-insert-command
+        org-yank
         sp-backward-delete-char
         sp-backward-sexp
         sp-backward-unwrap-sexp
