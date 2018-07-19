@@ -551,6 +551,13 @@
   ("C-c +" . 'evil-numbers/inc-at-pt)
   ("C-c -" . 'evil-numbers/dec-at-pt))
 
+(use-package deft
+  :init (setq deft-directory "~/txt"
+              deft-text-mode 'org-mode
+              deft-extensions '("org" "txt" "md")
+              deft-recursive t
+              deft-new-file-format "%Y-%m-%d-"))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
