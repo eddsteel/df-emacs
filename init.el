@@ -158,10 +158,6 @@
 
 (use-package edd-erc :ensure nil)
 
-(use-package edd-jabber
-  :ensure nil
-  :bind ("C-c j" . edd-hipchat-join))
-
 (use-package edd-haskell :ensure nil)
 
 (use-package "company"
@@ -552,6 +548,8 @@
   ("C-c -" . 'evil-numbers/dec-at-pt))
 
 (use-package deft
+  :bind
+  ("C-c d" . 'deft)
   :init (setq deft-directory "~/txt"
               deft-text-mode 'org-mode
               deft-extensions '("org" "txt" "md")
