@@ -70,4 +70,7 @@
 (let ((gls "/usr/local/bin/gls"))
   (if (file-exists-p gls) (setq insert-directory-program gls)))
 
+(setq sendmail-program "/usr/local/bin/msmtp")
+(setq ns-use-srgb-colorspace t)
+
 (provide 'edd-mac)
