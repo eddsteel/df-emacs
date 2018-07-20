@@ -17,3 +17,5 @@
 /var
 /.org-id-locations
 bookmarks
+/projectile.cache
+/.cask
