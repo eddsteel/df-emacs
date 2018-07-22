@@ -551,6 +551,18 @@
               deft-recursive t
               deft-new-file-format "%Y-%m-%d-"))
 
+(use-package engine-mode
+  :commands
+  (engine/search-github engine/search-google)
+  :config
+  (engine-mode 1)
+  (defengine google
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+    :keybinding "g")
+  (defengine github
+    "https://github.com/search?ref=simplesearch&q=%s"
+    :keybinding "/"))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
