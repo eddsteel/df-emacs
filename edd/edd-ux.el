@@ -1,6 +1,6 @@
 ;; remove distractions.
 (dolist
-    (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode blink-cursor-mode))
+    (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode blink-cursor-mode tooltip-mode))
   (when (fboundp mode) (funcall mode -1)))
 (mouse-avoidance-mode 'jump)
 
