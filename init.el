@@ -563,6 +563,10 @@
     "https://github.com/search?ref=simplesearch&q=%s"
     :keybinding "/"))
 
+(use-package edit-server
+  :init
+  (edit-server-start))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
