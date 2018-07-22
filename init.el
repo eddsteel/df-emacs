@@ -294,11 +294,6 @@
   (add-hook 'latex-mode-hook 'wrap-region-mode)
   (add-hook 'prog-mode-hook 'wrap-region-mode))
 
-(use-package docker
-  :diminish " 🐳"
-  :init
-  (setq docker-keymap-prefix "C-c C-d"))
-
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 
