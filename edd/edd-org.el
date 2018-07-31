@@ -17,7 +17,8 @@
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
    ("C-c b" . org-iswitchb)
-   ("C-c c" . org-capture)))
+   ("C-c c" . org-capture)
+   ("C-c j" . org-journal-new-entry)))
 
 
 (use-package weather-metno
