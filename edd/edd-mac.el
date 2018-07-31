@@ -62,10 +62,6 @@
       (set-face-attribute 'default (selected-frame) :height 140)
     (set-face-attribute 'default (selected-frame) :height 120)))
 
-;; let's turn this off.
-(mac-toggle-tab-bar)
-(mac-set-frame-tab-group-property nil :tab-bar-visible-p nil)
-
 ;; use coreutils ls
 (let ((gls "/usr/local/bin/gls"))
   (if (file-exists-p gls) (setq insert-directory-program gls)))
