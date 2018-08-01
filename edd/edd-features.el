@@ -5,6 +5,7 @@
 (use-package term
   :functions edd/term
   :init
+  (defvar edd/term-shell "bash" "Command to run when running term")
   (defun edd/term (pfx)
     (interactive "p")
     "Open my currently favourite kind of terminal, smartly.
@@ -15,7 +16,7 @@
      Otherwise will switch to *ansi-term*"
     (let ((bn (buffer-name))
           (tl "*ansi-term*")
-          (newterm (lambda () (ansi-term "bash"))))
+          (newterm (lambda () (ansi-term edd/term-shell))))
       (if (and (<= pfx 1) (get-buffer tl) (not (string-prefix-p tl bn)))
           (switch-to-buffer tl)
         (funcall newterm))))
