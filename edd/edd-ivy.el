@@ -34,7 +34,9 @@
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
   (setq ivy-use-virtual-buffers t)
   ;; number of result lines to display
-  (setq ivy-height 10)
+  (setq ivy-height 30)
+  (setq max-mini-window-height 30)
+  (add-to-list 'ivy-height-alist '(swiper . 15))
   ;; does not count candidates
   (setq ivy-count-format "%d/%d ")
   ;; allow selecting and using value in prompt
