@@ -1,9 +1,10 @@
-(use-package org-plus-contrib
+(use-package org
   :mode ("\\.org\\'" . org-mode)
   :ensure graphviz-dot-mode
   :ensure htmlize
   :ensure org-download
   :ensure org-bullets
+  :ensure org-plus-contrib
   :pin "org"
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -11,7 +12,10 @@
   (add-hook 'org-mode-hook (lambda () (org-display-inline-images t t)))
   (setq org-bullets-bullet-list
         '("​" "​" "​" "​" "​" "​" "​" "​"))
-;;        '("🐺" "🐸" "🐳" "🐻" "🐬" "🐤" "🐷" "🐴"))
+  :config
+  (when (eq 'darwin system-type)
+    (add-to-list 'org-modules 'org-mac-iCal))
+  (add-to-list 'org-modules 'ox-confluence)
 
   :bind
   (("C-c l" . org-store-link)
@@ -89,7 +93,9 @@
 
 (use-package org-journal
   :init
-  (setq org-journal-dir "~/txt/journal"))
+  (setq org-journal-dir "~/txt/journal")
+  (setq org-journal-date-format "%A, %d/%m")
+  (setq org-journal-file-format "%Y%m%d.org"))
 
 (use-package org-beautify-theme
   :init

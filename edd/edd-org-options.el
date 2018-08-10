@@ -10,7 +10,9 @@
       org-src-fontify-natively t
       org-src-preserve-indentation t
       org-src-tab-acts-natively t
-      org-hide-emphasis-markers t)
+      org-hide-emphasis-markers t
+      org-startup-folded nil
+      )
 (setq org-image-actual-width nil)
 (setq org-deck-title-slide-template
   "<h1>%t</h1>
@@ -45,7 +47,9 @@
 (setq org-use-speed-commands t)
 (setq org-ellipsis "…")
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
+      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")
+        (sequence "INPROG(i)" "PR(p)" "DEV(v)" "STG(s)" "PRD(x)"))
+      )
 (setq org-special-ctrl-a/e t)
 
 (define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
@@ -81,4 +85,14 @@
 (font-lock-add-keywords 'org-mode
                         '(("^ +\\([-*]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(eval-after-load 'org
+  (progn
+    (set-face-attribute 'org-document-title nil :height 1.0)
+    (set-face-attribute 'org-agenda-structure nil :height 1.0)
+    (set-face-attribute 'org-link nil :foreground "#06d8ff")
+    (set-face-attribute 'org-verbatim nil :inherit font-lock-keyword-face)
+    (set-face-attribute 'org-block-begin-line nil :background "#444444")
+    (set-face-attribute 'org-block-end-line nil :background "#444444")))
+
 (provide 'edd-org-options)

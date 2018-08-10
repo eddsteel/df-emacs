@@ -69,4 +69,73 @@
 (setq sendmail-program "/usr/local/bin/msmtp")
 (setq ns-use-srgb-colorspace t)
 
+(defun edd-omi-checked (dir)
+  (ignore-errors
+    (omi-checked dir)))
+
+(defun edd-org-mac-iCal ()
+  "Selects checked calendars in iCal.app and imports them into
+the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
+  (interactive)
+
+  ;; kill diary buffers then empty diary files to avoid duplicates
+  (setq currentBuffer (buffer-name))
+  (setq openBuffers (mapcar (function buffer-name) (buffer-list)))
+  (omi-kill-diary-buffer openBuffers)
+  (with-temp-buffer
+    (insert-file-contents diary-file)
+    (delete-region (point-min) (point-max))
+    (write-region (point-min) (point-max) diary-file))
+
+  ;; determine available calendars
+  (setq caldav-folders (directory-files "~/Library/Calendars" 1 ".*caldav$"))
+  (setq caldav-calendars nil)
+  (mapc
+     (lambda (x)
+       (setq caldav-calendars (nconc caldav-calendars (directory-files x 1 ".*calendar$"))))
+     caldav-folders)
+
+  (setq local-calendars nil)
+  (setq local-calendars (directory-files "~/Library/Calendars" 1 ".*calendar$"))
+
+  (setq all-calendars (append caldav-calendars local-calendars))
+
+  ;; parse each calendar's Info.plist to see if calendar is checked in iCal
+  (setq all-calendars (delq 'nil (mapcar
+                                    (lambda (x)
+                                      (edd-omi-checked x))
+                                    all-calendars)))
+
+
+  ;; for each calendar, concatenate individual events into a single ics file
+  (with-temp-buffer
+    (shell-command "sw_vers" (current-buffer))
+    (omi-concat-leopard-ics all-calendars))
+
+  ;; move all caldav ics files to the same place as local ics files
+  (mapc
+   (lambda (x)
+     (mapc
+      (lambda (y)
+        (rename-file (concat x "/" y);
+                     (concat "~/Library/Calendars/" y)))
+      (directory-files x nil ".*ics$")))
+   caldav-folders)
+
+  ;; check calendar has contents and import
+  (setq import-calendars (directory-files "~/Library/Calendars" 1 ".*ics$"))
+  (mapc
+   (lambda (x)
+     (when (/= (nth 7 (file-attributes x 'string)) 0)
+       (omi-import-ics x)))
+   import-calendars)
+
+  ;; tidy up intermediate files and buffers
+  (setq usedCalendarsBuffers (mapcar (function buffer-name) (buffer-list)))
+  (omi-kill-ics-buffer usedCalendarsBuffers)
+  (setq usedCalendarsFiles (directory-files "~/Library/Calendars" 1 ".*ics$"))
+  (omi-delete-ics-file usedCalendarsFiles)
+
+  (org-pop-to-buffer-same-window currentBuffer))
+
 (provide 'edd-mac)

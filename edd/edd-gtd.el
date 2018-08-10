@@ -30,7 +30,7 @@
         ("tickler.org" . (:level . 1))
         ("calendar.org" . (:tag . "inbox"))
         ("projects.org" . (:tag . "project"))
-        ("projects.org" . (:tag . "work"))
+        ("projects.org" . (:tag . "inbox"))
         ("inbox.org" . (:tag . "inbox"))
         ("someday.org" . (:level . 1))))
 
@@ -100,7 +100,7 @@
           (org-show-hierarchy-above nil)
           (org-show-context 'minimal))
          )
-        ("c" "actions"
+        ("n" "actions"
           ((tags-todo "-work&TODO=\"NEXT\""))
           ((org-agenda-compact-blocks t))
           )
@@ -149,14 +149,17 @@
           (org-show-hierarchy-above nil)
           (org-show-context 'minimal))
          )
-        ("wc" "work next actions"
+        ("wn" "work next actions"
          ((tags-todo "work&TODO=\"NEXT\""))
          ((org-agenda-compact-blocks t)))))
+
+(if (eq 'darwin system-type)
+  (add-to-list 'org-agenda-custom-commands
+               '("I" "Import from ical" agenda "" ((org-agenda-mode-hook (lambda () (edd-org-mac-iCal)))))))
 
 (setq org-agenda-default-appointment-duration 60)
 (setq org-icalendar-timezone "America/Vancouver")
 (setq org-icalendar-use-deadline '(event-if-todo todo-due))
-(setq org-icalendar-combined-agenda-file "~/tmp/org.ics")
 ;; diary stuff
 (setq org-agenda-diary-file diary-file)
 (add-hook 'diary-list-entries-hook 'diary-include-other-diary-files)

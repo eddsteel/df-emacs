@@ -20,7 +20,8 @@
 
 ;; built-in features
 ;;
-(use-package edd-features :ensure nil)
+(use-package edd-features
+  :ensure nil)
 
 ;; System-specific stuff.
 ;;
@@ -71,7 +72,6 @@
   (set-face-attribute whitespace-indentation nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")
   (set-face-attribute whitespace-trailing nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))
 
-
 ;; Ace window
 (use-package ace-window
   :bind
@@ -83,8 +83,8 @@
 
 (use-package which-key)
 
-(use-package edd-ivy :ensure nil)
-
+(use-package edd-ivy
+  :ensure nil)
 
 ;; projectile
 ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
@@ -118,16 +118,15 @@
    ("C-x k". edd-kill-a-buffer)
    ("C-c !". edd-config-reload)))
 
-
 ;; RE-Builder
 ;;
 (use-package re-builder
-  :init
+  :config
   (setq reb-re-syntax 'string))
 
 ;; vagrant
 (use-package vagrant
-  :init
+  :config
   (defun edd-vagrant-edit ()
     (interactive)
     "edit the local Vagrantfile"
@@ -140,16 +139,21 @@
    ("C-c v v" . vagrant-ssh)
    ("C-c v e" . edd-vagrant-edit)))
 
-;; prety lambda, used to be a package
-(defun my-pretty-lambda ()
-  "make some word or string show as pretty Unicode symbols"
-  (setq prettify-symbols-alist
-        '(
+
+
+(use-package prog-mode
+  :ensure nil
+  :config
+  (defun my-pretty-lambda ()
+    "make some word or string show as pretty Unicode symbols"
+    (setq prettify-symbols-alist
+          '(
           ("lambda" . 955) ; λ
           )))
-(add-hook 'scheme-mode-hook 'my-pretty-lambda)
-(add-hook 'elisp-mode-hook 'my-pretty-lambda)
-(global-prettify-symbols-mode 1)
+  (add-hook 'scheme-mode-hook 'my-pretty-lambda)
+  (add-hook 'elisp-mode-hook 'my-pretty-lambda)
+  (global-prettify-symbols-mode 1))
+
 
 ;; secret config -- used below.
 (use-package edd-secrets
@@ -169,7 +173,11 @@
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 
-(use-package edd-org :ensure nil)
+(use-package edd-org
+  :ensure nil
+  :config
+  )
+
 
 (use-package edd-mail
   :ensure nil
@@ -216,7 +224,7 @@
   :demand t
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
-  (setq magit-commit-arguments '("--gpg-sign=33620159D40385A0")))
+  (setq magit-commit-arguments '("--gpg-sign")))
 
 (use-package magit-filenotify :demand t)
 
@@ -549,7 +557,7 @@
               deft-text-mode 'org-mode
               deft-extensions '("org" "txt" "md")
               deft-recursive t
-              deft-new-file-format "%Y-%m-%d-"))
+              deft-new-file-format "%Y%m%d-"))
 
 (use-package engine-mode
   :commands
@@ -566,6 +574,28 @@
 (use-package edit-server
   :init
   (edit-server-start))
+
+(use-package web-mode)
+(use-package inf-ruby
+  :config
+  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+
+(use-package string-inflection
+  :bind
+  ("C-c i i" . string-inflection-all-cycle)
+  ("C-c i c" . string-inflection-camelcase))
+
+(use-package copy-as-format
+  :bind
+  ("C-c M-w s" . copy-as-format-slack)
+  ("C-c M-w j" . copy-as-format-jira)
+  ("C-c M-w g" . copy-as-format-github))
+
+(use-package epa
+  :ensure nil
+  :config
+  (setq epa-pinentry-mode 'loopback))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
