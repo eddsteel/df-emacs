@@ -559,11 +559,6 @@
   ("C-c M-w j" . copy-as-format-jira)
   ("C-c M-w g" . copy-as-format-github))
 
-(use-package epa
-  :ensure nil
-  :config
-  (setq epa-pinentry-mode 'loopback))
-
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
