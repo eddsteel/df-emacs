@@ -33,4 +33,8 @@
   (let ((conf (locate-user-emacs-file name)))
     (when (file-readable-p conf) (load-file conf))))
 
+(use-package exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize))
+
 (provide 'edd-bootstrap)
