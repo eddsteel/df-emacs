@@ -3,20 +3,10 @@
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
 
-;; theme
-;;
-(use-package darkokai-theme
-  :init
-  (load-theme 'darkokai t))
-
 ;; Do this stuff early to avoid flicker
 ;;
-(use-package edd-ux :ensure nil)
-
-(eval-when-compile
-  (require 'use-package)
-  (require 'diminish)
-  (require 'bind-key))
+(use-package edd-ux
+  :ensure nil)
 
 ;; built-in features
 ;;
@@ -33,35 +23,12 @@
   :ensure nil
   :if (not (eq 'darwin system-type)))
 
-;; nyan nyan
-;;
-(use-package nyan-mode
-  :init
-  (require 'midnight)
-  (midnight-mode)
-  :config
-  (require 'time-date)
-  (setq nyan-wavy-trail 1)
-  ;; animate on Wednesdays
-  (when
-      (string-match-p "Wed.*" (current-time-string))
-    (nyan-start-animation))
-  ;; animate on Wednesdays without restart
-  (add-hook
-   'midnight-hook
-   (lambda ()
-     (if
-         (string-match-p "Wed.*" (current-time-string))
-         (nyan-start-animation)
-       (nyan-stop-animation))))
-  (nyan-mode 1))
-
 ;; whitespace
 ;;
 (use-package whitespace
   :diminish whitespace-mode
   :init
-  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook org-mode-hook))
+  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
     (add-hook hook #'whitespace-mode))
   (add-hook 'before-save-hook 'whitespace-cleanup)
   :config

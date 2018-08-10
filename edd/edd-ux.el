@@ -1,8 +1,14 @@
 ;; remove distractions.
 (dolist
-    (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode blink-cursor-mode tooltip-mode))
+    (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode tooltip-mode))
   (when (fboundp mode) (funcall mode -1)))
 (mouse-avoidance-mode 'jump)
+
+;; theme
+;;
+(use-package darkokai-theme
+  :init
+  (load-theme 'darkokai t))
 
 ;; don't yell.
 (setq visible-bell nil) ;; The default
@@ -16,7 +22,6 @@
 (show-paren-mode t)
 
 (add-hook 'prog-mode-hook (lambda () (hl-line-mode t)))
-
 (add-to-list 'default-frame-alist '(height . 124))
 (add-to-list 'default-frame-alist '(width . 82))
 
@@ -39,11 +44,9 @@
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (put 'default-frame-alist 'alpha '(100 80)))
         (progn
-          (set-face-attribute 'default nil :font "Fira Mono-11")))))))
+          (set-face-attribute 'default nil :font "Fira Mono-11")
+          (set-face-attribute 'fixed-pitch nil :font "Fira Mono-11")))))))
 
-;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
-(when (not (daemonp)) (edd-prep-frame (selected-frame)))
-(add-hook 'after-make-frame-functions 'edd-prep-frame)
 
 ;; Mode line I like.
 (display-time-mode 1)
@@ -52,7 +55,8 @@
 (display-battery-mode t)
 (setq battery-mode-line-format " %b%p%%")
 
-;; Slightly quieter modeline.
+;; Modeline
+;;
 (defvar edd-vc-mode-line
   '(" " (:propertize
          ;; Strip the backend name from the VC status information
@@ -72,6 +76,32 @@
                 mode-line-position
                 (vc-mode edd-vc-mode)
                 " " mode-line-modes mode-line-end-spaces))
+
+;;(use-package mode-icons
+;;  :config
+;;  (setq mode-icons-change-mode-name nil)
+;;  (mode-icons-mode))
+
+(use-package nyan-mode
+    :init
+    (require 'midnight)
+    (midnight-mode)
+    :config
+    (require 'time-date)
+    (setq nyan-wavy-trail 1)
+    ;; animate on Wednesdays
+    (when
+        (string-match-p "Wed.*" (current-time-string))
+      (nyan-start-animation))
+    ;; animate on Wednesdays without restart
+    (add-hook
+     'midnight-hook
+     (lambda ()
+       (if
+           (string-match-p "Wed.*" (current-time-string))
+           (nyan-start-animation)
+         (nyan-stop-animation))))
+    (nyan-mode 1))
 
 ;; comfortable bindings
 ;; C-h for delete
@@ -100,16 +130,9 @@
       (custom-theme-set-faces 'org-beautify
                               `(org-level-3 ((t (:box ,padding))))
                               `(org-level-2 ((t (:box ,padding))))
-                              `(org-level-1 ((t (:box ,padding))))))
-    (remove-hook 'prog-mode-hook (lambda() (hl-line-mode t)))))
+                              `(org-level-1 ((t (:box ,padding))))))))
 
-(use-package mode-icons
-  :init
-  (mode-icons-mode))
-
-(use-package doom-modeline
-      :ensure t
-      :defer t
-      :hook (after-init . doom-modeline-init))
-
+;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
+(when (not (daemonp)) (edd-prep-frame (selected-frame)))
+(add-hook 'after-make-frame-functions 'edd-prep-frame)
 (provide 'edd-ux)
