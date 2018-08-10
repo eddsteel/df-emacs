@@ -65,7 +65,7 @@
     ("r"   projectile-recentf "recent files")
     ("s"   projectile-multi-occur "occur")
     ("S"   projectile-replace "replace")
-    ("t"   projectile-find-test-file "find test file")
+    ("t"   projectile-toggle-between-implementation-and-test "flip between test and implementation")
     ("T"   projectile-test-project "test project")
     ("v"   projectile-display-buffer "display buffer")
     ("V"   projectile-ibuffer "ibuffer")
