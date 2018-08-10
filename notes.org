@@ -2,9 +2,17 @@
 ** DONE Ace jump to C-c j and C-c k
    CLOSED: [2014-04-11 Fri 12:17]
 ** install discover.el and get rid of guide
-** install exec path from shell
+** DONE install exec path from shell
 * org
-** org-gcal - make it automatic
-** org-feed?
-** appt?
+** DONE org-gcal - make it automatic
 * http://www.emacswiki.org/emacs/DelightedModes
+
+* TODO General cleanup
+
+** Use use-package more
+
+** Use use-package better
+
+*** Replace hook stuff with :hook
+
+** Add use-feature macro?
