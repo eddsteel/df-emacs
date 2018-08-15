@@ -143,10 +143,6 @@
 (setq make-backup-files nil)
 (winner-mode t)
 
-;; text increase
-(global-set-key (kbd "s-<up>") 'text-scale-increase)
-(global-set-key (kbd "s-<down>") 'text-scale-decrease)
-
 ;; abbrevs
 ;;
 (read-abbrev-file
