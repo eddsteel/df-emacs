@@ -1,5 +1,6 @@
 (use-package hydra
-  :init
+  :ensure projectile
+  :config
 
   ;; WANT:
 
@@ -142,16 +143,16 @@
             (projectile-dired)
             (hydra-project/body))))
 
-  (define-key projectile-mode-map (kbd "C-c p") nil)
-
-  (add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c SPC") 'hydra-music/body)))
-
-  (global-set-key (kbd "C-c SPC") 'hydra-music/body)
-  (global-set-key (kbd "C-c m") 'hydra-mark-modify/body)
-  (global-set-key (kbd "C-c p") 'hydra-project/body)
-  (global-set-key (kbd "C-c s") 'sbt-hydra)
-  (global-set-key (kbd "C-c o") 'hydra-goto/body))
+  :bind
+  (("C-c SPC" . hydra-music/body)
+   ("C-c m" . hydra-mark-modify/body)
+   ("C-c p" . hydra-project/body)
+   ("C-c s" . sbt-hydra)
+   ("C-c o" . hydra-goto/body)
+   :map projectile-mode-map
+   ("C-c p" . hydra-project/body)
+   :map org-mode-map
+   ("C-c SPC" . hydra-music/body))
+  )
 
 (provide 'edd-hydra)

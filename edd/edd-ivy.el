@@ -1,6 +1,5 @@
 ;; Mostly taken from https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
 ;;
-
 (use-package ivy
   :ensure ivy-hydra
   :ensure counsel

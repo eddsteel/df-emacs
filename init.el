@@ -1,82 +1,72 @@
-(package-initialize)
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
 
 ;; Do this stuff early to avoid flicker
 ;;
-(use-package edd-ux
-  :ensure nil)
+(use-package edd-ux)
 
 ;; built-in features
 ;;
-(use-package edd-features
-  :ensure nil)
+(use-package edd-features)
 
 ;; System-specific stuff.
 ;;
-(use-package edd-mac
-  :ensure nil
-  :if (eq 'darwin system-type))
-
-(use-package edd-linux
-  :ensure nil
-  :if (not (eq 'darwin system-type)))
+(use-package edd-mac :if (eq 'darwin system-type))
+(use-package edd-linux :if (not (eq 'darwin system-type)))
 
 ;; whitespace
 ;;
 (use-package whitespace
   :delight whitespace-mode
-  :init
-  (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
-    (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook 'whitespace-cleanup)
+  :hook
+  ((prog-mode text-mode conf-mode) . whitespace-mode)
+  (before-save . whitespace-cleanup)
   :config
   (setq-default
    whitespace-style '(face trailing tabs empty indentation)
    indent-tabs-mode nil)
-  (set-face-attribute whitespace-line nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")
-  (set-face-attribute whitespace-indentation nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")
-  (set-face-attribute whitespace-trailing nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))
+  :custom-face
+  (whitespace-line ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
+  (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
+  (whitespace-trailing ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))))
 
 ;; Ace window
 (use-package ace-window
   :bind
   ("C-x o" . ace-window)
-  :init
+  :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
-  (setq aw-background nil))
+  (setq aw-background t))
 
 (use-package which-key)
 
-(use-package edd-ivy
-  :ensure nil)
+(use-package edd-ivy :after projectile)
 
 ;; projectile
 ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
 ;;
 (use-package projectile
+  :demand t
   :init
+  ;; counsel-projectile will die without this
   (setq projectile-keymap-prefix (kbd "C-x p"))
-
+  :hook
+  ((text-mode prog-mode) . projectile-mode)
   :config
-  (add-hook 'text-mode-hook #'projectile-mode)
-  (add-hook 'prog-mode-hook #'projectile-mode)
-
   (setq projectile-mode-line
-        '(:eval (format " 🔖%s" (projectile-project-name))))
-
+	'(:eval (format " 🔖%s" (projectile-project-name))))
+  (defun edd/projectile-run-comint ()
+    (interactive)
+    (projectile-with-default-dir (projectile-project-root)
+      (call-interactively 'comint-run)))
   :bind
-  ("C-c r" .
-   (lambda () (interactive)
-     (projectile-with-default-dir (projectile-project-root)
-       (call-interactively 'comint-run)))))
+  ("C-c r" . edd/projectile-run-comint))
 
 ;; utilities that are too small to live alone
 ;;
 (use-package edd-util
-  :ensure nil
   :demand t
   :bind
   (("C-w" . kill-region-or-backward-kill-word)
@@ -106,30 +96,26 @@
    ("C-c v v" . vagrant-ssh)
    ("C-c v e" . edd-vagrant-edit)))
 
-(use-package prog-mode
-  :ensure nil
+(use-package emacs
+  :hook
+  ((scheme-mode elisp-mode) . my-pretty-lambda)
   :config
   (defun my-pretty-lambda ()
     "make some word or string show as pretty Unicode symbols"
     (setq prettify-symbols-alist
-          '(
-          ("lambda" . 955) ;; λ
-          )))
-  (add-hook 'scheme-mode-hook 'my-pretty-lambda)
-  (add-hook 'elisp-mode-hook 'my-pretty-lambda)
+	  '(
+	  ("lambda" . 955) ;; λ
+	  )))
   (global-prettify-symbols-mode 1))
 
-
 ;; secret config -- used below.
-(use-package edd-secrets
-  :ensure nil
-  :commands edd-with-secrets)
+(use-package edd-secrets :commands edd-with-secrets)
 
-(use-package edd-erc :ensure nil)
+(use-package edd-erc)
 
-(use-package edd-haskell :ensure nil)
+(use-package edd-haskell)
 
-(use-package "company"
+(use-package company
   :ensure company-ghc
   :commands (company-mode)
   :delight
@@ -140,49 +126,45 @@
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 
-(use-package edd-org
-  :ensure nil
-  :config
-  )
+(use-package edd-org)
 
 (use-package edd-mail
-  :ensure nil
-  :init
+  :config
   (setq mail-specify-envelope-from t
-        mail-envelope-from 'header
-        send-mail-function 'sendmail-send-it
-        message-sendmail-envelope-from 'header
-        message-send-mail-function 'message-send-mail-with-sendmail)
+	mail-envelope-from 'header
+	send-mail-function 'sendmail-send-it
+	message-sendmail-envelope-from 'header
+	message-send-mail-function 'message-send-mail-with-sendmail)
   :bind ("C-c n" . edd-mailbox))
 
-(use-package edd-pdf :ensure nil)
-
-(use-package edd-scala :ensure nil)
+(use-package edd-pdf)
+(use-package edd-scala)
 
 (use-package flycheck
-  :delight (flycheck-mode " 🛂")
+  :delight " 🛂"
+  :hook
+  ((rust-mode go-mode) . flycheck-mode)
+  (scala-mode-hook . edd/flycheck-unless-sbt)
   :config
   (setq flycheck-scalastyle-jar
-        (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
+	(expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
   (setq flycheck-scalastylerc
-        (expand-file-name "scalastyle/scalastyle-config.xml"))
-  (add-hook 'rust-mode-hook #'flycheck-mode)
-  (add-hook 'go-mode-hook #'flycheck-mode)
-  (add-hook 'scala-mode-hook
-            (lambda () (unless (and (buffer-file-name (current-buffer)) (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt"))
-                    (flycheck-mode 1)))))
+	(expand-file-name "scalastyle/scalastyle-config.xml"))
+  (defun edd/flycheck-unless-sbt ()
+    (unless (and (buffer-file-name (current-buffer)) (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt"))
+      (flycheck-mode 1))))
 
 (use-package rainbow-delimiters
-  :init
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
 
 (use-package auto-highlight-symbol
-  :init
-  (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode)
-  :diminish auto-highlight-symbol-mode)
+  :hook
+  (prog-mode . auto-highlight-symbol-mode)
+  :diminish)
 
 (use-package git-gutter
-  :diminish git-gutter-mode
+  :diminish
   :config
   (global-git-gutter-mode 1))
 
@@ -209,39 +191,42 @@
   :mode (("\\.apib\\$" . markdown-mode)))
 
 (use-package imenu-anywhere
-  :config (defun jcs-use-package ()
-            (add-to-list 'imenu-generic-expression
-             '("Used Packages"
-               "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2)))
-  (add-hook 'emacs-lisp-mode-hook #'jcs-use-package))
-
+  :hook
+  (emacs-lisp-mode . jcs-use-package)
+  :config
+  (defun jcs-use-package ()
+    (add-to-list
+     'imenu-generic-expression
+     '("Used Packages"
+       "\\(^\\s-*(use-package +\\)\\(\\_<.+\\_>\\)" 2))))
 
 ;; smoother scrolling
 (use-package smooth-scrolling
-  :init
-  (setq smooth-scroll-margin 5
-        scroll-conservatively 101
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil)
+  :hook
+  ((term-mode comint) . (lambda () (setq-local scroll-margin 0)))
   :config
-  (setq scroll-margin 5)
-  (dolist (hook '(term-mode-hook comint-hook))
-    (add-hook hook (lambda () (setq-local scroll-margin 0)))))
+  (setq smooth-scroll-margin 5
+	scroll-conservatively 101
+	scroll-preserve-screen-position t
+	auto-window-vscroll nil
+	scroll-margin 5))
+
+(use-package company
+  :config
+  (global-company-mode))
 
 (use-package company-emoji
   :config
   (add-to-list 'company-backends 'company-emoji))
 
-(global-company-mode)
-
 (use-package ssh
   :commands ssh
   :config
   (add-hook 'ssh-mode-hook
-            (lambda ()
-              (setq ssh-directory-tracking-mode t)
-              (shell-dirtrack-mode t)
-              (setq dirtrackp nil))))
+	    (lambda ()
+	      (setq ssh-directory-tracking-mode t)
+	      (shell-dirtrack-mode t)
+	      (setq dirtrackp nil))))
 
 (use-package quickrun
   :bind
@@ -272,21 +257,20 @@
 (use-package dockerfile-mode)
 
 (use-package edd-hydra
-  :ensure nil
   :demand t)
 
-(use-package edd-rust :ensure nil)
+(use-package edd-rust)
 
-(use-package edd-go :ensure nil)
+(use-package edd-go)
 
 ;;preview files in dired
 (use-package peep-dired
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
-              ("P" . peep-dired)))
+	      ("P" . peep-dired)))
 
 (use-package volatile-highlights
-  :diminish volatile-highlights-mode
+  :diminish
   :config
   (volatile-highlights-mode t))
 
@@ -324,43 +308,43 @@
 
   :bind
   (:map smartparens-mode-map
-        ("C-M-a" . sp-beginning-of-sexp)
-        ("C-M-e" . sp-end-of-sexp)
+	("C-M-a" . sp-beginning-of-sexp)
+	("C-M-e" . sp-end-of-sexp)
 
-        ("C-M-d"   . sp-down-sexp)
-        ("C-M-S-u" . sp-up-sexp)
-        ("C-M-S-d" . sp-backward-down-sexp)
-        ("C-M-u"   . sp-backward-up-sexp)
+	("C-M-d"   . sp-down-sexp)
+	("C-M-S-u" . sp-up-sexp)
+	("C-M-S-d" . sp-backward-down-sexp)
+	("C-M-u"   . sp-backward-up-sexp)
 
-        ("C-M-f" . sp-forward-sexp)
-        ("C-M-b" . sp-backward-sexp)
+	("C-M-f" . sp-forward-sexp)
+	("C-M-b" . sp-backward-sexp)
 
-        ("C-M-n" . sp-next-sexp)
-        ("C-M-p" . sp-previous-sexp)
+	("C-M-n" . sp-next-sexp)
+	("C-M-p" . sp-previous-sexp)
 
-        ("C-S-f" . sp-forward-symbol)
-        ("C-S-b" . sp-backward-symbol)
+	("C-S-f" . sp-forward-symbol)
+	("C-S-b" . sp-backward-symbol)
 
-        ("C-<right>" . sp-forward-slurp-sexp)
-        ("M-<right>" . sp-forward-barf-sexp)
-        ("C-<left>"  . sp-backward-slurp-sexp)
-        ("M-<left>"  . sp-backward-barf-sexp)
+	("C-<right>" . sp-forward-slurp-sexp)
+	("M-<right>" . sp-forward-barf-sexp)
+	("C-<left>"  . sp-backward-slurp-sexp)
+	("M-<left>"  . sp-backward-barf-sexp)
 
-        ("C-M-t" . sp-transpose-sexp)
-        ("C-M-k" . sp-kill-sexp)
-        ("C-k"   . sp-kill-hybrid-sexp)
-        ("M-k"   . sp-backward-kill-sexp)
-        ("C-M-w" . sp-copy-sexp)
+	("C-M-t" . sp-transpose-sexp)
+	("C-M-k" . sp-kill-sexp)
+	("C-k"   . sp-kill-hybrid-sexp)
+	("M-k"   . sp-backward-kill-sexp)
+	("C-M-w" . sp-copy-sexp)
 
-        ("C-<backspace>" . sp-backward-kill-word)
+	("C-<backspace>" . sp-backward-kill-word)
 
-        ("M-[" . sp-backward-unwrap-sexp)
-        ("M-]" . sp-unwrap-sexp)
+	("M-[" . sp-backward-unwrap-sexp)
+	("M-]" . sp-unwrap-sexp)
 
-        ("C-c )"  . edd/rww-paren)
-        ("C-c ]"  . edd/rww-bracket)
-        ("C-c }"  . edd/rww-brace)
-        ("C-x C-t" . sp-transpose-hybrid-sexp)))
+	("C-c )"  . edd/rww-paren)
+	("C-c ]"  . edd/rww-bracket)
+	("C-c }"  . edd/rww-brace)
+	("C-x C-t" . sp-transpose-hybrid-sexp)))
 
 (use-package anzu
   :diminish anzu-mode
@@ -395,23 +379,22 @@
   :config
   (defun edd/emms-modeline ()
     (concat " 🎶 "
-            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
-                                     (emms-mode-line-playlist-current))))
-              (substring s
-                         0 (min 20 (length s))))))
+	    (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
+				     (emms-mode-line-playlist-current))))
+	      (substring s
+			 0 (min 20 (length s))))))
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   :bind (("<f5>" . emms-pause)))
 
 (use-package dumb-jump
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g q" . dumb-jump-quick-look))
+  :bind
+  (("M-g o" . dumb-jump-go-other-window)
+   ("M-g j" . dumb-jump-go)
+   ("M-g q" . dumb-jump-quick-look)
+   ([remap xref-find-definitions] . dumb-jump-go)
+   ([remap xref-pop-marker-stack] . dumb-jump-back)
+   )
   :config
-  (with-eval-after-load 'dumb-jump
-    (define-key global-map [remap xref-find-definitions] 'dumb-jump-go)
-    (define-key global-map [remap xref-pop-marker-stack] 'dumb-jump-back)
-    )
-
   (setq dumb-jump-selector 'ivy))
 
 (use-package helm-make
@@ -419,7 +402,7 @@
   (setq helm-make-completion-method 'ivy)
   (setq helm-make-comint 't))
 
-(use-package edd-rss :ensure nil)
+(use-package edd-rss)
 
 (use-package csv)
 (use-package elm-mode)
@@ -442,8 +425,8 @@
   (eval-after-load "idris-simple-indent" '(diminish 'idris-simple-indent-mode))
   :bind
   (:map idris-mode-map
-        ("C-c C-j" . idris-pop-to-repl)
-        ("C-c C-f" . edd/idris-next-hole)))
+	("C-c C-j" . idris-pop-to-repl)
+	("C-c C-f" . edd/idris-next-hole)))
 
 
 (use-package cider)
@@ -470,14 +453,12 @@
 (use-package multiple-cursors)
 
 (use-package edd-sow
-  :demand
-  :ensure nil
   :config
   (edd-sow-mode 1))
 
 (use-package restart-emacs)
 
-(use-package edd-git-web-link :ensure nil
+(use-package edd-git-web-link
   :bind
   ("C-c g" . hydra-edd-git-web-link/body))
 
@@ -520,11 +501,12 @@
 (use-package deft
   :bind
   ("C-c d" . 'deft)
-  :init (setq deft-directory "~/txt"
-              deft-text-mode 'org-mode
-              deft-extensions '("org" "txt" "md")
-              deft-recursive t
-              deft-new-file-format "%Y%m%d-"))
+  :config
+  (setq deft-directory "~/txt"
+	deft-text-mode 'org-mode
+	deft-extensions '("org" "txt" "md")
+	deft-recursive t
+	deft-new-file-format "%Y%m%d-"))
 
 (use-package engine-mode
   :commands
@@ -578,7 +560,8 @@
   (debugger-mode "")
   (term-mode "")
   (shell-mode "")
-  )
+  (special-mode "")
+  (messages-buffer-mode ""))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

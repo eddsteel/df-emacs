@@ -1,109 +1,117 @@
-;; remove distractions.
-(dolist
-    (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode tooltip-mode))
-  (when (fboundp mode) (funcall mode -1)))
-(mouse-avoidance-mode 'jump)
-
 ;; theme
 ;;
 (use-package darkokai-theme
-  :init
+  :config
   (load-theme 'darkokai t))
 
-;; don't yell.
-(setq visible-bell nil) ;; The default
-(setq ring-bell-function 'ignore)
+(use-package emacs
+  :hook
+  (after-make-frame-functions . edd-prep-frame)
+  :config
+  (tooltip-mode -1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  ;; don't yell.
+  (setq visible-bell nil) ;; The default
+  (setq ring-bell-function 'ignore)
 
-;; don't insist.
-(defalias 'yes-or-no-p 'y-or-n-p)
+  ;; don't insist.
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (column-number-mode t)
+  (show-paren-mode t)
 
-;; show me where I am.
-(column-number-mode t)
-(show-paren-mode t)
+  (add-to-list 'default-frame-alist '(height . 124))
+  (add-to-list 'default-frame-alist '(width . 82))
+  ;; Modeline
+  ;;
+  (defvar edd-vc-mode-line
+    '(" " (:propertize
+           ;; Strip the backend name from the VC status information
+           (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+                    (substring vc-mode (+ (length backend) 2))))
+           face font-lock-variable-name-face))
+    "Mode line format for VC Mode.")
 
-(add-hook 'prog-mode-hook (lambda () (hl-line-mode t)))
-(add-to-list 'default-frame-alist '(height . 124))
-(add-to-list 'default-frame-alist '(width . 82))
+  (put 'edd-vc-mode-line 'risky-local-variable t)
 
-;; use when themes don't set hl-line
-(defun edd-fix-hl-line-mode ()
-  (interactive)
-  (set-face-background 'hl-line (face-background 'highlight)))
+  (setq-default mode-line-format
+                '("%e"
+                  mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
+                  " "
+                  mode-line-misc-info
+                  mode-line-frame-identification mode-line-buffer-identification " "
+                  mode-line-position
+                  (vc-mode edd-vc-mode)
+                  " " mode-line-modes mode-line-end-spaces))
 
-(defun edd-prep-frame (frame)
-  (with-selected-frame frame
-    (when (display-graphic-p)
-      (progn
-        (if (eq 'darwin system-type)
-          (progn
-            ;; fade when inactive
-            (set-frame-parameter (selected-frame) 'alpha '(100 80))
-            (add-to-list 'default-frame-alist '(font . "FuraCode Nerd Font-12"))
-            (put 'default-frame-alist 'alpha '(100 80)))
-          (progn
-          (set-face-attribute 'default nil :font "FuraCode Nerd Font-11")
-          (set-face-attribute 'fixed-pitch nil :font "FuraCode Nerd Font-11")))))))
+  ;; comfortable bindings
+  ;; C-h for delete
+  (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+  ;; C-z for help, in exchange
+  (define-key key-translation-map (kbd "C-z") (kbd "<help>"))
+  (defun edd-prep-frame (frame)
+    (with-selected-frame frame
+      (when (display-graphic-p)
+        (progn
+          (if (eq 'darwin system-type)
+              (progn
+                ;; fade when inactive
+                (set-frame-parameter (selected-frame) 'alpha '(100 80))
+                (add-to-list 'default-frame-alist '(font . "FuraCode Nerd Font-12"))
+                (put 'default-frame-alist 'alpha '(100 80)))
+            (progn
+              (set-face-attribute 'default nil :font "FuraCode Nerd Font-11")
+              (set-face-attribute 'fixed-pitch nil :font "FuraCode Nerd Font-11")))
+          (when (member "Noto Emoji" (font-family-list))
+            (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))))))
 
-;; Mode line I like.
-(display-time-mode 1)
-(setq display-time-string-forms
-      '((propertize (concat "📆 " day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load))))
-(display-battery-mode t)
-(setq battery-mode-line-format " %b%p%%")
+  ;; if we're loading non-daemon set up initial frame. Otherwise the hook will get it.
+  (when (not (daemonp)) (edd-prep-frame (car (frame-list))))
+  (setq custom-safe-themes '("4639288d273cbd3dc880992e6032f9c817f17c4a91f00f3872009a099f5b3f84" default)))
 
-;; Modeline
-;;
-(defvar edd-vc-mode-line
-  '(" " (:propertize
-         ;; Strip the backend name from the VC status information
-         (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
-                  (substring vc-mode (+ (length backend) 2))))
-         face font-lock-variable-name-face))
-  "Mode line format for VC Mode.")
+(use-package avoid
+  :config
+  (mouse-avoidance-mode 'jump))
 
-(put 'edd-vc-mode-line 'risky-local-variable t)
+(use-package hl-line
+  :hook
+  (prog-mode . hl-line-mode)
+  :config
+  ;; use when themes don't set hl-line
+  (defun edd-fix-hl-line-mode ()
+    (interactive)
+    (set-face-background 'hl-line (face-background 'highlight))))
 
-(setq-default mode-line-format
-              '("%e"
-                mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
-                " "
-                mode-line-misc-info
-                mode-line-frame-identification mode-line-buffer-identification " "
-                mode-line-position
-                (vc-mode edd-vc-mode)
-                " " mode-line-modes mode-line-end-spaces))
+(use-package time
+  :config
+  ;; Mode line I like.
+  (display-time-mode 1)
+  (setq display-time-string-forms
+        '((propertize (concat "📆 " day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load)))))
 
-;;(use-package mode-icons
-;;  :config
-;;  (setq mode-icons-change-mode-name nil)
-;;  (mode-icons-mode))
+(use-package battery
+  :config
+  (display-battery-mode t)
+  (setq battery-mode-line-format " %b%p%%"))
 
 (use-package nyan-mode
-    :init
-    (require 'midnight)
-    (midnight-mode)
-    :config
-    (require 'time-date)
-    (setq nyan-wavy-trail 1)
-    ;; animate on Wednesdays
-    (when
-        (string-match-p "Wed.*" (current-time-string))
-      (nyan-start-animation))
-    ;; animate on Wednesdays without restart
-    (add-hook
-     'midnight-hook
-     (lambda ()
-       (if
-           (string-match-p "Wed.*" (current-time-string))
-           (nyan-start-animation)
-         (nyan-stop-animation))))
-    (nyan-mode 1))
-
-;; comfortable bindings
-;; C-h for delete
-(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
-;; C-z for help, in exchange
-(define-key key-translation-map (kbd "C-z") (kbd "<help>"))
+  :ensure midnight
+  :ensure time-date
+  :demand t
+  :hook
+  (midnight . edd-ux/nyan-on-wednesdays)
+  :init
+  (midnight-mode)
+  :config
+  ;; animate on Wednesdays
+  (defun edd-ux/nyan-on-wednesdays ()
+    (if (string-match-p "Wed.*" (current-time-string))
+        (nyan-start-animation)
+      (nyan-stop-animation)))
+  (setq nyan-wavy-trail 1)
+  (edd-ux/nyan-on-wednesdays)
+  (nyan-mode 1))
 
 (use-package "basic-theme"
   :commands edd-ux/basic-mode
@@ -128,7 +136,4 @@
                               `(org-level-2 ((t (:box ,padding))))
                               `(org-level-1 ((t (:box ,padding))))))))
 
-;; if we're loading non-daemon set up initial frame. Otherwise the hook will get it.
-(when (not (daemonp)) (edd-prep-frame (car (frame-list))))
-(add-hook 'after-make-frame-functions 'edd-prep-frame)
 (provide 'edd-ux)
