@@ -46,10 +46,6 @@
 (setq org-hide-leading-stars t)
 (setq org-use-speed-commands t)
 (setq org-ellipsis "…")
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")
-        (sequence "INPROG(i)" "PR(p)" "DEV(v)" "STG(s)" "PRD(x)"))
-      )
 (setq org-special-ctrl-a/e t)
 
 (define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
@@ -86,13 +82,18 @@
                         '(("^ +\\([-*]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-(eval-after-load 'org
-  (progn
-    (set-face-attribute 'org-document-title nil :height 1.0)
-    (set-face-attribute 'org-agenda-structure nil :height 1.0)
-    (set-face-attribute 'org-link nil :foreground "#06d8ff")
-    (set-face-attribute 'org-verbatim nil :inherit font-lock-keyword-face)
-    (set-face-attribute 'org-block-begin-line nil :background "#444444")
-    (set-face-attribute 'org-block-end-line nil :background "#444444")))
+
+
+(defun edd-org-split-gh-pr (tag)
+  (let*
+      ((pieces (split-string tag "#"))
+       (project (car pieces))
+       (pr (cadr pieces)))
+    (string-join (list project "/pull/" pr))))
+
+(add-to-list 'org-link-abbrev-alist
+             '("gh" .  "https://github.com/"))
+(add-to-list 'org-link-abbrev-alist
+             '("ghp" . "https://github.com/%(edd-org-split-gh-pr)"))
 
 (provide 'edd-org-options)

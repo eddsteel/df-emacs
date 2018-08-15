@@ -1,5 +1,5 @@
 (use-package org
-  :mode ("\\.org\\'" . org-mode)
+  :mode ("\\.(org\\|org.txt)\\'" . org-mode)
   :ensure graphviz-dot-mode
   :ensure htmlize
   :ensure org-download
@@ -10,9 +10,9 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'org-mode-hook (lambda () (org-display-inline-images t t)))
+  :config
   (setq org-bullets-bullet-list
         '("​" "​" "​" "​" "​" "​" "​" "​"))
-  :config
   (when (eq 'darwin system-type)
     (add-to-list 'org-modules 'org-mac-iCal))
   (add-to-list 'org-modules 'ox-confluence)
@@ -22,11 +22,19 @@
    ("C-c a" . org-agenda)
    ("C-c b" . org-iswitchb)
    ("C-c c" . org-capture)
-   ("C-c j" . org-journal-new-entry)))
+   ("C-c j" . org-journal-new-entry))
 
+  :custom-face
+  (org-document-title ((nil :height 1.0)))
+  (org-agenda-structure ((nil :height 1.0)))
+  (org-link ((nil :foreground "#06d8ff")))
+  (org-verbatim ((nil :inherit font-lock-keyword-face)))
+  (org-block-begin-line ((nil :background "#444444")))
+  (org-block-end-line ((nil :background "#444444"))))
 
 (use-package weather-metno
   :commands weather-metno-forecast
+  :after org-agenda
   :init
   (setq weather-metno-location-name "Vancouver, Canada"
         weather-metno-location-latitude 49

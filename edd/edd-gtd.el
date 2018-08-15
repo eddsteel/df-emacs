@@ -13,7 +13,8 @@
 
 ;; Action state changes
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")))
+      '((sequence "TODO(t)" "NEXT(n)" "WAIT(w@/!)" "|" "DONE(d!)" "DELEGATED(l@)")
+        (sequence "INPROG(i)" "PR(p)" "DEV(v)" "STG(s)" "PRD(x)")))
 
 ;; Project tags are non-hierarchical
 (setq org-tags-exclude-from-inheritance

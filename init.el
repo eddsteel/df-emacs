@@ -299,6 +299,7 @@
   :init
   (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode)
   (require 'smartparens-config)
 
   (sp-pair "(" ")" :wrap "C-c (")
