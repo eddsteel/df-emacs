@@ -6,7 +6,7 @@
   :ensure counsel
   :ensure counsel-projectile
   :ensure rg
-  :diminish " 🌱"
+  :delight " 🌱"
   :bind
   (("C-'" . avy-goto-char-timer)
    ("M-x" . counsel-M-x)

@@ -1,7 +1,7 @@
 (use-package scala-mode
   :ensure sbt-mode
   :mode ("\\.scala\\'" . scala-mode)
-
+  :delight ""
   :bind
   (("C-c h s" . edd-run-scala))
   :config

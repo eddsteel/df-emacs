@@ -6,6 +6,7 @@
   :ensure org-bullets
   :ensure org-plus-contrib
   :pin "org"
+  :delight "🦄"
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
@@ -100,7 +101,8 @@
   (setq interleave-org-notes-dir-list '("." "~/txt/notes")))
 
 (use-package org-journal
-  :init
+  :delight ""
+  :config
   (setq org-journal-dir "~/txt/journal")
   (setq org-journal-date-format "%A, %d/%m")
   (setq org-journal-file-format "%Y%m%d.org"))

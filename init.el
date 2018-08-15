@@ -26,7 +26,7 @@
 ;; whitespace
 ;;
 (use-package whitespace
-  :diminish whitespace-mode
+  :delight whitespace-mode
   :init
   (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
     (add-hook hook #'whitespace-mode))
@@ -106,8 +106,6 @@
    ("C-c v v" . vagrant-ssh)
    ("C-c v e" . edd-vagrant-edit)))
 
-
-
 (use-package prog-mode
   :ensure nil
   :config
@@ -115,7 +113,7 @@
     "make some word or string show as pretty Unicode symbols"
     (setq prettify-symbols-alist
           '(
-          ("lambda" . 955) ; λ
+          ("lambda" . 955) ;; λ
           )))
   (add-hook 'scheme-mode-hook 'my-pretty-lambda)
   (add-hook 'elisp-mode-hook 'my-pretty-lambda)
@@ -134,7 +132,9 @@
 (use-package "company"
   :ensure company-ghc
   :commands (company-mode)
-  :diminish (company-search-mode company-mode)
+  :delight
+  (company-search-mode)
+  (company-mode)
   :config
   (progn
     (add-to-list 'company-backends 'company-ghc)
@@ -144,7 +144,6 @@
   :ensure nil
   :config
   )
-
 
 (use-package edd-mail
   :ensure nil
@@ -161,7 +160,7 @@
 (use-package edd-scala :ensure nil)
 
 (use-package flycheck
-  :diminish (flycheck-mode . " 🛂")
+  :delight (flycheck-mode " 🛂")
   :config
   (setq flycheck-scalastyle-jar
         (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
@@ -543,6 +542,11 @@
   :init
   (edit-server-start))
 
+(use-package ruby-mode
+  :ensure nil
+  :delight ""
+  )
+
 (use-package web-mode)
 (use-package inf-ruby
   :config
@@ -564,6 +568,17 @@
   :ensure nil
   :config
   (setq epa-pinentry-mode 'loopback))
+
+(use-package delight
+  :delight
+  (emacs-lisp-mode "")
+  (lisp-interaction-mode "λ")
+  (Info-mode "")
+  (help-mode "")
+  (debugger-mode "")
+  (term-mode "")
+  (shell-mode "")
+  )
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

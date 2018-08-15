@@ -7,7 +7,6 @@
           #'(lambda () ; restore gc after startup
               (setq gc-cons-threshold 800000)))
 
-
 (setq inhibit-startup-screen t
       package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
@@ -32,6 +31,7 @@
 (defun edd/maybe-load-config (name)
   (let ((conf (locate-user-emacs-file name)))
     (when (file-readable-p conf) (load-file conf))))
+
 
 (use-package exec-path-from-shell
   :init
