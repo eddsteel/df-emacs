@@ -30,23 +30,22 @@
   (interactive)
   (set-face-background 'hl-line (face-background 'highlight)))
 
-;; use that font I like.
 (defun edd-prep-frame (frame)
   (with-selected-frame frame
     (when (display-graphic-p)
       (progn
-        (when (member "Noto Emoji" (font-family-list))
-          (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
         (if (eq 'darwin system-type)
           (progn
-            (set-frame-font "-*-Fira Code Retina-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" 't)
             ;; fade when inactive
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
+            (add-to-list 'default-frame-alist '(font . "FuraCode Nerd Font-12"))
             (put 'default-frame-alist 'alpha '(100 80)))
+
         (progn
           (set-face-attribute 'default nil :font "Fira Mono-11")
-          (set-face-attribute 'fixed-pitch nil :font "Fira Mono-11")))))))
-
+          (set-face-attribute 'fixed-pitch nil :font "Fira Mono-11"))))
+      (when (member "Noto Emoji" (font-family-list))
+        (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji")))))
 
 ;; Mode line I like.
 (display-time-mode 1)
@@ -132,7 +131,7 @@
                               `(org-level-2 ((t (:box ,padding))))
                               `(org-level-1 ((t (:box ,padding))))))))
 
-;; if we're loading non-daemon set up frame. Otherwise the hook will get it.
-(when (not (daemonp)) (edd-prep-frame (selected-frame)))
+;; if we're loading non-daemon set up initial frame. Otherwise the hook will get it.
+(when (not (daemonp)) (edd-prep-frame (car (frame-list))))
 (add-hook 'after-make-frame-functions 'edd-prep-frame)
 (provide 'edd-ux)
