@@ -40,12 +40,9 @@
             (set-frame-parameter (selected-frame) 'alpha '(100 80))
             (add-to-list 'default-frame-alist '(font . "FuraCode Nerd Font-12"))
             (put 'default-frame-alist 'alpha '(100 80)))
-
-        (progn
-          (set-face-attribute 'default nil :font "Fira Mono-11")
-          (set-face-attribute 'fixed-pitch nil :font "Fira Mono-11"))))
-      (when (member "Noto Emoji" (font-family-list))
-        (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji")))))
+          (progn
+          (set-face-attribute 'default nil :font "FuraCode Nerd Font-11")
+          (set-face-attribute 'fixed-pitch nil :font "FuraCode Nerd Font-11")))))))
 
 ;; Mode line I like.
 (display-time-mode 1)
