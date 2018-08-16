@@ -1,19 +1,18 @@
-(defun edd-mailbox ()
-  (interactive)
-  "Open default mailbox"
-  (mu4e))
-
-(setq mail-specify-envelope-from t
-      mail-envelope-from 'header
-      send-mail-function 'sendmail-send-it
-      message-sendmail-envelope-from 'header
-      message-send-mail-function 'message-send-mail-with-sendmail)
+(use-package emacs
+  :config
+  (setq mail-specify-envelope-from t
+        mail-envelope-from 'header
+        send-mail-function 'sendmail-send-it
+        message-sendmail-envelope-from 'header
+        message-send-mail-function 'message-send-mail-with-sendmail))
 
 (use-package mu4e
-  :commands mu4e
-  :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e"
-  :init
+  :config
+  (defun edd-mailbox ()
+    (interactive)
+    "Open default mailbox"
+    (mu4e))
   (setq mu4e-use-fancy-chars t)
   (setq mu4e-maildir "~/spool")
   (setq mu4e-hide-index-messages t)
@@ -75,6 +74,7 @@
   (setq mu4e-compose-context-policy 'ask-if-none)
   (setq mu4e-sent-messages-behavior 'delete)
   :bind
-  ("C-c m" . mu4e))
+  ("C-c m" . mu4e)
+  ("C-c n" . edd-mailbox))
 
 (provide 'edd-mail)

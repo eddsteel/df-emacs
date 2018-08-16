@@ -5,7 +5,13 @@
   :ensure counsel
   :ensure counsel-projectile
   :ensure rg
-  :delight " 🌱"
+  :ensure projectile
+  :ensure ido
+  :ensure company
+  :after company
+  :delight
+  (ivy-mode " 🌱")
+  :demand
   :bind
   (("C-'" . avy-goto-char-timer)
    ("M-x" . counsel-M-x)
@@ -19,29 +25,42 @@
    ("<f1> f" . counsel-describe-function)
    ("<f1> v" . counsel-describe-variable)
    ("<f1> S" . counsel-info-lookup-symbol)
+   ("C-c ," . ivy-imenu-anywhere)
+   ([remap xref-find-references] . edd/find-rg-references-projectile)
    :map minibuffer-local-map
-   ("C-r" . counsel-minibuffer-history))
+   ("C-r" . counsel-minibuffer-history)
+   :map ivy-minibuffer-map
+   ("C-l" . 'edd-ivy/updir)
+   :map Info-mode-map
+   ("C-s" . isearch-forward)
+   :map company-mode-map
+   ("C-M-i" . 'counsel-company)
+   :map company-active-map
+   ("C-M-i" . 'counsel-company)
+   :map isearch-mode-map
+   ("M-i" . swiper-from-isearch))
+
   :init
-  (with-eval-after-load 'ido
-    (ido-mode -1)
-    ;; Enable ivy
-    (ivy-mode 1))
-  (ivy-mode 1)
-  (setq enable-recursive-minibuffers t)
+  (ivy-mode)
 
   :config
-  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-  (setq ivy-use-virtual-buffers t)
-  ;; number of result lines to display
-  (setq ivy-height 30)
-  (setq max-mini-window-height 30)
-  (add-to-list 'ivy-height-alist '(swiper . 15))
-  ;; does not count candidates
-  (setq ivy-count-format "%d/%d ")
-  ;; allow selecting and using value in prompt
-  (setq ivy-use-selectable-prompt t)
+  (ido-mode -1)
+  (counsel-projectile-mode)
 
-  (setq counsel-projectile-rg-initial-input '(projectile-symbol-or-selection-at-point))
+  (setq
+   projectile-completion-system 'ivy
+   enable-recursive-minibuffers t
+   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+   ivy-use-virtual-buffers t
+   ;; number of result lines to display
+   ivy-height 30
+   max-mini-window-height 30
+   ivy-count-format "%d/%d "
+   ivy-use-selectable-prompt t
+   counsel-projectile-rg-initial-input '(projectile-symbol-or-selection-at-point))
+
+  (add-to-list 'ivy-height-alist '(swiper . 15))
+
 
   ;; fire once version of counsel-projectile-rg
   (defun edd/find-rg-references-projectile (&optional options)
@@ -52,46 +71,30 @@ be passed to rg. It is read from the minibuffer if the function
 is called with a prefix argument."
     (interactive)
     (let* ((ignored (mapconcat (lambda (i)
-                               (concat "--glob "
-                                       (shell-quote-argument (concat "!" i))
-                                       " "))
-                             (append (projectile-ignored-files-rel)
-                                     (projectile-ignored-directories-rel))
-                             ""))
-         (options
-          (if current-prefix-arg
-              (read-string (projectile-prepend-project-name "rg options: ")
-                           ignored
-                           'counsel-projectile-rg-options-history)
-            (concat ignored options))))
+			       (concat "--glob "
+				       (shell-quote-argument (concat "!" i))
+				       " "))
+			     (append (projectile-ignored-files-rel)
+				     (projectile-ignored-directories-rel))
+			     ""))
+	 (options
+	  (if current-prefix-arg
+	      (read-string (projectile-prepend-project-name "rg options: ")
+			   ignored
+			   'counsel-projectile-rg-options-history)
+	    (concat ignored options))))
       (counsel-rg (projectile-symbol-or-selection-at-point) (projectile-project-root) options (projectile-prepend-project-name "rg"))))
-  (with-eval-after-load 'projectile
-                       (define-key global-map [remap xref-find-references] 'edd/find-rg-references-projectile))
+
 
   ;; turns out this was the only thing I miss from helm
-  (defun edd-ivy-updir ()
+  (defun edd-ivy/updir ()
     "for ivy file prompts, either delete back to subdirectory prompt or go up a directory"
     (interactive)
     (when ivy--directory
       (if (= (minibuffer-prompt-end) (point))
-          (ivy-backward-delete-char)
-        (while (not (= (minibuffer-prompt-end) (point)))
-          (ivy-backward-kill-word)))))
-
-  (define-key ivy-minibuffer-map (kbd "C-l") 'edd-ivy-updir)
-
-  (with-eval-after-load 'info
-    (define-key Info-mode-map (kbd "C-s") 'isearch-forward))
-  (with-eval-after-load 'company
-    (define-key company-mode-map (kbd "C-M-i") 'counsel-company)
-    (define-key company-active-map (kbd "C-M-i") 'counsel-company))
-  (with-eval-after-load 'projectile
-    (setq projectile-completion-system 'ivy)
-    (counsel-projectile-mode))
-  (eval-after-load 'imenu-anywhere
-    '(global-set-key (kbd "C-c ,") 'ivy-imenu-anywhere))
-
-  (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch))
+	  (ivy-backward-delete-char)
+	(while (not (= (minibuffer-prompt-end) (point)))
+	  (ivy-backward-kill-word))))))
 
 ;; Need to use
 ;; https://raw.githubusercontent.com/abo-abo/helm-make/master/helm-make.el

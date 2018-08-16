@@ -56,7 +56,7 @@
   ((text-mode prog-mode) . projectile-mode)
   :config
   (setq projectile-mode-line
-	'(:eval (format " 🔖%s" (projectile-project-name))))
+        '(:eval (format " 🔖%s" (projectile-project-name))))
   (defun edd/projectile-run-comint ()
     (interactive)
     (projectile-with-default-dir (projectile-project-root)
@@ -103,9 +103,9 @@
   (defun my-pretty-lambda ()
     "make some word or string show as pretty Unicode symbols"
     (setq prettify-symbols-alist
-	  '(
-	  ("lambda" . 955) ;; λ
-	  )))
+          '(
+          ("lambda" . 955) ;; λ
+          )))
   (global-prettify-symbols-mode 1))
 
 ;; secret config -- used below.
@@ -113,11 +113,10 @@
 
 (use-package edd-erc)
 
-(use-package edd-haskell)
-
 (use-package company
   :ensure company-ghc
   :commands (company-mode)
+  :demand
   :delight
   (company-search-mode)
   (company-mode)
@@ -127,32 +126,22 @@
     (custom-set-variables '(company-ghc-show-info t))))
 
 (use-package edd-org)
-
-(use-package edd-mail
-  :config
-  (setq mail-specify-envelope-from t
-	mail-envelope-from 'header
-	send-mail-function 'sendmail-send-it
-	message-sendmail-envelope-from 'header
-	message-send-mail-function 'message-send-mail-with-sendmail)
-  :bind ("C-c n" . edd-mailbox))
-
+(use-package edd-mail)
 (use-package edd-pdf)
 (use-package edd-scala)
+(use-package edd-haskell)
+(use-package edd-ruby)
 
 (use-package flycheck
   :delight " 🛂"
   :hook
-  ((rust-mode go-mode) . flycheck-mode)
-  (scala-mode-hook . edd/flycheck-unless-sbt)
+  ((rust-mode go-mode scala-mode ruby-mode) . flycheck-mode)
+  ((sbt-file-mode) . (lambda () (flycheck-mode -1)))
   :config
   (setq flycheck-scalastyle-jar
-	(expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
+        (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
   (setq flycheck-scalastylerc
-	(expand-file-name "scalastyle/scalastyle-config.xml"))
-  (defun edd/flycheck-unless-sbt ()
-    (unless (and (buffer-file-name (current-buffer)) (eq (file-name-extension (buffer-file-name (current-buffer))) "sbt"))
-      (flycheck-mode 1))))
+        (expand-file-name "scalastyle/scalastyle-config.xml")))
 
 (use-package rainbow-delimiters
   :hook
@@ -206,10 +195,10 @@
   ((term-mode comint) . (lambda () (setq-local scroll-margin 0)))
   :config
   (setq smooth-scroll-margin 5
-	scroll-conservatively 101
-	scroll-preserve-screen-position t
-	auto-window-vscroll nil
-	scroll-margin 5))
+        scroll-conservatively 101
+        scroll-preserve-screen-position t
+        auto-window-vscroll nil
+        scroll-margin 5))
 
 (use-package company
   :config
@@ -223,10 +212,10 @@
   :commands ssh
   :config
   (add-hook 'ssh-mode-hook
-	    (lambda ()
-	      (setq ssh-directory-tracking-mode t)
-	      (shell-dirtrack-mode t)
-	      (setq dirtrackp nil))))
+            (lambda ()
+              (setq ssh-directory-tracking-mode t)
+              (shell-dirtrack-mode t)
+              (setq dirtrackp nil))))
 
 (use-package quickrun
   :bind
@@ -267,7 +256,7 @@
 (use-package peep-dired
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
-	      ("P" . peep-dired)))
+              ("P" . peep-dired)))
 
 (use-package volatile-highlights
   :diminish
@@ -277,14 +266,11 @@
 (use-package multi-term)
 
 (use-package smartparens
-  :diminish " 🎷"
+  :delight " 🎷"
+  :hook
+  ((prog-mode markdown-mode org-mode) . turn-on-smartparens-strict-mode)
   :config
-  :init
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-  (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
-  (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode)
   (require 'smartparens-config)
-
   (sp-pair "(" ")" :wrap "C-c (")
   (sp-pair "[" "]" :wrap "C-c [")
   (sp-pair "{" "}" :wrap "C-c {")
@@ -308,43 +294,43 @@
 
   :bind
   (:map smartparens-mode-map
-	("C-M-a" . sp-beginning-of-sexp)
-	("C-M-e" . sp-end-of-sexp)
+        ("C-M-a" . sp-beginning-of-sexp)
+        ("C-M-e" . sp-end-of-sexp)
 
-	("C-M-d"   . sp-down-sexp)
-	("C-M-S-u" . sp-up-sexp)
-	("C-M-S-d" . sp-backward-down-sexp)
-	("C-M-u"   . sp-backward-up-sexp)
+        ("C-M-d"   . sp-down-sexp)
+        ("C-M-S-u" . sp-up-sexp)
+        ("C-M-S-d" . sp-backward-down-sexp)
+        ("C-M-u"   . sp-backward-up-sexp)
 
-	("C-M-f" . sp-forward-sexp)
-	("C-M-b" . sp-backward-sexp)
+        ("C-M-f" . sp-forward-sexp)
+        ("C-M-b" . sp-backward-sexp)
 
-	("C-M-n" . sp-next-sexp)
-	("C-M-p" . sp-previous-sexp)
+        ("C-M-n" . sp-next-sexp)
+        ("C-M-p" . sp-previous-sexp)
 
-	("C-S-f" . sp-forward-symbol)
-	("C-S-b" . sp-backward-symbol)
+        ("C-S-f" . sp-forward-symbol)
+        ("C-S-b" . sp-backward-symbol)
 
-	("C-<right>" . sp-forward-slurp-sexp)
-	("M-<right>" . sp-forward-barf-sexp)
-	("C-<left>"  . sp-backward-slurp-sexp)
-	("M-<left>"  . sp-backward-barf-sexp)
+        ("C-<right>" . sp-forward-slurp-sexp)
+        ("M-<right>" . sp-forward-barf-sexp)
+        ("C-<left>"  . sp-backward-slurp-sexp)
+        ("M-<left>"  . sp-backward-barf-sexp)
 
-	("C-M-t" . sp-transpose-sexp)
-	("C-M-k" . sp-kill-sexp)
-	("C-k"   . sp-kill-hybrid-sexp)
-	("M-k"   . sp-backward-kill-sexp)
-	("C-M-w" . sp-copy-sexp)
+        ("C-M-t" . sp-transpose-sexp)
+        ("C-M-k" . sp-kill-sexp)
+        ("C-k"   . sp-kill-hybrid-sexp)
+        ("M-k"   . sp-backward-kill-sexp)
+        ("C-M-w" . sp-copy-sexp)
 
-	("C-<backspace>" . sp-backward-kill-word)
+        ("C-<backspace>" . sp-backward-kill-word)
 
-	("M-[" . sp-backward-unwrap-sexp)
-	("M-]" . sp-unwrap-sexp)
+        ("M-[" . sp-backward-unwrap-sexp)
+        ("M-]" . sp-unwrap-sexp)
 
-	("C-c )"  . edd/rww-paren)
-	("C-c ]"  . edd/rww-bracket)
-	("C-c }"  . edd/rww-brace)
-	("C-x C-t" . sp-transpose-hybrid-sexp)))
+        ("C-c )"  . edd/rww-paren)
+        ("C-c ]"  . edd/rww-bracket)
+        ("C-c }"  . edd/rww-brace)
+        ("C-x C-t" . sp-transpose-hybrid-sexp)))
 
 (use-package anzu
   :diminish anzu-mode
@@ -379,10 +365,10 @@
   :config
   (defun edd/emms-modeline ()
     (concat " 🎶 "
-	    (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
-				     (emms-mode-line-playlist-current))))
-	      (substring s
-			 0 (min 20 (length s))))))
+            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
+                                     (emms-mode-line-playlist-current))))
+              (substring s
+                         0 (min 20 (length s))))))
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   :bind (("<f5>" . emms-pause)))
 
@@ -425,8 +411,8 @@
   (eval-after-load "idris-simple-indent" '(diminish 'idris-simple-indent-mode))
   :bind
   (:map idris-mode-map
-	("C-c C-j" . idris-pop-to-repl)
-	("C-c C-f" . edd/idris-next-hole)))
+        ("C-c C-j" . idris-pop-to-repl)
+        ("C-c C-f" . edd/idris-next-hole)))
 
 
 (use-package cider)
@@ -465,15 +451,11 @@
 (use-package iedit)
 
 (use-package wgrep
-  :init
-  (eval-after-load 'grep
-    '(define-key grep-mode-map
-       (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode))
-
-  (eval-after-load 'wgrep
-    '(define-key grep-mode-map
-       (kbd "C-c C-c") 'wgrep-finish-edit)))
-
+  :after grep
+  :bind
+  (:map grep-mode-map
+        ("C-x C-q" . wgrep-change-to-wgrep-mode)
+        ("C-c C-c" . wgrep-finish-edit)))
 
 (use-package ivy-lobsters)
 (use-package direnv)
@@ -503,10 +485,10 @@
   ("C-c d" . 'deft)
   :config
   (setq deft-directory "~/txt"
-	deft-text-mode 'org-mode
-	deft-extensions '("org" "txt" "md")
-	deft-recursive t
-	deft-new-file-format "%Y%m%d-"))
+        deft-text-mode 'org-mode
+        deft-extensions '("org" "txt" "md")
+        deft-recursive t
+        deft-new-file-format "%Y%m%d-"))
 
 (use-package engine-mode
   :commands
@@ -524,21 +506,6 @@
   :init
   (edit-server-start))
 
-(use-package ruby-mode
-  :ensure nil
-  :delight ""
-  )
-
-(use-package web-mode)
-(use-package inf-ruby
-  :config
-  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
-  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
-
-(use-package string-inflection
-  :bind
-  ("C-c i i" . string-inflection-all-cycle)
-  ("C-c i c" . string-inflection-camelcase))
 
 (use-package copy-as-format
   :bind
@@ -547,7 +514,6 @@
   ("C-c M-w g" . copy-as-format-github))
 
 (use-package epa
-  :ensure nil
   :config
   (setq epa-pinentry-mode 'loopback))
 
@@ -561,7 +527,8 @@
   (term-mode "")
   (shell-mode "")
   (special-mode "")
-  (messages-buffer-mode ""))
+  (messages-buffer-mode "")
+  (dired-mode ""))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

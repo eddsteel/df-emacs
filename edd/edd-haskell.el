@@ -1,41 +1,36 @@
 (use-package haskell-mode
+  :ensure hi2
+  :delight
+  (haskell-mode "")
+  (hi2-mode)
+  (haskell-doc-mode " 📜")
   :mode "\\.hs\\'"
+  :hook
+  (haskell-mode . haskell-doc-mode)
+  (haskell-mode . turn-on-hi2)
+  (haskell-mode . haskell-indentiation-mode)
+  (haskell-mode . haskell-decl-scan-mode)
+  (haskell-mode . edd-haskell/prettify)
   :init
-  (dolist (hook '(haskell-doc-mode
-                  haskell-indentation-mode
-                  haskell-decl-scan-mode))
-    (add-hook 'haskell-mode-hook hook))
   (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
     (add-to-list 'exec-path my-cabal-path))
+  :config
   (setq
-;;   company-ghc-show-info t
    haskell-tags-on-save t
    haskell-process-suggest-remove-import-lines t
    haskell-process-auto-import-loaded-modules t
    haskell-process-type 'cabal-repl
    haskell-process-log t)
-  :config
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-  (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
-  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
-  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
-  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
-  (define-key haskell-mode-map (kbd "C-c DEL") 'haskell-hoogle)
-  (eval-after-load "haskell-doc" '(diminish 'haskell-doc-mode " 📜"))
-  (eval-after-load "hi2" '(diminish 'hi2-mode))
   (when (not (string-match-p (regexp-quote (expand-file-name "~/.local/bin")) (getenv "PATH")))
     (setenv "PATH"
             (concat
              (getenv "PATH") ":" (expand-file-name "~/.local/bin") )))
 
-  (add-hook 'haskell-mode-hook
-            (lambda ()
-              (setq-local
+  (defun edd-haskell/prettify ()
+    (setq-local
                prettify-symbols-alist
-               '(
-                 ("&&" . ?∧)
+               '(("&&" . ?∧)
                  ("++" . ?⧺)
                  ("+++" . ?⧻)
                  ("--" . 9548)
@@ -161,25 +156,33 @@
                  ("|||" . ?⫴)
                  ("~>" . ?⇝)
                  ("!" . 172)))
-              (prettify-symbols-mode)))
+    (prettify-symbols-mode)
+    )
 
   :bind
-  ("C-c h h" . switch-to-haskell))
+  (
+   ("C-c h h" . switch-to-haskell)
+   :map haskell-mode-map
+   ("C-c C-l" . haskell-process-load-or-reload)
+   ("C-c C-z" . haskell-interactive-switch)
+   ("C-c C-n C-t" . haskell-process-do-type)
+   ("C-c C-n C-i" . haskell-process-do-info)
+   ("C-c C-n C-c" . haskell-process-cabal-build)
+   ("C-c C-n c" . haskell-process-cabal)
+   ("C-c DEL" . haskell-hoogle)))
 
-(use-package hi2
-  :commands (turn-on-hi2)
-  :init
-    (add-hook 'haskell-mode-hook 'turn-on-hi2))
 
 (use-package intero
   :commands (intero-mode intero-mode-blacklist)
-  :diminish " ⁉"
+  :delight " ‽"
+  :hook
+  (haskell-mode . intero-mode)
+  (haskell-mode . intero-mode-blacklist)
   :init
   (setq intero-blacklist (list (expand-file-name "~/.xmonad")))
-  (add-hook 'haskell-mode-hook 'intero-mode)
-  (add-hook 'haskell-mode-hook 'intero-mode-blacklist)
-  :bind (:map intero-mode-map
-              ("C-c C-j" . intero-repl)))
+  :bind
+  (:map intero-mode-map
+   ("C-c C-j" . intero-repl)))
 
 (use-package flymake-hlint)
 

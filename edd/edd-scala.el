@@ -189,12 +189,11 @@
             (insert " // scalastyle:ignore " rule)))))))
 
 (use-package ensime
-  ;; :pin melpa-stable
   :pin melpa-stable
+  :hook
+  (scala-mode . edd-ensime-scala-mode-hook)
   :init
-  (setq ensime-auto-generate-config 't)
-  (setq ensime-startup-notification nil)
-  (setq ensime-startup-snapshot-notification nil)
+  :config
   (defun edd-ensime-scala-mode-hook ()
     (when buffer-file-name ;; i.e. not org babel
       (let ((file (ensime-config-find-file (buffer-file-name))))
@@ -203,25 +202,19 @@
           (call-interactively 'ensime))
         (ensime-mode))))
 
-  (add-hook 'scala-mode-hook #'edd-ensime-scala-mode-hook)
-  :config
-;  (setq ensime-goto-test-config-defaults
-;        (plist-put ensime-goto-test-config-defaults
-;                   :test-template-fn 'edd-ensime-test-template))
+  (setq ensime-auto-generate-config 't)
+  (setq ensime-startup-notification nil)
+  (setq ensime-startup-snapshot-notification nil)
   (setq ensime-use-helm nil)
-  (setq ensime-graphical-tooltips 't)
-  (local-set-key (kbd "C-c C-e") 'ensime-inf-eval-region)
   ;; dumb jump if ensime jump fails
   (defadvice ensime-edit-definition (after dumb-jump-after-ensime)
     (when (not ad-return-value)
       (call-interactively #'dumb-jump-go)))
   (ad-activate 'ensime-edit-definition)
-
-  :commands
-  (ensime-scala-mode-hook ensime-config-find-file ensime-connection-or-nil)
   :bind
   (:map scala-mode-map
-        ("C-c e" . ensime)))
+   ("C-c e" . ensime)
+   ("C-c C-e" . ensime-inf-eval-region)))
 
 ;; Extra mode for .sbt files to stop them being covered in errors.
 ;;

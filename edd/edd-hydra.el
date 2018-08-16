@@ -1,5 +1,5 @@
 (use-package hydra
-  :ensure projectile
+  :after projectile
   :config
 
   ;; WANT:
@@ -152,7 +152,6 @@
    :map projectile-mode-map
    ("C-c p" . hydra-project/body)
    :map org-mode-map
-   ("C-c SPC" . hydra-music/body))
-  )
+   ("C-c SPC" . hydra-music/body)))
 
 (provide 'edd-hydra)

@@ -5,6 +5,7 @@
   (setq mac-option-modifier 'meta
         mac-command-modifier 'super
         ns-function-modifier 'hyper)
+
   ;; unbind some annoying defaults
   ;;
   (dolist (troublesome '("<f11>" "s-h" "s-z" "C-z" "C-x C-z"))
@@ -13,6 +14,9 @@
   ;; use coreutils ls
   (let ((gls "/usr/local/bin/gls"))
     (if (file-exists-p gls) (setq insert-directory-program gls)))
+
+  (when (executable-find "gpg2")
+    (setq epg-gpg-program "gpg2"))
 
   (setq sendmail-program "/usr/local/bin/msmtp")
   (setq ns-use-srgb-colorspace t)
@@ -54,13 +58,16 @@
 
 (use-package org-agenda
   :defer t
-  :ensure nil
+  :ensure midnight
+  :hook
+  (midnight . edd-mac/agenda-iCal)
   :config
+
   (defun edd-omi-checked (dir)
     (ignore-errors
       (omi-checked dir)))
 
-  (defun edd-org-mac-iCal ()
+  (defun edd-mac/agenda-iCal ()
     "Selects checked calendars in iCal.app and imports them into
 the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
     (interactive)

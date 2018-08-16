@@ -156,7 +156,7 @@
 
 (if (eq 'darwin system-type)
   (add-to-list 'org-agenda-custom-commands
-               '("I" "Import from ical" agenda "" ((org-agenda-mode-hook (lambda () (edd-org-mac-iCal)))))))
+               '("I" "Import from ical" agenda "" ((org-agenda-mode-hook (lambda () (edd-mac/agenda-iCal)))))))
 
 (setq org-agenda-default-appointment-duration 60)
 (setq org-icalendar-timezone "America/Vancouver")

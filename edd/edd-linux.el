@@ -1,12 +1,3 @@
-;; Nix requires messing with the path too
-;;
-(if (and (file-exists-p "~/.nix-profile/bin")
-         (file-exists-p "/run/current-system/bin"))
-    (dolist (dir '("/run/current-system/bin" "~/.nix-profile/bin"))
-      (when (file-directory-p dir)
-        (setenv "PATH" (concat (expand-file-name dir) ":" (getenv "PATH")))
-        (add-to-list 'exec-path (expand-file-name dir)))))
-
 (defun noop ()
   (interactive))
 
