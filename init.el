@@ -26,6 +26,8 @@
   (setq-default
    whitespace-style '(face trailing tabs empty indentation)
    indent-tabs-mode nil)
+  (eval-after-load 'makefile-mode
+    (remove-hook 'before-save-hook 'whitespace-cleanup))
   :custom-face
   (whitespace-line ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
   (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
@@ -159,6 +161,7 @@
 
 (use-package magit
   :demand t
+  :delight ""
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
   (setq magit-commit-arguments '("--gpg-sign")))
@@ -177,6 +180,7 @@
   :commands bbdb)
 
 (use-package markdown-mode+
+  :delight (markdown-mode "")
   :mode (("\\.apib\\$" . markdown-mode)))
 
 (use-package imenu-anywhere
@@ -312,9 +316,9 @@
         ("C-S-b" . sp-backward-symbol)
 
         ("C-<right>" . sp-forward-slurp-sexp)
-        ("M-<right>" . sp-forward-barf-sexp)
         ("C-<left>"  . sp-backward-slurp-sexp)
-        ("M-<left>"  . sp-backward-barf-sexp)
+        ("C-M-<left>"  . sp-backward-barf-sexp)
+        ("C-M-<right>" . sp-forward-barf-sexp)
 
         ("C-M-t" . sp-transpose-sexp)
         ("C-M-k" . sp-kill-sexp)
@@ -330,7 +334,12 @@
         ("C-c )"  . edd/rww-paren)
         ("C-c ]"  . edd/rww-bracket)
         ("C-c }"  . edd/rww-brace)
-        ("C-x C-t" . sp-transpose-hybrid-sexp)))
+        ("C-x C-t" . sp-transpose-hybrid-sexp)
+        :map prog-mode-map
+        ;; This conflicts in org mode
+        ("M-<left>"  . sp-backward-barf-sexp)
+        ("M-<right>" . sp-forward-barf-sexp)
+))
 
 (use-package anzu
   :diminish anzu-mode
@@ -529,6 +538,25 @@
   (special-mode "")
   (messages-buffer-mode "")
   (dired-mode ""))
+
+(use-package make-mode
+  :mode ("Makefile.inc" . makefile-mode))
+
+;;(use-package tramp-term)
+;;
+;;(use-package counsel-tramp
+;;  :ensure vagrant-tramp)
+
+(eval-after-load 'tramp
+  '(add-to-list 'tramp-methods
+               '("hotdog"
+                 (tramp-login-program "hotdog")
+                 (tramp-login-args ("ssh") ("%h"))
+                 (tramp-remote-shell "/bin/sh")
+                 (tramp-remote-shell-args ("-c")))))
+
+
+
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

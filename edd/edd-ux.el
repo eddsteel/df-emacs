@@ -35,6 +35,17 @@
 
   (put 'edd-vc-mode-line 'risky-local-variable t)
 
+
+  (make-face 'mode-line-major-mode-face)
+  (make-face 'mode-line-minor-mode-face)
+
+  (set-face-attribute 'mode-line-major-mode-face nil
+                      :height 1.0
+                      :inherit 'mode-line-face)
+
+  (set-face-attribute 'mode-line-minor-mode-face nil
+                      :inherit 'mode-line-face)
+
   (setq-default mode-line-format
                 '("%e"
                   mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote
@@ -43,7 +54,10 @@
                   mode-line-frame-identification mode-line-buffer-identification " "
                   mode-line-position
                   (vc-mode edd-vc-mode)
-                  " " mode-line-modes mode-line-end-spaces))
+                  " "
+                  (:propertize mode-name face mode-line-major-mode-face)
+                  (:eval (propertize (format-mode-line minor-mode-alist) 'face 'mode-line-minor-mode-face))
+                  mode-line-end-spaces))
 
   ;; comfortable bindings
   ;; C-h for delete

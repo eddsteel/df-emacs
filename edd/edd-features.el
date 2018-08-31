@@ -18,11 +18,11 @@
      If there's no ansi-term, open a new one.
      Otherwise will switch to *ansi-term*"
     (let ((bn (buffer-name))
-	  (tl "*ansi-term*")
-	  (newterm (lambda () (ansi-term edd/term-shell))))
+          (tl "*ansi-term*")
+          (newterm (lambda () (ansi-term edd/term-shell))))
       (if (and (<= pfx 1) (get-buffer tl) (not (string-prefix-p tl bn)))
-	  (switch-to-buffer tl)
-	(funcall newterm))))
+          (switch-to-buffer tl)
+        (funcall newterm))))
 
   ;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
   ;;
@@ -39,7 +39,7 @@
     (process-send-string
      (get-buffer-process (current-buffer))
      (replace-regexp-in-string "[ \n]*\\'" ""
-			       (if string string (current-kill 0)))))
+                               (if string string (current-kill 0)))))
 
   ;; Terminal -- kill on exit
   ;;
@@ -48,13 +48,13 @@
     (kill-buffer))
 
   :bind (("C-c x" . edd/term)
-	 :map term-mode-map
-	 ("M-p" . term-send-up)
-	 ("M-n" . term-send-down)
-	 :map term-raw-map
-	 ("M-o" . other-window)
-	 ("M-p" . term-send-up)
-	 ("M-n" . term-send-down)))
+         :map term-mode-map
+         ("M-p" . term-send-up)
+         ("M-n" . term-send-down)
+         :map term-raw-map
+         ("M-o" . other-window)
+         ("M-p" . term-send-up)
+         ("M-n" . term-send-down)))
 
 (use-package server
   :if window-system
@@ -81,25 +81,30 @@
   :config
   (savehist-mode t)
   (setq savehist-file
-	(expand-file-name "history" user-emacs-directory)))
+        (expand-file-name "history" user-emacs-directory)))
 
 (use-package goto-addr
-  :config
-  (dolist (hook '(text-mode conf-mode-hook jabber-chat-mode-hook term-mode-hook))
-  (add-hook hook #'goto-address-mode)))
+  :hook
+  (((compilation-mode text-mode conf-mode term-mode shell-mode eshell-mode) . goto-address-mode)
+   (prog-mode . goto-address-prog-mode))
+  :bind
+  (:map goto-address-highlight-keymap
+        ("C-c C-o" . goto-address-at-point))
+  :commands (goto-address-prog-mode
+             goto-address-mode))
 
 (use-package tramp
   :config
   (setq tramp-terminal-type "dumb")
   (setq tramp-default-method "scp")
   (add-to-list 'tramp-methods '("vcsh"
-				(tramp-login-program "vcsh")
-				(tramp-login-args
-				 (("enter")
-				  ("%h")))
-				(tramp-remote-shell "/bin/sh")
-				(tramp-remote-shell-args
-			       ("-c")))))
+                                (tramp-login-program "vcsh")
+                                (tramp-login-args
+                                 (("enter")
+                                  ("%h")))
+                                (tramp-remote-shell "/bin/sh")
+                                (tramp-remote-shell-args
+                               ("-c")))))
 (use-package ispell
   :config
   ;; use english dictionary (there's no canadian or british one)
@@ -110,7 +115,9 @@
   ("M-i" . imenu))
 
 (use-package autorevert
-  :delight 'auto-revert-mode)
+  :delight 'auto-revert-mode
+  :config
+  (global-auto-revert-mode))
 
 ;; colorize compilation buffers
 ;; From http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
@@ -127,22 +134,17 @@
   :bind
   ("C-x C-b" . ibuffer))
 
-(use-package autorevert
-  :config
-  (global-auto-revert-mode))
-
 (use-package subword
   :delight
   :hook
   (prog-mode . subword-mode))
 
-
 (use-package emacs
   :hook
   ((prog-mode term-mode) . abbrev-mode)
   :delight
-  abbrev-mode
-  visual-line-mode
+  (abbrev-mode "")
+  (visual-line-mode "")
   :init
   (autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
   :config
@@ -157,7 +159,7 @@
    (expand-file-name "abbreviations" user-emacs-directory))
   ;; custom file
   (setq custom-file
-	(expand-file-name "custom.el" user-emacs-directory))
+        (expand-file-name "custom.el" user-emacs-directory))
   ;; uniquify buffers
   (setq uniquify-buffer-name-style 'post-forward)
   ;; make C-v M-v symmetrical

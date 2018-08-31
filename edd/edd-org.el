@@ -6,7 +6,9 @@
   :ensure org-bullets
   :ensure org-plus-contrib
   :pin "org"
-  :delight "🦄"
+  :delight
+  (org-mode "🦄")
+  (org-agenda-mode "")
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
@@ -66,6 +68,8 @@
         (file (concat "~/txt/work-notes/" project "/" number ".org")))
     (find-file file)
     (beginning-of-buffer)
+    (insert "#+TITLE:" project "-" number)
+    (newline-and-indent)
     (insert "* " url)
     (newline-and-indent)))
 

@@ -20,6 +20,9 @@
   :bind
   (:map ruby-mode-map
         ("C-c s r" . rake)
+        ("C-c s a" . rake-rerun))
+  (:map rake-compilation-mode-map
+        ("C-c s r" . rake)
         ("C-c s a" . rake-rerun)))
 
 (provide 'edd-ruby)
