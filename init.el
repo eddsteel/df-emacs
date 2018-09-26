@@ -556,8 +556,9 @@
                  (tramp-remote-shell "/bin/sh")
                  (tramp-remote-shell-args ("-c")))))
 
-
-
+(use-package kotlin-mode
+  :config
+  (setq kotlin-tab-width 4))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
