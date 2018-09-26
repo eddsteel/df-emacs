@@ -1,13 +1,12 @@
 (use-package ruby-mode
   :ensure nil
-  :delight ""
-  )
+  :delight "")
 
 (use-package web-mode)
 (use-package inf-ruby
-  :config
-  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
-  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+  :hook (ruby-mode . inf-ruby-minor-mode)
+  :commands inf-ruby
+  :config)
 
 (use-package string-inflection
   :bind
@@ -24,5 +23,10 @@
   (:map rake-compilation-mode-map
         ("C-c s r" . rake)
         ("C-c s a" . rake-rerun)))
+
+(use-package rubocop
+  :delight "👮"
+  :hook
+  (ruby-mode . rubocop-mode))
 
 (provide 'edd-ruby)
