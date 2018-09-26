@@ -29,6 +29,7 @@
   (eval-after-load 'makefile-mode
     (remove-hook 'before-save-hook 'whitespace-cleanup))
   :custom-face
+  (whitespace-empty ((nil :foreground "disabledControlTextColor" :background "controlBackgroundColor")))
   (whitespace-line ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
   (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
   (whitespace-trailing ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))))
