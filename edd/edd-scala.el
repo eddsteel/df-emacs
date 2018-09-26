@@ -11,6 +11,12 @@
    ("C-c C-v C-l" . edd-sbt-test-only-last)
    ("C-c C-v C-t" . edd-sbt-test-only)
    ("C-c C-b C-l" . sbt-run-previous-command))
+  :init
+  (defun edd-scala/hook ()
+    (progn
+      (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))
+      (setq-local
+       nyan-bar-length 16)))
   :config
   (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters nil
@@ -18,54 +24,7 @@
         scala-indent:use-javadoc-style nil
         flycheck-scalastyle-jar "~/.local/share/scalastyle.jar"
         flycheck-scalastylerc "~/.config/scalastyle.xml")
-  (defun edd-scala/hook ()
-    (progn
-      (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))
-      (setq-local
-       nyan-bar-length 16
-       prettify-symbols-alist
-       '(("<=" . 8804)
-         (">=" . 8805)
-         ("==" . 8801)
-         ("===" . 8803)
-         ("!" . 172)
-         ("!=" . 8802)
-         ("=!=" . 8813)
-         ("&&" . 8743)
-         ("||" . 8744)
-         ("true" . 8868)
-         ("false" . 8869)
-         ("empty" . 8709)
-         ("sum" . 8721)
-         ("product" . 8719)
-         ("intersect" . 8745)
-         ("union" . 8746)
-         ("diff" . 8783)
-         ("subsetOf" . 8838)
-         ("++" . 10746)
-         ("::" . 11820)
-         ("--" . 9548)
-         ("->" . 8594)
-         ("<-" . 8592)
-         ("=>" . 8658)
-         ("<=>" . 8660)
-         ("-->" . 10230)
-         ("<->" . 8596)
-         ("<--" . 10229)
-         ("<-->" . 10231)
-         ("==>" . 10233)
-         ("<==" . 10232)
-         ("<==>" . 10234)
-         ("~>" . 8669)
-         ("<~" . 8668)
-         ("assert" . 8870)
-         (":=" . 8788)
-         ("flatMap" . 10524)
-         (">>=" . 10524)
-         (">>" . 8811)
-         ("followedBy" . 8811)
-         ("<+>" . 8853)
-         ("_root_." . 46)))))
+
   (defun edd-run-scala ()
     (interactive)
     (if (ensime-connection-or-nil)
@@ -193,7 +152,6 @@
   :hook
   (scala-mode . edd-ensime-scala-mode-hook)
   :init
-  :config
   (defun edd-ensime-scala-mode-hook ()
     (when buffer-file-name ;; i.e. not org babel
       (let ((file (ensime-config-find-file (buffer-file-name))))
@@ -201,7 +159,7 @@
                    (not (ensime-connection-or-nil)))
           (call-interactively 'ensime))
         (ensime-mode))))
-
+  :config
   (setq ensime-auto-generate-config 't)
   (setq ensime-startup-notification nil)
   (setq ensime-startup-snapshot-notification nil)

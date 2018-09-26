@@ -25,7 +25,10 @@
     (interactive)
     (if (eq (face-attribute 'default :height) 120)
         (set-face-attribute 'default (selected-frame) :height 140)
-      (set-face-attribute 'default (selected-frame) :height 120))))
+      (set-face-attribute 'default (selected-frame) :height 120)))
+
+  ;; ligatures
+  (mac-auto-operator-composition-mode))
 
 (use-package flycheck
   :defer t
