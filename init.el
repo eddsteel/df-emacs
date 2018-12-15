@@ -538,8 +538,18 @@
                  (tramp-remote-shell-args ("-c")))))
 
 (use-package kotlin-mode
+  :mode ("build.gradle.kts" . kotlin-mode)
   :config
-  (setq kotlin-tab-width 4))
+  (setq kotlin-tab-width 4)
+  (add-to-list
+   'compilation-error-regexp-alist
+   '("^e: \\(.*\\): (\\([0-9]+\\), \\([0-9]+\\))" 1 2 3)))
+
+(use-package flycheck-kotlin
+  :commands flycheck-kotlin-setup
+  :after flycheck
+  :config
+  (flycheck-kotlin-setup))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

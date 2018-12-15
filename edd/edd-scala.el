@@ -1,3 +1,8 @@
+(use-package emacs
+  ;; sbt env file plugin
+  :config
+  (add-to-list 'auto-mode-alist '("\\.env\\'" . sh-mode)))
+
 (use-package scala-mode
   :ensure sbt-mode
   :mode ("\\.scala\\'" . scala-mode)
@@ -16,7 +21,23 @@
     (progn
       (eval-after-load "counsel" (setq-local counsel-grep-swiper-limit 1200))
       (setq-local
-       nyan-bar-length 16)))
+       nyan-bar-length 16)
+      (setq-local
+       prettify-symbols-alist
+       '(("true" . 8868)
+         ("false" . 8869)
+         ("empty" . 8709)
+         ("sum" . 8721)
+         ("product" . 8719)
+         ("intersect" . 8745)
+         ("union" . 8746)
+         ("diff" . 8783)
+         ("subsetOf" . 8838)
+         ("assert" . 8870)
+         ("flatMap" . 10524)
+         ("followedBy" . 8811)
+         ("_root_." . 46)))))
+
   :config
   (setenv "COURSIER_NO_TERM" "true")
   (setq scala-indent:align-parameters nil
