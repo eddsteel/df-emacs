@@ -45,27 +45,9 @@
 
 (use-package which-key)
 
-(use-package edd-ivy :after projectile)
+(use-package edd-proj)
 
-;; projectile
-;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
-;;
-(use-package projectile
-  :demand t
-  :init
-  ;; counsel-projectile will die without this
-  (setq projectile-keymap-prefix (kbd "C-x p"))
-  :hook
-  ((text-mode prog-mode) . projectile-mode)
-  :config
-  (setq projectile-mode-line
-        '(:eval (format " 🔖%s" (projectile-project-name))))
-  (defun edd/projectile-run-comint ()
-    (interactive)
-    (projectile-with-default-dir (projectile-project-root)
-      (call-interactively 'comint-run)))
-  :bind
-  ("C-c r" . edd/projectile-run-comint))
+(use-package edd-ivy :after projectile)
 
 ;; utilities that are too small to live alone
 ;;
