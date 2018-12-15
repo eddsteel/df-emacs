@@ -25,7 +25,7 @@
         ("C-c s a" . rake-rerun)))
 
 (use-package rubocop
-  :delight "👮"
+  :delight " 👮"
   :hook
   (ruby-mode . rubocop-mode))
 

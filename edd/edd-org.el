@@ -115,4 +115,8 @@
   :init
   (load-theme 'org-beautify))
 
+(use-package ox-gfm
+  :after org
+  :commands org-gfm-export-to-markdown)
+
 (provide 'edd-org)

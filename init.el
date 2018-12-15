@@ -419,7 +419,7 @@
      (lambda () (c-add-style "my-style" my-protobuf-style t))))
 
 (use-package gitignore-mode
-  :mode ("CODEOWNERS$" . gitignode-mode))
+  :mode ("CODEOWNERS$" . gitignore-mode))
 
 (use-package hcl-mode
   :mode ("\\.tf$" . hcl-mode))
