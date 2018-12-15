@@ -185,4 +185,9 @@
   :config
   (winner-mode))
 
+(use-package wdired
+  :delight (dired-mode "")
+  :config
+  (setq wdired-create-parent-directories t))
+
 (provide 'edd-features)

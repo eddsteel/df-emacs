@@ -537,8 +537,7 @@
   (term-mode "")
   (shell-mode "")
   (special-mode "")
-  (messages-buffer-mode "")
-  (dired-mode ""))
+  (messages-buffer-mode ""))
 
 (use-package make-mode
   :mode ("Makefile.inc" . makefile-mode))
