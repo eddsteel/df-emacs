@@ -2,7 +2,6 @@
 ;; - Paste from online banking sites
 ;; - Remove "exchange amount" if appropriate (M-x delete-matching-lines)
 ;; - Run appropriate clean function on each line (use macros)
-;; - Clear out text like Preauthorized etc
 ;; - Run clean entries
 ;; - Run `tac' on the paragraphs
 ;; - Initialize counter (using function)
@@ -134,8 +133,6 @@
 
 (eval-after-load "ledger"
   (bind-key (kbd "C-c C-n") 'edd/ledger-next-unknown ledger-mode-map))
-
-
 
 
 (provide 'edd-ledger)

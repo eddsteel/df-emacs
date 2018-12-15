@@ -84,14 +84,15 @@
 (use-package emacs
   :hook
   ((scheme-mode elisp-mode) . my-pretty-lambda)
+  :init
+  (global-prettify-symbols-mode 1)
   :config
   (defun my-pretty-lambda ()
     "make some word or string show as pretty Unicode symbols"
     (setq prettify-symbols-alist
           '(
           ("lambda" . 955) ;; λ
-          )))
-  (global-prettify-symbols-mode 1))
+          ))))
 
 ;; secret config -- used below.
 (use-package edd-secrets :commands edd-with-secrets)
@@ -192,15 +193,6 @@
   :config
   (add-to-list 'company-backends 'company-emoji))
 
-(use-package ssh
-  :commands ssh
-  :config
-  (add-hook 'ssh-mode-hook
-            (lambda ()
-              (setq ssh-directory-tracking-mode t)
-              (shell-dirtrack-mode t)
-              (setq dirtrackp nil))))
-
 (use-package quickrun
   :bind
   (("C-c q q" . quickrun)
@@ -213,7 +205,7 @@
 ;; wrap-region
 (use-package wrap-region
   :delight wrap-region-mode
-  :mode
+  :hook
   ((org-mode latex-mode prog-mode) wrap-region-mode)
   :config
   (wrap-region-add-wrappers
