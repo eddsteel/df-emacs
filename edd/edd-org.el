@@ -7,7 +7,7 @@
   :ensure org-plus-contrib
   :pin "org"
   :delight
-  (org-mode "🦄")
+  (org-mode "🐴")
   (org-agenda-mode "")
   :init
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))

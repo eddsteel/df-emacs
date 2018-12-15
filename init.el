@@ -113,6 +113,7 @@
 (use-package edd-org)
 (use-package edd-mail)
 (use-package edd-pdf)
+
 (use-package edd-scala)
 (use-package edd-haskell)
 (use-package edd-ruby)
@@ -135,10 +136,10 @@
 (use-package auto-highlight-symbol
   :hook
   (prog-mode . auto-highlight-symbol-mode)
-  :diminish)
+  :delight)
 
 (use-package git-gutter
-  :diminish
+  :delight
   :config
   (global-git-gutter-mode 1))
 
@@ -158,13 +159,9 @@
 
 (use-package tea-time)
 
-(use-package bbdb
-  :config (bbdb-initialize)
-  :commands bbdb)
-
 (use-package markdown-mode+
-  :delight (markdown-mode "")
-  :mode (("\\.apib\\$" . markdown-mode)))
+  :delight ""
+  :mode ("\\.apib\\$" . markdown-mode))
 
 (use-package imenu-anywhere
   :hook
@@ -215,7 +212,9 @@
 
 ;; wrap-region
 (use-package wrap-region
-  :diminish 'wrap-region-mode
+  :delight wrap-region-mode
+  :mode
+  ((org-mode latex-mode prog-mode) wrap-region-mode)
   :config
   (wrap-region-add-wrappers
    '(("*" "*" nil org-mode)
@@ -224,10 +223,7 @@
      ("=" "=" "+" org-mode)
      ("_" "_" nil org-mode)
      ("/*" "*/" "/" (scala-mode java-mode))
-     ("$" "$" nil (org-mode latex-mode))))
-  (add-hook 'org-mode-hook 'wrap-region-mode)
-  (add-hook 'latex-mode-hook 'wrap-region-mode)
-  (add-hook 'prog-mode-hook 'wrap-region-mode))
+     ("$" "$" nil (org-mode latex-mode)))))
 
 (use-package docker-tramp)
 (use-package dockerfile-mode)
@@ -300,8 +296,8 @@
 
         ("C-<right>" . sp-forward-slurp-sexp)
         ("C-<left>"  . sp-backward-slurp-sexp)
-        ("C-M-<left>"  . sp-backward-barf-sexp)
         ("C-M-<right>" . sp-forward-barf-sexp)
+        ("C-M-<left>"  . sp-backward-barf-sexp)
 
         ("C-M-t" . sp-transpose-sexp)
         ("C-M-k" . sp-kill-sexp)
@@ -331,7 +327,6 @@
   :bind
   (("M-%" . anzu-query-replace)
    ("C-M-%" . anzu-query-replace-regexp)))
-
 
 (use-package emms
   :load-path "../src/emms/lisp"
@@ -386,9 +381,9 @@
 (use-package elm-mode)
 (use-package gradle-mode)
 (use-package groovy-mode)
-(use-package php-mode)
+(use-package php-mode
+  :delight "")
 (use-package play-routes-mode)
-(use-package projectile-ripgrep)
 (use-package rjsx-mode
   :config
   (setq js2-strict-missing-semi-warning nil)
@@ -396,27 +391,25 @@
 (use-package less-css-mode)
 (use-package yaml-mode)
 (use-package idris-mode
+  :delight (idris-simple-indent-mode)
   :config
   (defun edd/idris-next-hole ()
       (interactive)
       (search-forward " ?" nil t))
-  (eval-after-load "idris-simple-indent" '(diminish 'idris-simple-indent-mode))
   :bind
   (:map idris-mode-map
         ("C-c C-j" . idris-pop-to-repl)
         ("C-c C-f" . edd/idris-next-hole)))
 
-
 (use-package cider)
-
 (use-package protobuf-mode
-  :init
-  (defconst my-protobuf-style
-    '((c-basic-offset . 2)
-       (indent-tabs-mode . nil)))
-
-   (add-hook 'protobuf-mode-hook
-     (lambda () (c-add-style "my-style" my-protobuf-style t))))
+  :hook
+  (protobuf-mode . edd-protobuf/set-style)
+  :config
+  (defun edd-protobuf/set-style ()
+    (c-add-style
+     "my-style"
+     '((c-basic-offset . 2) (indent-tabs-mode . nil)))))
 
 (use-package gitignore-mode
   :mode ("CODEOWNERS$" . gitignore-mode))
@@ -520,6 +513,11 @@
   (shell-mode "")
   (special-mode "")
   (messages-buffer-mode ""))
+
+;; let's use firefox
+(use-package browse-url
+  :config
+  (setq browse-url-browser-function 'browse-url-firefox))
 
 (use-package make-mode
   :mode ("Makefile.inc" . makefile-mode))

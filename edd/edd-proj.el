@@ -3,6 +3,7 @@
 ;; https://emacs.stackexchange.com/questions/40553/projectile-run-project-without-prompt
 ;;
 (use-package projectile
+  :ensure projectile-ripgrep
   :demand t
   :init
   ;; counsel-projectile will die without this
