@@ -10,13 +10,8 @@
   (setq projectile-keymap-prefix (kbd "C-x p"))
   :hook
   ((text-mode prog-mode) . projectile-mode)
-  :config
-  (setq projectile-mode-line
-        '(:eval (format " 🔖%s" (projectile-project-name))))
-
-  (plist-put (gethash 'gradlew projectile-project-types) 'run-command "./gradlew run")
-
-  (defun edd-proj/run-comint ()
+  :init
+    (defun edd-proj/run-comint ()
     (interactive)
     (projectile-with-default-dir (projectile-project-root)
       (call-interactively 'comint-run)))
@@ -49,6 +44,11 @@
     (interactive)
     (let ((compilation-read-command nil))
       (projectile-run-project nil)))
+  (setq projectile-mode-line
+        '(:eval (format " 🔖%s" (projectile-project-name))))
+
+  :config
+  (plist-put (alist-get 'gradlew projectile-project-types) 'run-command "./gradlew run")
 
   :bind
   ("C-c r" . edd-proj/run-comint))
