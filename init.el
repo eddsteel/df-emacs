@@ -541,6 +541,10 @@
   :config
   (flycheck-kotlin-setup))
 
+(use-package olivetti)
+(use-package typo
+  :hook (text-mode . typo-mode))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
