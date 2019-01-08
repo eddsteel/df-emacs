@@ -20,8 +20,8 @@
 (use-package whitespace
   :delight whitespace-mode
   :hook
-  ((prog-mode text-mode conf-mode) . whitespace-mode)
-  (before-save . whitespace-cleanup)
+  (((prog-mode text-mode conf-mode) . whitespace-mode)
+   (before-save . whitespace-cleanup))
   :config
   (setq-default
    whitespace-style '(face trailing tabs empty indentation)
