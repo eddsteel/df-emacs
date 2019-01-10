@@ -170,6 +170,10 @@
   (setq x-stretch-cursor t)
   ;; hurt me plenty
   (setq large-file-warning-threshold 100000000)
+  (setq initial-scratch-message
+        (concat initial-scratch-message
+                "\n(load-file user-init-file)"
+                "\n(progn (require \\='restart-emacs) (restart-emacs))"))
 
   :bind
   (("M-SPC" . cycle-spacing)
