@@ -115,9 +115,10 @@
   ("M-i" . imenu))
 
 (use-package autorevert
-  :delight 'auto-revert-mode
+  :delight auto-revert-mode
   :config
   (global-auto-revert-mode))
+
 
 ;; colorize compilation buffers
 ;; From http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
@@ -143,8 +144,7 @@
   :hook
   ((prog-mode term-mode) . abbrev-mode)
   :delight
-  (abbrev-mode "")
-  (visual-line-mode "")
+  (abbrev-mode) (auto-fill-function) (visual-line-mode)
   :init
   (autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
   :config
@@ -186,7 +186,6 @@
   (winner-mode))
 
 (use-package wdired
-  :delight (dired-mode "")
   :config
   (setq wdired-create-parent-directories t))
 

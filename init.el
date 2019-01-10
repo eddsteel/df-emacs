@@ -90,9 +90,9 @@
   (defun my-pretty-lambda ()
     "make some word or string show as pretty Unicode symbols"
     (setq prettify-symbols-alist
-          '(
-          ("lambda" . 955) ;; λ
-          ))))
+	  '(
+	  ("lambda" . 955) ;; λ
+	  ))))
 
 ;; secret config -- used below.
 (use-package edd-secrets :commands edd-with-secrets)
@@ -126,9 +126,9 @@
   ((sbt-file-mode) . (lambda () (flycheck-mode -1)))
   :config
   (setq flycheck-scalastyle-jar
-        (expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
+	(expand-file-name "scalastyle/scalastyle_2.10-batch.jar"))
   (setq flycheck-scalastylerc
-        (expand-file-name "scalastyle/scalastyle-config.xml")))
+	(expand-file-name "scalastyle/scalastyle-config.xml")))
 
 (use-package rainbow-delimiters
   :hook
@@ -146,7 +146,7 @@
 
 (use-package magit
   :demand t
-  :delight ""
+  :delight with-editor-mode
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
   (setq magit-commit-arguments '("--gpg-sign")))
@@ -161,7 +161,6 @@
 (use-package tea-time)
 
 (use-package markdown-mode+
-  :delight ""
   :mode ("\\.apib\\$" . markdown-mode))
 
 (use-package imenu-anywhere
@@ -180,10 +179,10 @@
   ((term-mode comint) . (lambda () (setq-local scroll-margin 0)))
   :config
   (setq smooth-scroll-margin 5
-        scroll-conservatively 101
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil
-        scroll-margin 5))
+	scroll-conservatively 101
+	scroll-preserve-screen-position t
+	auto-window-vscroll nil
+	scroll-margin 5))
 
 (use-package company
   :config
@@ -231,7 +230,7 @@
 (use-package peep-dired
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
-              ("P" . peep-dired)))
+	      ("P" . peep-dired)))
 
 (use-package volatile-highlights
   :delight
@@ -269,47 +268,47 @@
 
   :bind
   (:map smartparens-mode-map
-        ("C-M-a" . sp-beginning-of-sexp)
-        ("C-M-e" . sp-end-of-sexp)
+	("C-M-a" . sp-beginning-of-sexp)
+	("C-M-e" . sp-end-of-sexp)
 
-        ("C-M-d"   . sp-down-sexp)
-        ("C-M-S-u" . sp-up-sexp)
-        ("C-M-S-d" . sp-backward-down-sexp)
-        ("C-M-u"   . sp-backward-up-sexp)
+	("C-M-d"   . sp-down-sexp)
+	("C-M-S-u" . sp-up-sexp)
+	("C-M-S-d" . sp-backward-down-sexp)
+	("C-M-u"   . sp-backward-up-sexp)
 
-        ("C-M-f" . sp-forward-sexp)
-        ("C-M-b" . sp-backward-sexp)
+	("C-M-f" . sp-forward-sexp)
+	("C-M-b" . sp-backward-sexp)
 
-        ("C-M-n" . sp-next-sexp)
-        ("C-M-p" . sp-previous-sexp)
+	("C-M-n" . sp-next-sexp)
+	("C-M-p" . sp-previous-sexp)
 
-        ("C-S-f" . sp-forward-symbol)
-        ("C-S-b" . sp-backward-symbol)
+	("C-S-f" . sp-forward-symbol)
+	("C-S-b" . sp-backward-symbol)
 
-        ("C-<right>" . sp-forward-slurp-sexp)
-        ("C-<left>"  . sp-backward-slurp-sexp)
-        ("C-M-<right>" . sp-forward-barf-sexp)
-        ("C-M-<left>"  . sp-backward-barf-sexp)
+	("C-<right>" . sp-forward-slurp-sexp)
+	("C-<left>"  . sp-backward-slurp-sexp)
+	("C-M-<right>" . sp-forward-barf-sexp)
+	("C-M-<left>"  . sp-backward-barf-sexp)
 
-        ("C-M-t" . sp-transpose-sexp)
-        ("C-M-k" . sp-kill-sexp)
-        ("C-k"   . sp-kill-hybrid-sexp)
-        ("M-k"   . sp-backward-kill-sexp)
-        ("C-M-w" . sp-copy-sexp)
+	("C-M-t" . sp-transpose-sexp)
+	("C-M-k" . sp-kill-sexp)
+	("C-k"   . sp-kill-hybrid-sexp)
+	("M-k"   . sp-backward-kill-sexp)
+	("C-M-w" . sp-copy-sexp)
 
-        ("C-<backspace>" . sp-backward-kill-word)
+	("C-<backspace>" . sp-backward-kill-word)
 
-        ("M-[" . sp-backward-unwrap-sexp)
-        ("M-]" . sp-unwrap-sexp)
+	("M-[" . sp-backward-unwrap-sexp)
+	("M-]" . sp-unwrap-sexp)
 
-        ("C-c )"  . edd/rww-paren)
-        ("C-c ]"  . edd/rww-bracket)
-        ("C-c }"  . edd/rww-brace)
-        ("C-x C-t" . sp-transpose-hybrid-sexp)
-        :map prog-mode-map
-        ;; This conflicts in org mode
-        ("M-<left>"  . sp-backward-barf-sexp)
-        ("M-<right>" . sp-forward-barf-sexp)
+	("C-c )"  . edd/rww-paren)
+	("C-c ]"  . edd/rww-bracket)
+	("C-c }"  . edd/rww-brace)
+	("C-x C-t" . sp-transpose-hybrid-sexp)
+	:map prog-mode-map
+	;; This conflicts in org mode
+	("M-<left>"  . sp-backward-barf-sexp)
+	("M-<right>" . sp-forward-barf-sexp)
 ))
 
 (use-package anzu
@@ -344,10 +343,10 @@
   :config
   (defun edd/emms-modeline ()
     (concat " 🎶 "
-            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
-                                     (emms-mode-line-playlist-current))))
-              (substring s
-                         0 (min 20 (length s))))))
+	    (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
+				     (emms-mode-line-playlist-current))))
+	      (substring s
+			 0 (min 20 (length s))))))
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   :bind (("<f5>" . emms-pause)))
 
@@ -373,8 +372,7 @@
 (use-package elm-mode)
 (use-package gradle-mode)
 (use-package groovy-mode)
-(use-package php-mode
-  :delight "")
+(use-package php-mode)
 (use-package play-routes-mode)
 (use-package rjsx-mode
   :config
@@ -390,8 +388,8 @@
       (search-forward " ?" nil t))
   :bind
   (:map idris-mode-map
-        ("C-c C-j" . idris-pop-to-repl)
-        ("C-c C-f" . edd/idris-next-hole)))
+	("C-c C-j" . idris-pop-to-repl)
+	("C-c C-f" . edd/idris-next-hole)))
 
 (use-package cider)
 (use-package protobuf-mode
@@ -431,8 +429,8 @@
   :after grep
   :bind
   (:map grep-mode-map
-        ("C-x C-q" . wgrep-change-to-wgrep-mode)
-        ("C-c C-c" . wgrep-finish-edit)))
+	("C-x C-q" . wgrep-change-to-wgrep-mode)
+	("C-c C-c" . wgrep-finish-edit)))
 
 (use-package ivy-lobsters)
 (use-package direnv)
@@ -462,10 +460,10 @@
   ("C-c d" . 'deft)
   :config
   (setq deft-directory "~/txt"
-        deft-text-mode 'org-mode
-        deft-extensions '("org" "txt" "md")
-        deft-recursive t
-        deft-new-file-format "%Y%m%d-"))
+	deft-text-mode 'org-mode
+	deft-extensions '("org" "txt" "md")
+	deft-recursive t
+	deft-new-file-format "%Y%m%d-"))
 
 (use-package engine-mode
   :commands
@@ -494,18 +492,6 @@
   :config
   (setq epa-pinentry-mode 'loopback))
 
-(use-package delight
-  :delight
-  (emacs-lisp-mode "")
-  (lisp-interaction-mode "λ")
-  (Info-mode "")
-  (help-mode "")
-  (debugger-mode "")
-  (term-mode "")
-  (shell-mode "")
-  (special-mode "")
-  (messages-buffer-mode ""))
-
 ;; let's use firefox
 (use-package browse-url
   :config
@@ -521,11 +507,11 @@
 
 (eval-after-load 'tramp
   '(add-to-list 'tramp-methods
-               '("hotdog"
-                 (tramp-login-program "hotdog")
-                 (tramp-login-args ("ssh") ("%h"))
-                 (tramp-remote-shell "/bin/sh")
-                 (tramp-remote-shell-args ("-c")))))
+	       '("hotdog"
+		 (tramp-login-program "hotdog")
+		 (tramp-login-args ("ssh") ("%h"))
+		 (tramp-remote-shell "/bin/sh")
+		 (tramp-remote-shell-args ("-c")))))
 
 (use-package kotlin-mode
   :mode ("build.gradle.kts" . kotlin-mode)

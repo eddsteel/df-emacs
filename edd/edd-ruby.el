@@ -1,6 +1,5 @@
 (use-package ruby-mode
-  :ensure nil
-  :delight "")
+  :ensure nil)
 
 (use-package web-mode)
 (use-package inf-ruby

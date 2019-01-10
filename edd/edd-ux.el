@@ -72,11 +72,11 @@
               (progn
                 ;; fade when inactive
                 (set-frame-parameter (selected-frame) 'alpha '(100 80))
-                (add-to-list 'default-frame-alist '(font . "FuraCode Nerd Font-12"))
+                (set-frame-font "-*-Fira Code Retina-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1" 't)
                 (put 'default-frame-alist 'alpha '(100 80)))
             (progn
-              (set-face-attribute 'default nil :font "FuraCode Nerd Font-11")
-              (set-face-attribute 'fixed-pitch nil :font "FuraCode Nerd Font-11")))
+              (set-face-attribute 'default nil :font "Fira Code-13")
+              (set-face-attribute 'fixed-pitch nil :font "Fira Code-13")))
           (when (member "Noto Emoji" (font-family-list))
             (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))))))
 

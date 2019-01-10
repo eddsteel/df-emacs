@@ -1,5 +1,4 @@
 (use-package rust-mode
-  :delight ""
   :config
   (defun edd-rust-ivy-function ()
     (interactive)

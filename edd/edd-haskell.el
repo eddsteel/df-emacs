@@ -1,7 +1,6 @@
 (use-package haskell-mode
   :ensure hi2
   :delight
-  (haskell-mode "")
   (hi2-mode)
   (haskell-doc-mode " 📜")
   :mode "\\.hs\\'"

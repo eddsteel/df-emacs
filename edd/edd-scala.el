@@ -6,7 +6,6 @@
 (use-package scala-mode
   :ensure sbt-mode
   :mode (("\\.scala\\'" . scala-mode) ("\\.sc\\'" . scala-mode))
-  :delight ""
   :hook
   (scala-mode . edd-scala/hook)
   :bind
