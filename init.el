@@ -153,10 +153,7 @@
 
 (use-package magit-filenotify :demand t)
 
-(use-package ledger-mode
-  :mode ("\\.ledger$" "ledger\\.dat$")
-  :config
-  (setq ledger-post-auto-adjust-amounts t))
+(use-package edd-ledger)
 
 (use-package tea-time)
 
