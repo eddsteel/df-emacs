@@ -206,7 +206,7 @@
 (use-package wrap-region
   :delight wrap-region-mode
   :hook
-  ((org-mode latex-mode prog-mode) wrap-region-mode)
+  ((org-mode latex-mode prog-mode) . wrap-region-mode)
   :config
   (wrap-region-add-wrappers
    '(("*" "*" nil org-mode)
@@ -234,7 +234,7 @@
               ("P" . peep-dired)))
 
 (use-package volatile-highlights
-  :diminish
+  :delight
   :config
   (volatile-highlights-mode t))
 
@@ -313,7 +313,7 @@
 ))
 
 (use-package anzu
-  :diminish anzu-mode
+  :delight anzu-mode
   :init
   (global-anzu-mode +1)
   :bind
@@ -448,7 +448,7 @@
   (setq venv-dirlookup-names '(".venv" "pyenv" ".virtual" ".env")))
 
 (use-package editorconfig
-  :diminish " 📋"
+  :delight
   :config
   (editorconfig-mode 1))
 
@@ -543,7 +543,10 @@
 
 (use-package olivetti)
 (use-package typo
+  :delight (typo-mode " ❞")
   :hook (text-mode . typo-mode))
+
+(use-package lua-mode)
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

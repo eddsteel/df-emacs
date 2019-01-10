@@ -5,13 +5,13 @@
 (use-package projectile
   :ensure projectile-ripgrep
   :demand t
-  :init
-  ;; counsel-projectile will die without this
-  (setq projectile-keymap-prefix (kbd "C-x p"))
   :hook
   ((text-mode prog-mode) . projectile-mode)
   :init
-    (defun edd-proj/run-comint ()
+  ;; counsel-projectile will die without this
+  (setq projectile-keymap-prefix (kbd "C-x p"))
+
+  (defun edd-proj/run-comint ()
     (interactive)
     (projectile-with-default-dir (projectile-project-root)
       (call-interactively 'comint-run)))
@@ -19,7 +19,7 @@
   (defun edd-proj/magit-and-fetch ()
     (interactive)
     (progn (magit-status)(call-interactively #'magit-fetch-from-upstream)))
-    
+
   (defun edd-proj/term ()
     (interactive)
     (projectile-run-term "/bin/bash"))
@@ -28,7 +28,7 @@
     (interactive)
     (let ((res (ignore-errors (helm-make-projectile))))
       (if res res
-        (projectile-compile-project t))))
+	(projectile-compile-project t))))
 
   (defun edd-proj/compile-no-prompt ()
     (interactive)
@@ -44,8 +44,12 @@
     (interactive)
     (let ((compilation-read-command nil))
       (projectile-run-project nil)))
-  (setq projectile-mode-line
-        '(:eval (format " 🔖%s" (projectile-project-name))))
+
+  (defun edd-proj/modeline ()
+    (format " 🏉%s" (projectile-project-name)))
+
+  (setq projectile--mode-line " 🏉")
+  (setq projectile-mode-line-function #'edd-proj/modeline)
 
   :config
   (plist-put (alist-get 'gradlew projectile-project-types) 'run-command "./gradlew run")
