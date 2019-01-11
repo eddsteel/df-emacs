@@ -7,7 +7,7 @@
   :hook
   (haskell-mode . haskell-doc-mode)
   (haskell-mode . turn-on-hi2)
-  (haskell-mode . haskell-indentiation-mode)
+  (haskell-mode . haskell-indentation-mode)
   (haskell-mode . haskell-decl-scan-mode)
   (haskell-mode . edd-haskell/prettify)
   :init
