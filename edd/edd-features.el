@@ -193,4 +193,7 @@
   :config
   (setq wdired-create-parent-directories t))
 
+(use-package smerge-mode
+  :delight " ±")
+
 (provide 'edd-features)
