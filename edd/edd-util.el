@@ -189,4 +189,20 @@ From a program takes two point or marker arguments, BEG and END."
     (kill-this-buffer)))
 
 
+(defun edd/upgrade-packages ()
+  (interactive)
+  (require 'package)
+  (save-excursion
+    (call-interactively #'list-packages)
+    (call-interactively #'package-menu-mark-upgrades)
+    (call-interactively #'package-menu-mark-obsolete-for-deletion)
+    (sleep-for 1)
+    (call-interactively #'package-menu-execute)))
+
+(defun edd/nanji ()
+  (interactive)
+  (let ((delay (random 300))
+        (prompt "いまなんじですか。"))
+    (run-at-time delay nil (lambda (prompt)(progn (message prompt)(edd/nanji))) prompt)))
+
 (provide 'edd-util)
