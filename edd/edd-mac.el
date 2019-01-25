@@ -134,4 +134,9 @@ the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
     (omi-delete-ics-file usedCalendarsFiles)
     (org-pop-to-buffer-same-window currentBuffer)))
 
+(use-package browse-url
+  :init
+  (setq browse-url-firefox-program "open")
+  (setq browse-url-firefox-arguments '("-a" "Firefox")))
+
 (provide 'edd-mac)
