@@ -514,9 +514,21 @@
   :mode ("build.gradle.kts" . kotlin-mode)
   :config
   (setq kotlin-tab-width 4)
+  :init
   (add-to-list
    'compilation-error-regexp-alist
-   '("^e: \\(.*\\): (\\([0-9]+\\), \\([0-9]+\\))" 1 2 3)))
+   'kotlin-gradle)
+  (add-to-list
+   'compilation-error-regexp-alist
+   'kotlin-lint)
+  (add-to-list
+   'compilation-error-regexp-alist-alist
+   '(kotlin-gradle
+     "^e: \\(.*\\): (\\([0-9]+\\), \\([0-9]+\\))" 1 2 3))
+  (add-to-list
+   'compilation-error-regexp-alist-alist
+   '(kotlin-lint
+     "^Lint error > \\(.*\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3)))
 
 (use-package flycheck-kotlin
   :commands flycheck-kotlin-setup
