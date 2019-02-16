@@ -78,11 +78,21 @@
               (set-face-attribute 'default nil :font "Fira Code-13")
               (set-face-attribute 'fixed-pitch nil :font "Fira Code-13")))
           (when (member "Noto Emoji" (font-family-list))
-            (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))))))
+            (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
+          (when (member "Noto Sans CJK JP" (font-family-list))
+            (dolist (charset '(kana han symbol cjk-misc bopomofo))
+              (set-fontset-font (frame-parameter nil 'font) charset
+                                (font-spec :family "Noto Sans CJK JP"))))))))
 
   ;; if we're loading non-daemon set up initial frame. Otherwise the hook will get it.
   (when (not (daemonp)) (edd-prep-frame (car (frame-list))))
   (setq custom-safe-themes '("4639288d273cbd3dc880992e6032f9c817f17c4a91f00f3872009a099f5b3f84" default)))
+
+(use-package unicode-fonts
+  :ensure persistent-soft
+  :init
+  (unicode-fonts-setup)
+  (when (not (daemonp)) (edd-prep-frame (car (frame-list)))))
 
 (use-package avoid
   :config
