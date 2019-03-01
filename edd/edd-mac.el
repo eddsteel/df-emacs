@@ -11,6 +11,14 @@
   (dolist (troublesome '("<f11>" "s-h" "s-z" "C-z" "C-x C-z"))
     (global-unset-key (kbd troublesome)))
 
+  (global-set-key (kbd "<mouse-4>") 'isearch-forward)
+  (global-set-key (kbd "<mouse-5>") 'isearch-backward)
+
+  (eval-after-load "isearch"
+    (progn
+      (define-key isearch-mode-map (kbd "<mouse-4>") 'isearch-repeat-forward)
+      (define-key isearch-mode-map (kbd "<mouse-5>") 'isearch-repeat-backward)))
+
   ;; use coreutils ls
   (let ((gls "/usr/local/bin/gls"))
     (if (file-exists-p gls) (setq insert-directory-program gls)))
