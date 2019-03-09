@@ -15,7 +15,7 @@
   (global-set-key (kbd "<mouse-5>") 'isearch-backward)
 
   (eval-after-load "isearch"
-    (progn
+    '(progn
       (define-key isearch-mode-map (kbd "<mouse-4>") 'isearch-repeat-forward)
       (define-key isearch-mode-map (kbd "<mouse-5>") 'isearch-repeat-backward)))
 
