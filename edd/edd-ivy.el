@@ -61,6 +61,12 @@
 
   (add-to-list 'ivy-height-alist '(swiper . 15))
 
+  (defhydra+ hydra-project nil "Project"
+    ("a"   counsel-projectile-rg "rg")
+    ("b"   counsel-projectile-switch-to-buffer "buffer")
+    ("d"   counsel-projectile-find-dir "find dir")
+    ("f"   counsel-projectile-find-file "find file"))
+
 
   ;; fire once version of counsel-projectile-rg
   (defun edd/find-rg-references-projectile (&optional options)

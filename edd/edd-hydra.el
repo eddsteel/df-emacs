@@ -29,48 +29,11 @@
     ("-"   emms-volume-lower "volume down")
     ("P"   emms-playlist-mode-switch-buffer "playlist" :exit t))
 
-  ;; projectile
+  ;; project. Most of this is filled out in edd/edd-proj.el, some in counsel
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
   ;;
   (defhydra hydra-project (:exit t :idle 0.4 :columns 5) "Project"
-    ("<ESC>" nil "quit")
-    ("a"   counsel-projectile-rg "rg")
-    ("A"   projectile-grep "grep")
-    ("b"   counsel-projectile-switch-to-buffer "buffer")
-    ("B"   projectile-switch-to-buffer-other-window "buffer other window")
-    ("c"   projectile-run-command-in-root "command")
-    ("C"   projectile-run-async-shell-command-in-root "shell command")
-    ("d"   counsel-projectile-find-dir "find dir")
-    ("D"   projectile-find-dir-other-window "find dir other window")
-    ("e"   project-find-file "find file (any file under root)")
-    ("E"   project-find-regexp "find regexp (any file under root)")
-    ("f"   counsel-projectile-find-file "find file")
-    ("F"   projectile-find-file-other-window "find file other window")
-    ("g"   edd-proj/magit-and-fetch "git fetch")
-    ("h"   projectile-dired "dired")
-    ("i"   projectile-project-info "info")
-    ("kc"  projectile-invalidate-cache "invalidate cache")
-    ("kd"  projectile-remove-known-project "remove a project")
-    ("kk"  projectile-cache-current-file "cache current file")
-    ("K"   projectile-kill-buffers "kill buffers")
-    ("ks"  projectile-cleanup-known-projects "cleanup projects")
-    ("l"   projectile-find-file-dwim "find-file DWIM")
-    ("L"   projectile-find-file-dwim-other-window "find-file DWIM other window")
-    ("m"   edd-proj/make-or-compile "run Make target or compile command")
-    ("M"   edd-proj/compile-no-prompt "compile")
-    ("o"   projectile-find-other-file "find other file")
-    ("O"   projectile-find-other-file-other-window "find other file other window")
-    ("p"   projectile-switch-project "switch project >>")
-    ("r"   projectile-recentf "recent files")
-    ("R"   edd-proj/run-no-prompt)
-    ("s"   projectile-multi-occur "occur")
-    ("S"   projectile-replace "replace")
-    ("t"   projectile-toggle-between-implementation-and-test "flip between test and implementation")
-    ("T"   edd-proj/test-no-prompt "test project")
-    ("v"   projectile-display-buffer "display buffer")
-    ("V"   projectile-ibuffer "ibuffer")
-    ("X"   edd-proj/term "term")
-    ("x"   projectile-run-shell "shell"))
+    ("<ESC>" nil "quit"))
 
   ;; from wiki
   (defhydra hydra-goto-line (goto-map ""
@@ -142,6 +105,11 @@
             (projectile-dired)
             (hydra-project/body))))
 
+
+  (eval-after-load "org"
+    '(progn
+       (define-key org-mode-map (kbd "C-c SPC") 'hydra-music/body)))
+  
   :bind
   (("C-c SPC" . hydra-music/body)
    ("C-c m" . hydra-mark-modify/body)
@@ -149,8 +117,6 @@
    ("C-c s" . sbt-hydra)
    ("C-c o" . hydra-goto/body)
    :map projectile-mode-map
-   ("C-c p" . hydra-project/body)
-   :map org-mode-map
-   ("C-c SPC" . hydra-music/body)))
+   ("C-c p" . hydra-project/body)))
 
 (provide 'edd-hydra)
