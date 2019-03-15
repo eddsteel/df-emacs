@@ -28,6 +28,7 @@
         hydra-mark-modify/noop-and-exit
         indent-for-tab-command
         kill-region-or-backward-kill-word
+        markdown-outdent-or-delete
         org-beginning-of-line
         org-delete-char
         org-force-self-insert
