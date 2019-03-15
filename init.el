@@ -30,10 +30,10 @@
   (eval-after-load 'makefile-mode
     (remove-hook 'before-save-hook 'whitespace-cleanup))
   :custom-face
-  (whitespace-empty ((nil :foreground "disabledControlTextColor" :background "controlBackgroundColor")))
-  (whitespace-line ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
-  (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor")))
-  (whitespace-trailing ((nil :background "disabledControlTextColor" :foreground "controlBackgroundColor"))))
+  (whitespace-empty ((nil :foreground "disabledControlTextColor" :background "#333333")))
+  (whitespace-line ((nil :background "disabledControlTextColor" :foreground "#333333")))
+  (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "#333333")))
+  (whitespace-trailing ((nil :background "disabledControlTextColor" :foreground "#333333"))))
 
 ;; Ace window
 (use-package ace-window
