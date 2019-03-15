@@ -30,7 +30,8 @@
   (org-link ((nil :foreground "#06d8ff")))
   (org-verbatim ((nil :inherit font-lock-keyword-face)))
   (org-block-begin-line ((nil :background "#444444")))
-  (org-block-end-line ((nil :background "#444444"))))
+  (org-block-end-line ((nil :background "#444444")))
+  (org-block ((nil :background "#444444"))))
 
 (use-package weather-metno
   :commands weather-metno-forecast
@@ -87,6 +88,7 @@
   (org-babel-do-load-languages 'org-babel-load-languages '((http . t))))
 
 (use-package ob-async)
+(use-package ob-kotlin)
 
 (use-package edd-org-options
   :ensure nil)
