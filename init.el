@@ -541,15 +541,6 @@
   (flycheck-kotlin-setup))
 
 (use-package olivetti)
-(use-package typo
-  :delight (typo-mode " ❞")
-  :hook (text-mode . typo-mode)
-  :config
-  (eval-after-load 'org-mode
-    (typo-mode -1))
-  (eval-after-load 'yaml-mode
-    (typo-mode -1)))
-
 (use-package lua-mode)
 
 (edd/maybe-load-config "local.el")

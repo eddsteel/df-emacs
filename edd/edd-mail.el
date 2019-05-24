@@ -55,7 +55,6 @@
   (setq mu4e-change-filenames-when-moving t)
 
   :bind
-  ("C-c m" . mu4e)
   ("C-c n" . edd-mailbox))
 
 (provide 'edd-mail)

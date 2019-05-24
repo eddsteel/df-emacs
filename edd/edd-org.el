@@ -111,7 +111,7 @@
 
 (use-package org-beautify-theme
   :init
-  (load-theme 'org-beautify))
+  (load-theme 'org-beautify t))
 
 (use-package ox-gfm
   :after org
