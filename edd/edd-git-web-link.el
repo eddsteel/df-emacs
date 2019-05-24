@@ -23,7 +23,9 @@
          (append
           args
           (list
+           "-r"
            (edd-git-web-link-remote)
+           "-p"
            (file-relative-name (buffer-file-name))))))
 
 (defun edd-git-web-link-browse-current-file ()
@@ -43,19 +45,22 @@
          (append
           args
           (list
+           "-r"
            (edd-git-web-link-remote)
+           "-p"
            (file-relative-name (buffer-file-name))
+           "-l"
            (int-to-string (line-number-at-pos))))))
 
 (defun edd-git-web-link-browse-current-line ()
   "Open current line in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-line "-d")))
+  (browse-url (edd-git-web-link-current-line)))
 
 (defun edd-git-web-link-browse-current-line-master ()
   "Open current line in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-line "-b" "master" "-d")))
+  (browse-url (edd-git-web-link-current-line "-b" "master")))
 
 
 (defun edd-git-web-link-current-region (&rest args)
@@ -64,20 +69,34 @@
          (append
           args
           (list
+           "-r"
            (edd-git-web-link-remote)
+           "-p"
            (file-relative-name (buffer-file-name))
+           "-l"
            (int-to-string (line-number-at-pos (region-beginning)))
+           "-m"
            (int-to-string (line-number-at-pos (region-end)))))))
 
 (defun edd-git-web-link-browse-current-region ()
   "Open current region in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-region "-d")))
+  (browse-url (edd-git-web-link-current-region)))
 
 (defun edd-git-web-link-browse-current-region-master ()
   "Open current region in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-region "-b" "master" "-d")))
+  (browse-url (edd-git-web-link-current-region "-b" "master")))
+
+(defun edd-git-web-link-commit-at-point ()
+  (let ((commit (magit-commit-at-point)))
+    (apply 'edd-git-web-link-capture
+           (list "-r" (edd-git-web-link-remote) "-c" commit))))
+
+(defun edd-git-web-link-browse-commit-at-point ()
+  "Open the commit at point in the web provider"
+  (interactive)
+  (browse-url (edd-git-web-link-commit-at-point)))
 
 (defun edd-git-review ()
   (interactive)
@@ -85,9 +104,10 @@
 
 ;; TODO: move to hydra
 (defhydra hydra-edd-git-web-link (:exit nil :columns 3)
-  ("b" magit-blame "blame")
+  ("b" magit-blame "blame" :exit t)
   ("B" magit-blame-popup "blame...")
   ("c" edd-git-review "code review")
+  ("C" edd-git-web-link-browse-commit-at-point "browse commit at point")
   ("d" magit-diff-buffer-file "diff")
   ("D" magit-diff-buffer-file-popup "diff..")
   ("f" edd-git-web-link-browse-current-file "browse current file")
