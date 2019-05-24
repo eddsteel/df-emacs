@@ -44,6 +44,7 @@
         sp-kill-hybrid-sexp
         sp-kill-sexp
         sp-kill-word
+        yaml-electric-backspace
         ))
 
 (setq mc/cmds-to-run-once
