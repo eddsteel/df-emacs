@@ -1,4 +1,5 @@
 (use-package ruby-mode
+  :mode "\\.rbi"
   :ensure nil)
 
 (use-package web-mode)
