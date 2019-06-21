@@ -67,7 +67,6 @@
     ("d"   counsel-projectile-find-dir "find dir")
     ("f"   counsel-projectile-find-file "find file"))
 
-
   ;; fire once version of counsel-projectile-rg
   (defun edd/find-rg-references-projectile (&optional options)
       "Search the current project with rg for the thing under point/selected.

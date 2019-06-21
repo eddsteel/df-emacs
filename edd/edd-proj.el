@@ -88,7 +88,15 @@
     ("X"   edd-proj/term "term")
     ("x"   projectile-run-shell "shell"))
 
+  (setq projectile-switch-project-action
+        (lambda ()
+          (progn
+            (projectile-dired)
+            (hydra-project/body))))
+
   :bind
-  ("C-c r" . edd-proj/run-comint))
+  (("C-c r" . edd-proj/run-comint)
+   :map projectile-mode-map
+   ("C-c p" . hydra-project/body)))
 
 (provide 'edd-proj)

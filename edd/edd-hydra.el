@@ -1,5 +1,4 @@
 (use-package hydra
-  :after projectile
   :config
 
   ;; WANT:
@@ -99,24 +98,15 @@
     ("R" counsel-recentf "recentf" :exit t)
     ("P" hydra-project/body "project >>" :exit t))
 
-  (setq projectile-switch-project-action
-        (lambda ()
-          (progn
-            (projectile-dired)
-            (hydra-project/body))))
-
-
   (eval-after-load "org"
     '(progn
        (define-key org-mode-map (kbd "C-c SPC") 'hydra-music/body)))
-  
+
   :bind
   (("C-c SPC" . hydra-music/body)
    ("C-c m" . hydra-mark-modify/body)
    ("C-c p" . hydra-project/body)
    ("C-c s" . sbt-hydra)
-   ("C-c o" . hydra-goto/body)
-   :map projectile-mode-map
-   ("C-c p" . hydra-project/body)))
+   ("C-c o" . hydra-goto/body)))
 
 (provide 'edd-hydra)
