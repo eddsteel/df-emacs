@@ -543,6 +543,10 @@
 (use-package olivetti)
 (use-package lua-mode)
 
+(use-package cc-mode
+  :hook
+  (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;

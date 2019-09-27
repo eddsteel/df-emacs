@@ -65,6 +65,7 @@
 (setq org-todo-keyword-faces
       '(("DEV" . (:underline t :foreground "#53f2dc" :bold))
         ("STG" . (:underline t :foreground "#ffac4a" :bold))
+        ("DEPLOY" . "org-todo")
         ("PRD" . (:underline t :bold))
         ("PR" . "#53f2dc")))
 

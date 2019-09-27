@@ -199,10 +199,10 @@ From a program takes two point or marker arguments, BEG and END."
     (sleep-for 1)
     (call-interactively #'package-menu-execute)))
 
-(defun edd/nanji ()
-  (interactive)
-  (let ((delay (random 300))
-        (prompt "いまなんじですか。"))
-    (run-at-time delay nil (lambda (prompt)(progn (message prompt)(edd/nanji))) prompt)))
+(defun edd/dashify ()
+    (interactive)
+    (save-excursion
+      (beginning-of-buffer)
+      (while (search-forward " -- " nil t) (replace-match " — "))))
 
 (provide 'edd-util)

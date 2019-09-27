@@ -26,7 +26,8 @@
     ("p"   emms-previous "previous track")
     ("+"   emms-volume-raise "volume up")
     ("-"   emms-volume-lower "volume down")
-    ("P"   emms-playlist-mode-switch-buffer "playlist" :exit t))
+    ("P"   emms-playlist-mode-switch-buffer "playlist" :exit t)
+    ("d"   emms-add-dired "add (dired)" :exit t))
 
   ;; project. Most of this is filled out in edd/edd-proj.el, some in counsel
   ;; https://github.com/abo-abo/hydra/wiki/Projectile-&-Fixmee
