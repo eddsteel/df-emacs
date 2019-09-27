@@ -102,6 +102,33 @@
   (interactive)
   (git-gutter:set-start-revision "origin/master"))
 
+(defun edd-git-browse-pr (&optional args)
+  (interactive)
+  (let*
+    ((default-directory (projectile-project-root))
+     (pr-list (split-string (shell-command-to-string "hub pr list") "[\n]" t " *"))
+     (pr (completing-read "PR #:" pr-list))
+     (m (string-match "^#\\([0-9]+\\) *.*" pr))
+     (prn (match-string 1 pr)))
+  (shell-command (concat "hub pr show " prn))))
+
+(defun edd-git-create-pr (&optional args)
+  (interactive)
+  (magit-run-git-async "pr" args))
+
+(define-transient-command edd-magit-prs ()
+  "Extras"
+  [["PRs"
+    ("c" "create" edd-git-create-pr)
+    ("b" "browse" edd-git-browse-pr)
+    ]])
+
+(require 'magit)
+
+(transient-insert-suffix
+  'magit-dispatch "%"
+  '("@" "PRs" edd-magit-prs))
+
 ;; TODO: move to hydra
 (defhydra hydra-edd-git-web-link (:exit nil :columns 3)
   ("b" magit-blame "blame" :exit t)
