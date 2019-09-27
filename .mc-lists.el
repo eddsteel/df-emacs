@@ -9,12 +9,14 @@
         c-electric-paren
         c-electric-slash
         cycle-spacing
+        end-of-visual-line
         ensime-company-complete-or-indent
         evil-numbers/dec-at-pt
         evil-numbers/inc-at-pt
         forward-sexp
         haskell-indentation-common-electric-command
         hydra-mark-modify/body
+        hydra-mark-modify/er/mark-outside-pairs
         hydra-mark-modify/mc/edit-beginnings-of-lines
         hydra-mark-modify/mc/edit-beginnings-of-lines-and-exit
         hydra-mark-modify/mc/edit-ends-of-lines
@@ -53,6 +55,7 @@
         counsel-M-x
         ensime-mouse-motion
         flycheck-next-error
+        hydra-mark-modify/er/mark-inside-pairs
         hydra-mark-modify/er/mark-outside-quotes
         hydra-mark-modify/mc/edit-ends-of-lines
         hydra-mark-modify/mc/mark-next-like-this-and-exit
