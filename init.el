@@ -431,7 +431,9 @@
         ("C-c C-c" . wgrep-finish-edit)))
 
 (use-package ivy-lobsters)
-(use-package direnv)
+(use-package direnv
+  :config
+  (direnv-mode))
 
 (use-package browse-at-remote)
 (use-package atomic-chrome)
