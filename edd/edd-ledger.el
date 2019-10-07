@@ -6,10 +6,11 @@
 ;; - Run `tac' on the paragraphs
 ;; - Initialize counter (using function)
 ;; - Convert each line to a decorated item using function
-;; - clean whitespace
-;;
-;; Then sort paragraphs on whole buffer
-;; Then paste into ledger file and use next-unknown to fill out details.
+;; - whitespace-cleanup
+;; - sort paragraphs on whole buffer
+;; - undecorate-all
+;; Then paste into ledger file and use categorise-regulars/
+;; next-unknown to fill out details.
 ;;
 ;;
 (require 'dash)
@@ -47,29 +48,27 @@
         (end-of-line)
         (capitalize-region (point) beg))))
 
-  (defun edd/ledger-clean-visa ()
+  (defun edd/ledger-clean-visa (month)
     "Clean an entry pasted from Vancity VISA site"
     (save-excursion
+      (next-line)
+      (kill-whole-line)
+      (previous-line)
       (beginning-of-line)
-      (delete-char 1)
-      (forward-sexp)
-      (backward-word)
-      (transpose-words 1)
-      (backward-word 2)
-      (transpose-words 2)
-      (kill-word 3)
-      (just-one-space)
+      (insert "2019-" month "-")
+      (forward-char 2)
+      (kill-line)
+      (delete-indentation 4)
+      (delete-indentation 4)
+      (move-beginning-of-line nil)
       (let ((beg (point)))
         (end-of-line)
-        (perform-replace "	$" " -$" nil nil nil nil nil beg (point)))
-      (beginning-of-line)
-      (let ((beg (point)))
-        (end-of-line)
-        (perform-replace "	 	 $" " $" nil nil nil nil nil beg (point)))
-      (let ((beg (point)))
-        (end-of-line)
-        (capitalize-region (point) beg))))
-
+        (capitalize-region (point) beg))
+      (if (string= "Cr" (current-word))
+          (backward-kill-word 2)
+        (progn
+          (search-backward "$")
+          (insert "-")))))
 
   (defun edd/ledger-line-to-entry (acct)
     (search-forward-regexp "-?\\$")
@@ -108,9 +107,9 @@
 
   (defun edd/ledger-next-unknown ()
     (interactive)
-    (search-forward "???")
-    (back-to-indentation)
-    (kill-line))
+    (when (search-forward "???" nil t)
+      (back-to-indentation)
+      (kill-line)))
 
   (defun edd/ledger-undecorate-all ()
     (beginning-of-buffer)
@@ -140,8 +139,24 @@
     (edd/ledger-line-to-entry acct)
     (forward-line -4)
     (edd/ledger-decorate-for-sorting num))
+
+  (defvar edd/ledger-regulars '())
+
+  (defun edd/ledger-categorise-regulars ()
+    (interactive)
+    (save-excursion
+      (mapcar
+       (lambda (pair)
+         (let ((term (car pair))
+               (cat (cdr pair)))
+           (while (search-forward term nil 't)
+             (save-excursion
+               (next-line 2)
+               (beginning-of-line)
+               (kill-line)
+               (ledger-magic-tab)
+               (insert cat)))))
+       edd/ledger-regulars)))
   )
-
-
 
 (provide 'edd-ledger)
