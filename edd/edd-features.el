@@ -196,4 +196,17 @@
 (use-package smerge-mode
   :delight " ±")
 
+;; Override _ in ctl-x 8 to provide vowels with macrons
+(use-package emacs
+  :init
+  (with-eval-after-load 'iso-transl (progn
+				      (setcdr
+				       (assoc "_a" iso-transl-char-map) [?ā])
+				      (add-to-list 'iso-transl-char-map '("_i" . [?ī]))
+				      (add-to-list 'iso-transl-char-map '("_u" . [?ū]))
+				      (add-to-list 'iso-transl-char-map '("_e" . [?ē]))
+				      (setcdr
+				       (assoc "_o" iso-transl-char-map) [?ō])
+				      (iso-transl-define-keys iso-transl-char-map))))
+
 (provide 'edd-features)
