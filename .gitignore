@@ -21,3 +21,8 @@ bookmarks
 /.cask
 /diary
 /rake.cache
+/site-lisp/lsp-scala/
+/transient/history.el
+/metals-emacs
+/newsticker
+/kkcrc
