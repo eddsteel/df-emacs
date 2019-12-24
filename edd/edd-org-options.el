@@ -11,8 +11,7 @@
       org-src-preserve-indentation t
       org-src-tab-acts-natively t
       org-hide-emphasis-markers t
-      org-startup-folded nil
-      )
+      org-startup-folded nil)
 (setq org-image-actual-width nil)
 (setq org-deck-title-slide-template
   "<h1>%t</h1>
@@ -48,20 +47,6 @@
 (setq org-ellipsis "…")
 (setq org-special-ctrl-a/e t)
 
-(define-key org-mode-map (kbd "M-p") 'org-shiftmetaup)
-(define-key org-mode-map (kbd "M-n") 'org-shiftmetadown)
-(define-key org-mode-map (kbd "C-M-o") 'org-insert-heading)
-
-;          (darkokai-yellow           "#E6DB74")
-;          (darkokai-orange           "#ffac4a")
-;          (darkokai-red              "#ff0066")
-;          (darkokai-magenta          "#ff8eff")
-;          (darkokai-violet           "#ab7eff")
-;          (darkokai-blue             "#06d8ff")
-;          (darkokai-cyan             "#53f2dc")
-;          (darkokai-green            "#63de5d")
-;          (darkokai-gray             "#35393b")
-
 (setq org-todo-keyword-faces
       '(("DEV" . (:underline t :foreground "#53f2dc" :bold))
         ("STG" . (:underline t :foreground "#ffac4a" :bold))
@@ -82,8 +67,6 @@
 (font-lock-add-keywords 'org-mode
                         '(("^ +\\([-*]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-
 
 (defun edd-org-split-gh-pr (tag)
   (let*

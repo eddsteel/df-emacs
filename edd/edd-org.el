@@ -1,22 +1,61 @@
-(use-package org
+(use-package graphviz-dot-mode)
+(use-package htmlize)
+(use-package org-download)
+(use-package org-bullets)
+
+;; so things that depend on org don't actually build it -- we have org-plus-contrib for that
+(straight-use-package '(org :local-repo nil))
+
+(use-package org-plus-contrib
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
-  :ensure graphviz-dot-mode
-  :ensure htmlize
-  :ensure org-download
-  :ensure org-bullets
-  :ensure org-plus-contrib
-  :pin "org"
-  :init
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
-  (add-hook 'org-mode-hook (lambda () (org-display-inline-images t t)))
+  :hook ((org-mode . #'turn-on-visual-line-mode)
+         (org-mode . (lambda () (org-bullets-mode 1)))
+         (org-mode . (lambda () (org-display-inline-images t t))))
+  :commands (org-confluence-export-as-confluence edd-ox-confluence)
   :config
+  (require 'ox-confluence)
+  (defun edd-ox-confluence ()
+    (interactive)
+    (org-confluence-export-as-confluence)
+    (beginning-of-buffer)
+    (replace-regexp "`\\([^']*\\)'" "{{\\1}}")
+    (beginning-of-buffer)
+    (replace-string "=/=" "}}/{{")
+    (beginning-of-buffer)
+    (replace-string "[" "\\[")
+    (beginning-of-buffer)
+    (replace-string "]" "\\]")
+    (beginning-of-buffer)
+    (replace-regexp "\\\\\\[\\(http.*\\)\\\\\\]" "[\\1]"))
   (setq org-bullets-bullet-list
         '("​" "​" "​" "​" "​" "​" "​" "​"))
   (when (eq 'darwin system-type)
     (add-to-list 'org-modules 'org-mac-iCal))
   (add-to-list 'org-modules 'ox-confluence)
 
+  (defun edd/create-ticket-notes (project number)
+    (let ((url (concat "[[j:" project "-" number "]]"))
+          (file (concat "~/txt/work-notes/" project "/" number ".org")))
+      (find-file file)
+      (beginning-of-buffer)
+      (insert "#+TITLE:" project "-" number)
+      (newline-and-indent)
+      (insert "* " url)
+      (newline-and-indent)))
+
+  (defun edd/parse-jira-ticket-near-point ()
+    (save-excursion
+      (backward-word-strictly 3)
+      (re-search-forward ".*[^A-Z]\\([A-Z]+\\)-\\([0-9]+\\).*")
+      (cons (match-string 1) (match-string 2))))
+
+  (defun edd/create-jira-notes ()
+    (interactive)
+    (let ((ticket (edd/parse-jira-ticket-near-point)))
+      (edd/create-ticket-notes (car ticket) (cdr ticket))))
+
+  (load-file "./edd-org-options.el")
+  
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
@@ -43,45 +82,6 @@
   (setq weather-metno-get-image-props
         '(:width 16 :height 16 :ascent center)))
 
-(use-package ox-confluence
-  :ensure nil
-  :commands (org-confluence-export-as-confluence edd-ox-confluence)
-  :config
-  (defun edd-ox-confluence ()
-    (interactive)
-    (org-confluence-export-as-confluence)
-    (beginning-of-buffer)
-    (replace-regexp "`\\([^']*\\)'" "{{\\1}}")
-    (beginning-of-buffer)
-    (replace-string "=/=" "}}/{{")
-    (beginning-of-buffer)
-    (replace-string "[" "\\[")
-    (beginning-of-buffer)
-    (replace-string "]" "\\]")
-    (beginning-of-buffer)
-    (replace-regexp "\\\\\\[\\(http.*\\)\\\\\\]" "[\\1]")))
-
-(defun edd/create-ticket-notes (project number)
-  (let ((url (concat "[[j:" project "-" number "]]"))
-        (file (concat "~/txt/work-notes/" project "/" number ".org")))
-    (find-file file)
-    (beginning-of-buffer)
-    (insert "#+TITLE:" project "-" number)
-    (newline-and-indent)
-    (insert "* " url)
-    (newline-and-indent)))
-
-(defun edd/parse-jira-ticket-near-point ()
-  (save-excursion
-    (backward-word-strictly 3)
-    (re-search-forward ".*[^A-Z]\\([A-Z]+\\)-\\([0-9]+\\).*")
-    (cons (match-string 1) (match-string 2))))
-
-(defun edd/create-jira-notes ()
-  (interactive)
-  (let ((ticket (edd/parse-jira-ticket-near-point)))
-    (edd/create-ticket-notes (car ticket) (cdr ticket))))
-
 (use-package ob-http
   :defer
   :config
@@ -90,11 +90,8 @@
 (use-package ob-async)
 (use-package ob-kotlin)
 
-(use-package edd-org-options
-  :ensure nil)
-
 (use-package edd-gtd
-  :ensure nil
+  :straight nil
   :commands (edd/go-home)
   :bind
   (("C-c w" . edd/go-to-work)))

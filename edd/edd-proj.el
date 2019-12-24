@@ -2,8 +2,8 @@
 ;; http://endlessparentheses.com/improving-projectile-with-extra-commands.html
 ;; https://emacs.stackexchange.com/questions/40553/projectile-run-project-without-prompt
 ;;
+(use-package projectile-ripgrep)
 (use-package projectile
-  :ensure projectile-ripgrep
   :demand t
   :hook
   ((text-mode prog-mode) . projectile-mode)
@@ -53,39 +53,38 @@
 
   :config
   (plist-put (alist-get 'gradlew projectile-project-types) 'run-command "./gradlew run")
+  (plist-put (alist-get 'gradlew projectile-project-types) 'compile-command "./gradlew compile")
+
+
+
+
+  
   (defhydra+ hydra-project nil "Project"
+    ("!"   projectile-run-command-in-root "command")
+    ("&"   projectile-run-async-shell-command-in-root "async command")
     ("A"   projectile-grep "grep")
-    ("B"   projectile-switch-to-buffer-other-window "buffer other window")
-    ("c"   projectile-run-command-in-root "command")
-    ("C"   projectile-run-async-shell-command-in-root "shell command")
-    ("D"   projectile-find-dir-other-window "find dir other window")
-    ("e"   project-find-file "find file (any file under root)")
     ("E"   project-find-regexp "find regexp (any file under root)")
     ("F"   projectile-find-file-other-window "find file other window")
+    ("K"   projectile-kill-buffers "kill buffers")
+    ("L"   projectile-find-file-dwim-other-window "find-file DWIM other window")
+    ("c"   edd-proj/compile-no-prompt "compile")
+    ("O"   projectile-find-other-file-other-window "find other file other window")
+    ("r"   edd-proj/run-no-prompt)
+    ("T"   projectile-toggle-between-implementation-and-test "flip between test and implementation")
+    ("V"   projectile-ibuffer "ibuffer")
+    ("X"   edd-proj/term "term")
+    ("e"   project-find-file "find file (any file under root)")
     ("g"   edd-proj/magit-and-fetch "git fetch origin")
-    ("h"   projectile-dired "dired")
-    ("i"   projectile-project-info "info")
+    ("d"   projectile-dired "dired")
     ("kc"  projectile-invalidate-cache "invalidate cache")
     ("kd"  projectile-remove-known-project "remove a project")
     ("kk"  projectile-cache-current-file "cache current file")
-    ("K"   projectile-kill-buffers "kill buffers")
     ("ks"  projectile-cleanup-known-projects "cleanup projects")
-    ("l"   projectile-find-file-dwim "find-file DWIM")
-    ("L"   projectile-find-file-dwim-other-window "find-file DWIM other window")
     ("m"   edd-proj/make-or-compile "run Make target or compile command")
-    ("M"   edd-proj/compile-no-prompt "compile")
     ("o"   projectile-find-other-file "find other file")
-    ("O"   projectile-find-other-file-other-window "find other file other window")
     ("p"   projectile-switch-project "switch project >>")
-    ("r"   projectile-recentf "recent files")
-    ("R"   edd-proj/run-no-prompt)
-    ("s"   projectile-multi-occur "occur")
-    ("S"   projectile-replace "replace")
-    ("t"   projectile-toggle-between-implementation-and-test "flip between test and implementation")
-    ("T"   edd-proj/test-no-prompt "test project")
-    ("v"   projectile-display-buffer "display buffer")
-    ("V"   projectile-ibuffer "ibuffer")
-    ("X"   edd-proj/term "term")
+    ("R"   edd-proj/run-comint "run in comint")
+    ("t"   edd-proj/test-no-prompt "test project")
     ("x"   projectile-run-shell "shell"))
 
   (setq projectile-switch-project-action

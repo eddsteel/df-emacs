@@ -1,32 +1,23 @@
-;; Bootstrap use-package.
+;; Bootstrap use-package and straight.
 ;;
 
-;; https://github.com/nilcons/emacs-use-package-fast/blob/master/README.md#a-trick-less-gc-during-startup
-(package-initialize)
-(setq gc-cons-threshold 64000000)
-(add-hook 'after-init-hook
-          #'(lambda () ; restore gc after startup
-              (setq gc-cons-threshold 800000)))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq inhibit-startup-screen t
-      package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")
-                         ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
+(setq straight-use-package-by-default t)
+(straight-use-package 'use-package)
 
-(eval-when-compile
-  (require 'package)
-  (package-initialize)
-  (progn
-    (unless (package-installed-p 'use-package)
-      (message "Whoa! Bootstrapping.")
-      (package-refresh-contents)
-      (package-install 'use-package))
-    (require 'use-package)
-    (setq package-enable-at-startup nil
-          use-package-always-ensure 't
-          use-package-always-pin "melpa")))
-(use-package delight :pin gnu)
+(use-package delight :straight t)
 (use-package bind-key)
 
 (defun edd/maybe-load-config (name)

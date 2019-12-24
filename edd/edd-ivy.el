@@ -1,13 +1,11 @@
 ;; Mostly taken from https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
 ;;
+(use-package counsel)
+(use-package rg)
+(use-package ivy-hydra)
+(straight-use-package
+    '(counsel-projectile :type git :host github :repo "ericdanan/counsel-projectile"))
 (use-package ivy
-  :ensure ivy-hydra
-  :ensure counsel
-  :ensure counsel-projectile
-  :ensure rg
-  :ensure projectile
-  :ensure ido
-  :ensure company
   :after company
   :delight
   (ivy-mode " 🌱")

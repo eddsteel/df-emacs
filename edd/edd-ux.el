@@ -89,7 +89,6 @@
   (setq custom-safe-themes '("4639288d273cbd3dc880992e6032f9c817f17c4a91f00f3872009a099f5b3f84" default)))
 
 (use-package unicode-fonts
-  :ensure persistent-soft
   :init
   (unicode-fonts-setup)
   (when (not (daemonp)) (edd-prep-frame (car (frame-list)))))
@@ -120,8 +119,6 @@
   (setq battery-mode-line-format " %b%p%%"))
 
 (use-package nyan-mode
-  :ensure midnight
-  :ensure time-date
   :demand t
   :hook
   (midnight . edd-ux/nyan-on-wednesdays)
@@ -137,7 +134,7 @@
   (edd-ux/nyan-on-wednesdays)
   (nyan-mode 1))
 
-(use-package "basic-theme"
+(use-package basic-theme
   :commands edd-ux/basic-mode
   :config
   (defun edd-ux/basic-mode ()

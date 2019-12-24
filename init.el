@@ -2,19 +2,21 @@
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
+(defvar edd/consul-p t "Whether to do consul stuff")
 
 ;; Do this stuff early to avoid flicker
 ;;
-(use-package edd-ux)
+(use-package edd-ux :straight nil)
 
 ;; built-in features
 ;;
-(use-package edd-features)
+(use-package edd-features :straight nil)
 
 ;; System-specific stuff.
 ;;
-(use-package edd-mac :if (eq 'darwin system-type))
-(use-package edd-linux :if (not (eq 'darwin system-type)))
+(use-package edd-mac :if (eq 'darwin system-type) :straight nil)
+(use-package edd-linux :if (not (eq 'darwin system-type)) :straight nil)
+(use-package restart-emacs)
 
 ;; whitespace
 ;;
@@ -46,16 +48,17 @@
 
 (use-package which-key)
 
-(use-package edd-hydra :demand t)
+(use-package edd-hydra :demand t :straight nil)
 
-(use-package edd-proj)
+(use-package edd-proj :straight nil)
 
-(use-package edd-ivy :after projectile)
+(use-package edd-ivy :after projectile :straight nil)
 
 ;; utilities that are too small to live alone
 ;;
 (use-package edd-util
   :demand t
+  :straight nil
   :bind
   (("C-w" . kill-region-or-backward-kill-word)
    ("C-c M-p" . edd-jump-to-prev-url)
@@ -68,21 +71,6 @@
 (use-package re-builder
   :config
   (setq reb-re-syntax 'string))
-
-;; vagrant
-(use-package vagrant
-  :config
-  (defun edd-vagrant-edit ()
-    (interactive)
-    "edit the local Vagrantfile"
-    (require 'vagrant)
-    (find-file (concat (vagrant-locate-vagrantfile) "Vagrantfile")))
-  :bind
-  (("C-c v u" . vagrant-up)
-   ("C-c v p" . vagrant-provision)
-   ("C-c v d" . vagrant-destroy)
-   ("C-c v v" . vagrant-ssh)
-   ("C-c v e" . edd-vagrant-edit)))
 
 (use-package emacs
   :hook
@@ -98,12 +86,11 @@
           ))))
 
 ;; secret config -- used below.
-(use-package edd-secrets :commands edd-with-secrets)
+(use-package edd-secrets :commands edd-with-secrets :straight nil)
 
-(use-package edd-erc)
+(use-package edd-erc :straight nil)
 
 (use-package company
-  :ensure company-ghc
   :commands (company-mode)
   :demand
   :delight
@@ -114,13 +101,13 @@
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 
-(use-package edd-org)
-(use-package edd-mail)
-(use-package edd-pdf)
+(use-package edd-org :straight nil)
+(use-package edd-mail :straight nil)
+(use-package edd-pdf :straight nil)
 
-(use-package edd-scala)
-(use-package edd-haskell)
-(use-package edd-ruby)
+(use-package edd-scala :straight nil)
+(use-package edd-haskell :straight nil)
+(use-package edd-ruby :straight nil)
 
 (use-package flycheck
   :delight " 🛂"
@@ -156,7 +143,7 @@
 
 (use-package magit-filenotify :demand t)
 
-(use-package edd-ledger)
+(use-package edd-ledger :straight nil)
 
 (use-package tea-time)
 
@@ -219,10 +206,9 @@
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 
+(use-package edd-rust :straight nil)
 
-(use-package edd-rust)
-
-(use-package edd-go)
+(use-package edd-go :straight nil)
 
 ;;preview files in dired
 (use-package peep-dired
@@ -319,6 +305,8 @@
 
 (use-package emms
   :load-path "../src/emms/lisp"
+  :hook
+  (emms-player-started . edd/emms-tell-consul)
   :commands (emms-smart-browse emms-pause)
   :init
   (setq default-major-mode 'fundamental-mode) ;; shim for emms to work
@@ -339,14 +327,27 @@
   (setq emms-volume-change-function 'emms-volume-pulse-change)
 
   :config
+  (require 'json)
   (defun edd/emms-modeline ()
     (concat " 🎶 "
             (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
                                      (emms-mode-line-playlist-current))))
               (substring s
                          0 (min 20 (length s))))))
+  (defun edd/emms-tell-consul ()
+    (when edd/emms-consul-p
+      (let*
+          ((artist (emms-track-get (emms-playlist-current-selected-track) 'info-artist))
+           (title (emms-track-get (emms-playlist-current-selected-track) 'info-title))
+           (json (json-encode-alist (list (cons :artist artist) (cons :title title)))))
+        (start-process "np" "*tell-consul*" "b" "np" "set" json))))
+
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
-  :bind (("<f5>" . emms-pause)))
+  :bind (
+         ("<f5>" . emms-pause)
+         ("<XF86AudioNext>" . emms-next)
+         ("<XF86AudioPrev>" . emms-previous)
+         ))
 
 (use-package dumb-jump
   :bind
@@ -363,8 +364,6 @@
   :config
   (setq helm-make-completion-method 'ivy)
   (setq helm-make-comint 't))
-
-(use-package edd-rss)
 
 (use-package csv)
 (use-package elm-mode)
@@ -412,12 +411,12 @@
 (use-package multiple-cursors)
 
 (use-package edd-sow
+  :straight nil
   :config
   (edd-sow-mode 1))
 
-(use-package restart-emacs)
-
 (use-package edd-git-web-link
+  :straight nil
   :bind
   ("C-c g" . hydra-edd-git-web-link/body))
 
@@ -444,11 +443,6 @@
   :config
   (venv-initialize-interactive-shells)
   (setq venv-dirlookup-names '(".venv" "pyenv" ".virtual" ".env")))
-
-(use-package editorconfig
-  :delight
-  :config
-  (editorconfig-mode 1))
 
 (use-package evil-numbers
   :bind
@@ -481,7 +475,6 @@
   :init
   (edit-server-start))
 
-
 (use-package copy-as-format
   :bind
   ("C-c M-w s" . copy-as-format-slack)
@@ -499,19 +492,6 @@
 
 (use-package make-mode
   :mode ("Makefile.inc" . makefile-mode))
-
-;;(use-package tramp-term)
-;;
-;;(use-package counsel-tramp
-;;  :ensure vagrant-tramp)
-
-(eval-after-load 'tramp
-  '(add-to-list 'tramp-methods
-               '("hotdog"
-                 (tramp-login-program "hotdog")
-                 (tramp-login-args ("ssh") ("%h"))
-                 (tramp-remote-shell "/bin/sh")
-                 (tramp-remote-shell-args ("-c")))))
 
 (use-package kotlin-mode
   :mode ("build.gradle.kts" . kotlin-mode)

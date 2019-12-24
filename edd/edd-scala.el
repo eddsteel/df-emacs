@@ -3,8 +3,8 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.env\\'" . sh-mode)))
 
+(use-package sbt-mode)
 (use-package scala-mode
-  :ensure sbt-mode
   :mode (("\\.scala\\'" . scala-mode) ("\\.sc\\'" . scala-mode))
   :hook
   (scala-mode . edd-scala/hook)
@@ -166,49 +166,12 @@
 	    (end-of-line)
 	    (insert " // scalastyle:ignore " rule)))))))
 
-(use-package ensime
-  :pin melpa-stable
-  :hook
-  (scala-mode . edd-ensime-scala-mode-hook)
-  :init
-  (defun edd-ensime-scala-mode-hook ()
-    (when buffer-file-name ;; i.e. not org babel
-      (let ((file (ensime-config-find-file (buffer-file-name))))
-	(when (and file
-		   (not (ensime-connection-or-nil)))
-	  (call-interactively 'ensime))
-	(ensime-mode))))
-  :config
-  (setq ensime-auto-generate-config 't)
-  (setq ensime-startup-notification nil)
-  (setq ensime-startup-snapshot-notification nil)
-  (setq ensime-use-helm nil)
-  ;; dumb jump if ensime jump fails
-  (defadvice ensime-edit-definition (after dumb-jump-after-ensime)
-    (when (not ad-return-value)
-      (call-interactively #'dumb-jump-go)))
-  (ad-activate 'ensime-edit-definition)
-  :bind
-  (:map scala-mode-map
-   ("C-c e" . ensime)
-   ("C-c C-e" . ensime-inf-eval-region)))
 
 ;; Extra mode for .sbt files to stop them being covered in errors.
 ;;
 (define-derived-mode sbt-file-mode scala-mode "SBT file mode"
   "A mode for editing .sbt files")
 (add-to-list 'auto-mode-alist '("\\.sbt\\'" . sbt-file-mode))
-
-
-(defun edd-ensime-test-template ()
-  ""
-  "package %TESTPACKAGE%
-
-import org.scalatest._
-
-class %TESTCLASS% extends FlatSpec with Matchers {
-
-}")
 
 (defun edd-align-sbt-deps ()
   (interactive)
@@ -217,10 +180,6 @@ class %TESTCLASS% extends FlatSpec with Matchers {
 (defun edd-java-hook ()
   (setq compile-command "ant \-emacs compile \-find")
   (local-set-key (kbd "C-x C-k") 'recompile))
-
-(defun edd-scala-helm-method ()
-  (interactive)
-  (call-interactively 'helm-occur "\bdef\ "))
 
 (add-hook 'java-mode-hook 'edd-java-hook)
 

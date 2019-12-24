@@ -31,12 +31,12 @@
 (defun edd-git-web-link-browse-current-file ()
   "Open current file in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-file "-d")))
+  (edd-git-web-link-current-file "-o" "-d"))
 
 (defun edd-git-web-link-browse-current-file-master ()
   "Open current file in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-file "-b" "master" "-d")))
+  (edd-git-web-link-current-file "-o" "-b" "master" "-d"))
 
 
 (defun edd-git-web-link-current-line (&rest args)
@@ -55,12 +55,12 @@
 (defun edd-git-web-link-browse-current-line ()
   "Open current line in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-line)))
+  (edd-git-web-link-current-line "-o" "-d"))
 
 (defun edd-git-web-link-browse-current-line-master ()
   "Open current line in the web provider on master."
   (interactive)
-  (browse-url (edd-git-web-link-current-line "-b" "master")))
+  (edd-git-web-link-current-line "-o" "-b" "master" "-d"))
 
 
 (defun edd-git-web-link-current-region (&rest args)
@@ -81,12 +81,12 @@
 (defun edd-git-web-link-browse-current-region ()
   "Open current region in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-region)))
+  (edd-git-web-link-current-region "-o" "-d"))
 
 (defun edd-git-web-link-browse-current-region-master ()
   "Open current region in the web provider."
   (interactive)
-  (browse-url (edd-git-web-link-current-region "-b" "master")))
+  (edd-git-web-link-current-region "-b" "master" "-o" "-d"))
 
 (defun edd-git-web-link-commit-at-point ()
   (let ((commit (magit-commit-at-point)))
@@ -96,7 +96,7 @@
 (defun edd-git-web-link-browse-commit-at-point ()
   "Open the commit at point in the web provider"
   (interactive)
-  (browse-url (edd-git-web-link-commit-at-point)))
+  (edd-git-web-link-commit-at-point "-o" "-d"))
 
 (defun edd-git-review ()
   (interactive)

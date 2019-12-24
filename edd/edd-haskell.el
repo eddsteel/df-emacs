@@ -1,7 +1,9 @@
-(use-package haskell-mode
-  :ensure hi2
+(use-package hi2
   :delight
-  (hi2-mode)
+  (hi2-mode))
+
+(use-package haskell-mode
+  :delight
   (haskell-doc-mode " 📜")
   :mode "\\.hs\\'"
   :hook
