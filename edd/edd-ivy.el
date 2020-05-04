@@ -44,6 +44,7 @@
   :config
   (ido-mode -1)
   (counsel-projectile-mode)
+  (push '(counsel-rg . "--glob '**' -- ") ivy-initial-inputs-alist)
 
   (setq
    projectile-completion-system 'ivy

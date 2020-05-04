@@ -32,6 +32,7 @@
         ("calendar.org" . (:tag . "inbox"))
         ("projects.org" . (:tag . "project"))
         ("projects.org" . (:tag . "inbox"))
+        ("projects.org" . (:tag . "target"))
         ("inbox.org" . (:tag . "inbox"))
         ("someday.org" . (:level . 1))))
 

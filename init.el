@@ -23,19 +23,21 @@
 (use-package whitespace
   :delight whitespace-mode
   :hook
-  (((prog-mode text-mode conf-mode) . whitespace-mode)
-   (before-save . whitespace-cleanup))
+  (((prog-mode text-mode conf-mode) . whitespace-mode))
   :config
   (setq-default
    whitespace-style '(face trailing tabs empty indentation)
    indent-tabs-mode nil)
-  (eval-after-load 'makefile-mode
-    (remove-hook 'before-save-hook 'whitespace-cleanup))
+
   :custom-face
   (whitespace-empty ((nil :foreground "disabledControlTextColor" :background "#333333")))
   (whitespace-line ((nil :background "disabledControlTextColor" :foreground "#333333")))
   (whitespace-indentation ((nil :background "disabledControlTextColor" :foreground "#333333")))
   (whitespace-trailing ((nil :background "disabledControlTextColor" :foreground "#333333"))))
+
+(use-package whitespace-cleanup-mode
+  :config
+  (global-whitespace-cleanup-mode 1))
 
 ;; Ace window
 (use-package ace-window
@@ -334,6 +336,7 @@
                                      (emms-mode-line-playlist-current))))
               (substring s
                          0 (min 20 (length s))))))
+
   (defun edd/emms-tell-consul ()
     (when edd/emms-consul-p
       (let*
@@ -343,11 +346,21 @@
         (start-process "np" "*tell-consul*" "b" "np" "set" json))))
 
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
-  :bind (
-         ("<f5>" . emms-pause)
-         ("<XF86AudioNext>" . emms-next)
-         ("<XF86AudioPrev>" . emms-previous)
-         ))
+
+  (defun edd/emms-start-or-previous ()
+    (interactive)
+    (when emms-player-playing-p
+      (emms-stop))
+    (when (< emms-playing-time 10)
+        (emms-playlist-current-select-previous))
+    (emms-start))
+
+  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
+  :bind (("<f8>" . emms-pause)
+         ("<f7>" . edd/emms-start-or-previous)
+         ("<f9>" . emms-next)
+         ("C-M-s-p" . emms-playlist-mode-switch-buffer)
+         ("C-M-s-m" . emms-browse-by-album)))
 
 (use-package dumb-jump
   :bind
