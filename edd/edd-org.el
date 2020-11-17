@@ -1,10 +1,6 @@
-(use-package graphviz-dot-mode)
-(use-package htmlize)
-(use-package org-download)
-(use-package org-bullets)
+(straight-use-package '(org-plus-contrib :includes (org)))
 
-;; so things that depend on org don't actually build it -- we have org-plus-contrib for that
-(straight-use-package '(org :local-repo nil))
+(defun org-plus-contrib ())
 
 (use-package org-plus-contrib
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
@@ -12,26 +8,14 @@
          (org-mode . (lambda () (org-bullets-mode 1)))
          (org-mode . (lambda () (org-display-inline-images t t))))
   :commands (org-confluence-export-as-confluence edd-ox-confluence)
-  :config
-  (require 'ox-confluence)
-  (defun edd-ox-confluence ()
-    (interactive)
-    (org-confluence-export-as-confluence)
-    (beginning-of-buffer)
-    (replace-regexp "`\\([^']*\\)'" "{{\\1}}")
-    (beginning-of-buffer)
-    (replace-string "=/=" "}}/{{")
-    (beginning-of-buffer)
-    (replace-string "[" "\\[")
-    (beginning-of-buffer)
-    (replace-string "]" "\\]")
-    (beginning-of-buffer)
-    (replace-regexp "\\\\\\[\\(http.*\\)\\\\\\]" "[\\1]"))
-  (setq org-bullets-bullet-list
-        '("​" "​" "​" "​" "​" "​" "​" "​"))
+  :init
   (when (eq 'darwin system-type)
     (add-to-list 'org-modules 'org-mac-iCal))
-  (add-to-list 'org-modules 'ox-confluence)
+  ;;  (add-to-list 'org-modules 'ox-confluence)
+  (load-file (locate-user-emacs-file "edd/edd-org-options.el"))
+  :config
+  (setq org-bullets-bullet-list
+        '("​" "​" "​" "​" "​" "​" "​" "​"))
 
   (defun edd/create-ticket-notes (project number)
     (let ((url (concat "[[j:" project "-" number "]]"))
@@ -53,8 +37,6 @@
     (interactive)
     (let ((ticket (edd/parse-jira-ticket-near-point)))
       (edd/create-ticket-notes (car ticket) (cdr ticket))))
-
-  (load-file "./edd-org-options.el")
   
   :bind
   (("C-c l" . org-store-link)
@@ -83,18 +65,11 @@
         '(:width 16 :height 16 :ascent center)))
 
 (use-package ob-http
-  :defer
-  :config
+  :init
   (org-babel-do-load-languages 'org-babel-load-languages '((http . t))))
 
 (use-package ob-async)
 (use-package ob-kotlin)
-
-(use-package edd-gtd
-  :straight nil
-  :commands (edd/go-home)
-  :bind
-  (("C-c w" . edd/go-to-work)))
 
 (use-package interleave
   :config
@@ -114,4 +89,10 @@
   :after org
   :commands org-gfm-export-to-markdown)
 
+(use-package graphviz-dot-mode)
+(use-package htmlize)
+(use-package org-download)
+(use-package org-bullets)
+
 (provide 'edd-org)
+

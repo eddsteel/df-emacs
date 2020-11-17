@@ -1,10 +1,9 @@
 ;; org config that doesn't load packages
-(require 'org)
-(require 'org-element)
-(require 'ob-http)
 (setq org-html-validation-link nil)
 (setq org-html-head-include-default-style nil)
-(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+
+(eval-after-load "org"
+  (lambda () (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))))
 (setq org-confirm-babel-evaluate nil
       org-edit-src-content-indentation 0
       org-src-fontify-natively t
@@ -37,9 +36,9 @@
    (ruby . t)
    (scala . t)
    (shell . t)
-   (sqlite . t)
-   (http . t)))
+   (sqlite . t)))
 
+(setq org-imenu-depth 3)
 (setq org-src-fontify-natively t)
 (setq org-log-done t)
 (setq org-hide-leading-stars t)

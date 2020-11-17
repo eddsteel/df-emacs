@@ -12,6 +12,10 @@
 ;;
 (use-package edd-features :straight nil)
 
+;; org-mode, as good as built-in
+;;
+(use-package edd-org :straight nil)
+
 ;; System-specific stuff.
 ;;
 (use-package edd-mac :if (eq 'darwin system-type) :straight nil)
@@ -103,7 +107,11 @@
     (add-to-list 'company-backends 'company-ghc)
     (custom-set-variables '(company-ghc-show-info t))))
 
-(use-package edd-org :straight nil)
+(use-package edd-gtd
+  :straight nil
+  :commands (edd/go-home)
+  :bind
+  (("C-c w" . edd/go-to-work)))
 (use-package edd-mail :straight nil)
 (use-package edd-pdf :straight nil)
 
