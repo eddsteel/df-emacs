@@ -67,13 +67,11 @@
                      (match-string 1))))))
   (setq emms-volume-change-function 'edd-emms-volume-m-change))
 
-(use-package org-agenda
-  :defer t
-  :ensure midnight
+(use-package org-plus-contrib
+  :commands edd-mac/agenda-iCal
   :hook
   (midnight . edd-mac/agenda-iCal)
   :config
-
   (defun edd-omi-checked (dir)
     (ignore-errors
       (omi-checked dir)))

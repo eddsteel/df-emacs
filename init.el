@@ -1,4 +1,4 @@
-(toggle-debug-on-error)
+;;(toggle-debug-on-error)
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
@@ -43,7 +43,6 @@
   :config
   (global-whitespace-cleanup-mode 1))
 
-;; Ace window
 (use-package ace-window
   :bind
   ("C-x o" . ace-window)
@@ -72,8 +71,6 @@
    ("C-x k". edd-kill-a-buffer)
    ("C-c !". edd-config-reload)))
 
-;; RE-Builder
-;;
 (use-package re-builder
   :config
   (setq reb-re-syntax 'string))
@@ -101,11 +98,7 @@
   :demand
   :delight
   (company-search-mode)
-  (company-mode)
-  :config
-  (progn
-    (add-to-list 'company-backends 'company-ghc)
-    (custom-set-variables '(company-ghc-show-info t))))
+  (company-mode))
 
 (use-package edd-gtd
   :straight nil
@@ -113,7 +106,9 @@
   :bind
   (("C-c w" . edd/go-to-work)))
 (use-package edd-mail :straight nil)
-(use-package edd-pdf :straight nil)
+(use-package pdf-tools
+  :init
+  (pdf-tools-install))
 
 (use-package edd-scala :straight nil)
 (use-package edd-haskell :straight nil)
@@ -152,6 +147,10 @@
   (setq magit-commit-arguments '("--gpg-sign")))
 
 (use-package magit-filenotify :demand t)
+
+(use-package magit-delta
+  :hook
+  ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
 
 (use-package edd-ledger :straight nil)
 
@@ -368,7 +367,7 @@
          ("<f7>" . edd/emms-start-or-previous)
          ("<f9>" . emms-next)
          ("C-M-s-p" . emms-playlist-mode-switch-buffer)
-         ("C-M-s-m" . emms-browse-by-album)))
+         ("C-M-s-n" . emms-browse-by-album)))
 
 (use-package dumb-jump
   :bind

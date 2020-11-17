@@ -93,9 +93,10 @@
   (unicode-fonts-setup)
   (when (not (daemonp)) (edd-prep-frame (car (frame-list)))))
 
-(use-package avoid
-  :config
-  (mouse-avoidance-mode 'jump))
+(when (not (eq 'darwin system-type))
+  (use-package avoid
+    :config
+    (mouse-avoidance-mode 'jump)))
 
 (use-package hl-line
   :hook
