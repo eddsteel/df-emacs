@@ -3,12 +3,14 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        backward-sexp
         c-electric-brace
         c-electric-colon
         c-electric-delete-forward
         c-electric-paren
         c-electric-slash
         cycle-spacing
+        delete-horizontal-space
         end-of-visual-line
         ensime-company-complete-or-indent
         evil-numbers/dec-at-pt
@@ -55,6 +57,7 @@
         counsel-M-x
         ensime-mouse-motion
         flycheck-next-error
+        flycheck-previous-error
         hydra-mark-modify/er/mark-inside-pairs
         hydra-mark-modify/er/mark-outside-quotes
         hydra-mark-modify/mc/edit-ends-of-lines
@@ -69,4 +72,5 @@
         org-end-of-line
         sp-backward-delete-char
         sp-forward-barf-sexp
+        transpose-words
         ))
