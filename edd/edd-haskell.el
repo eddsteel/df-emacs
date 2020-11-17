@@ -17,6 +17,8 @@
     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
     (add-to-list 'exec-path my-cabal-path))
   :config
+  (add-to-list 'company-backends 'company-ghc)
+  (custom-set-variables '(company-ghc-show-info t))
   (setq
    haskell-tags-on-save t
    haskell-process-suggest-remove-import-lines t
