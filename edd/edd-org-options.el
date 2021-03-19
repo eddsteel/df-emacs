@@ -34,9 +34,10 @@
    (plantuml . t)
    (python . t)
    (ruby . t)
-   (scala . t)
    (shell . t)
    (sqlite . t)))
+
+(eval-after-load "scala" (lambda () (org-babel-do-load-languages 'org-babel-load-languages '(scala . t))))
 
 (setq org-imenu-depth 3)
 (setq org-src-fontify-natively t)

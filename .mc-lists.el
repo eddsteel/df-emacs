@@ -70,6 +70,7 @@
         mac-mwheel-scroll
         mark-sexp
         org-end-of-line
+        sh-assignment
         sp-backward-delete-char
         sp-forward-barf-sexp
         transpose-words

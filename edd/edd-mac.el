@@ -67,7 +67,7 @@
                      (match-string 1))))))
   (setq emms-volume-change-function 'edd-emms-volume-m-change))
 
-(use-package org-plus-contrib
+(use-package org
   :commands edd-mac/agenda-iCal
   :hook
   (midnight . edd-mac/agenda-iCal)
