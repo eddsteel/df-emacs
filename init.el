@@ -334,6 +334,7 @@
   (setq emms-info-functions '(emms-info-libtag))
   (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
   (setq emms-volume-change-function 'emms-volume-pulse-change)
+  (setq emms-show-format "%s")
 
   :config
   (require 'json)
@@ -361,6 +362,14 @@
     (when (< emms-playing-time 10)
         (emms-playlist-current-select-previous))
     (emms-start))
+
+  ;; This is like (emms-show) but doesn't display or insert, just returns the string
+  (defun edd/emms-now-playing ()
+    (if emms-player-playing-p
+                    (format emms-show-format
+                            (emms-track-description
+                             (emms-playlist-current-selected-track)))
+                  "Nothing playing right now"))
 
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   :bind (("<f8>" . emms-pause)
