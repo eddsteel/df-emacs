@@ -76,7 +76,8 @@
                 (put 'default-frame-alist 'alpha '(100 80)))
             (progn
               (set-face-attribute 'default nil :font "Fira Code-13")
-              (set-face-attribute 'fixed-pitch nil :font "Fira Code-13")))
+              (set-face-attribute 'fixed-pitch nil :font "Fira Code-13")
+              ))
           (when (member "Noto Emoji" (font-family-list))
             (set-fontset-font t '(#x1F300 . #x1F6FF) "Noto Emoji"))
           (when (member "Noto Sans CJK JP" (font-family-list))
@@ -131,7 +132,6 @@
     (if (string-match-p "Wed.*" (current-time-string))
         (nyan-start-animation)
       (nyan-stop-animation)))
-  (setq nyan-wavy-trail 1)
   (edd-ux/nyan-on-wednesdays)
   (nyan-mode 1))
 

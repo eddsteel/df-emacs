@@ -93,18 +93,18 @@
   :commands (goto-address-prog-mode
              goto-address-mode))
 
-(use-package tramp
-  :config
-  (setq tramp-terminal-type "dumb")
-  (setq tramp-default-method "scp")
-  (add-to-list 'tramp-methods '("vcsh"
-                                (tramp-login-program "vcsh")
-                                (tramp-login-args
-                                 (("enter")
-                                  ("%h")))
-                                (tramp-remote-shell "/bin/sh")
-                                (tramp-remote-shell-args
-                               ("-c")))))
+;;(use-package tramp
+;;  :config
+;;  (setq tramp-terminal-type "dumb")
+;;  (setq tramp-default-method "scp")
+;;  (add-to-list 'tramp-methods '("vcsh"
+;;                                (tramp-login-program "vcsh")
+;;                                (tramp-login-args
+;;                                 (("enter")
+;;                                  ("%h")))
+;;                                (tramp-remote-shell "/bin/sh")
+;;                                (tramp-remote-shell-args
+;;                               ("-c")))))
 (use-package ispell
   :config
   ;; use english dictionary (there's no canadian or british one)

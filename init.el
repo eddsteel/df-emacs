@@ -2,7 +2,7 @@
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
-(defvar edd/consul-p t "Whether to do consul stuff")
+(defvar edd/emms-consul-p t "Whether to do consul stuff with emms")
 
 ;; Do this stuff early to avoid flicker
 ;;
@@ -51,7 +51,7 @@
   (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
   (setq aw-background t))
 
-(use-package which-key)
+(use-package which-key :config (which-key-mode))
 
 (use-package edd-hydra :demand t :straight nil)
 
@@ -316,12 +316,10 @@
   :load-path "../src/emms/lisp"
   :hook
   (emms-player-started . edd/emms-tell-consul)
-  :commands (emms-smart-browse emms-pause)
+  :commands (emms-smart-browse emms-pause emms-browse-by-album)
   :init
   (setq default-major-mode 'fundamental-mode) ;; shim for emms to work
   (require 'emms-setup)
-  (emms-all)
-  (emms-default-players)
   (setq emms-source-file-default-directory (expand-file-name "~/media/music"))
   (setq emms-playing-time-display-format " %s")
   (setq emms-playing-time-display-short-p 1)
@@ -337,7 +335,42 @@
   (setq emms-show-format "%s")
 
   :config
+  (emms-all)
+  (emms-default-players)
   (require 'json)
+  ;;; Display album in playlist
+  (defun ambrevar/emms-artist-album-track-and-title-format (bdata fmt)
+    (concat
+     "%i"
+     (let ((artist (emms-browser-format-elem fmt "a")))
+       (if (not artist)
+           "%n"                    ; If unknown, display the filename.
+         (concat
+          "%a - "
+          (let ((album (emms-browser-format-elem fmt "A")))
+            (if album "%A - " ""))
+          (let ((disc (emms-browser-format-elem fmt "D")))
+            (if (and disc (not (string= disc ""))) "%D/" ""))
+          (let ((track (emms-browser-format-elem fmt "T")))
+            (if (and track (not (string= track "0")))
+                "%T. "
+              ""))
+          "%t [%d]")))))
+  (setq emms-browser-playlist-info-title-format 'ambrevar/emms-artist-album-track-and-title-format)
+
+;; Display disc number in browser
+(defun ambrevar/emms-browser-track-artist-and-title-format (bdata fmt)
+  (concat
+   "%i"
+   (let ((disc (emms-browser-format-elem fmt "D")))
+     (if (and disc (not (string= disc "")))
+         "%D/"))
+   (let ((track (emms-browser-format-elem fmt "T")))
+     (if (and track (not (string= track "0")))
+         "%T. "
+       ""))
+   "%n"))
+(setq emms-browser-info-title-format 'ambrevar/emms-browser-track-artist-and-title-format)
   (defun edd/emms-modeline ()
     (concat " 🎶 "
             (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
@@ -350,11 +383,16 @@
       (let*
           ((artist (emms-track-get (emms-playlist-current-selected-track) 'info-artist))
            (title (emms-track-get (emms-playlist-current-selected-track) 'info-title))
-           (json (json-encode-alist (list (cons :artist artist) (cons :title title)))))
+           (album (emms-track-get (emms-playlist-current-selected-track) 'info-album))
+           (time (string-to-number (format-time-string "%s000")))
+           (json (json-encode-alist
+                  (list (cons :artist artist)
+                        (cons :title title)
+                        (cons :album album)
+                        (cons :time time)))))
         (start-process "np" "*tell-consul*" "b" "np" "set" json))))
 
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
-
   (defun edd/emms-start-or-previous ()
     (interactive)
     (when emms-player-playing-p
@@ -399,7 +437,7 @@
    ([remap xref-find-definitions] . dumb-jump-go)
    ([remap xref-pop-marker-stack] . dumb-jump-back)
    )
-  :config
+  :config         
   (setq dumb-jump-selector 'ivy))
 
 (use-package helm-make
@@ -409,7 +447,10 @@
 
 (use-package csv)
 (use-package elm-mode)
-(use-package gradle-mode)
+(use-package gradle-mode
+  :init
+  (setq gradle-gradlew-executable (expand-file-name "gradlew" (projectile-project-root))))
+
 (use-package groovy-mode)
 (use-package php-mode)
 (use-package play-routes-mode)
@@ -542,6 +583,7 @@
   :config
   (setq kotlin-tab-width 4)
   (setq gradle-use-gradlew t)
+  (setq gradle-gradlew-executable (expand-file-name "gradlew" (projectile-project-root)))
   (defhydra+ hydra-project nil "Project"
     ("m" gradle-execute "execute gradle task"))
   (defun edd-kt/sort-imports ()
@@ -585,6 +627,10 @@
   :hook
   (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
 
+(use-package nov)
+
+(use-package sml-mode)
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
@@ -599,3 +645,4 @@
 ;; http://pragmaticemacs.com/emacs/wrap-text-in-custom-characters/
 ;; http://lists.madduck.net/pipermail/vcs-home/2013-August/000880.html
 ;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/
+(defun org())

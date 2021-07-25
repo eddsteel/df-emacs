@@ -2,8 +2,9 @@
 
 (defun org-plus-contrib ())
 
-(use-package org-plus-contrib
+(use-package org
   :defer
+  :straight org-plus-contrib
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
   :hook ((org-mode . #'turn-on-visual-line-mode)
          (org-mode . (lambda () (org-bullets-mode 1)))
@@ -52,6 +53,10 @@
    `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
       1 'org-checkbox-done-text prepend))
    'append)
+  (load-file
+   (expand-file-name
+    (concat user-emacs-directory
+            "edd/edd-org-options.el")))
 
   :bind
   (("C-c l" . org-store-link)

@@ -1,6 +1,6 @@
 ;; Process is:
 ;; - Paste from online banking sites
-;; - Remove "exchange amount" if appropriate (M-x delete-matching-lines)
+;; - Run (edd/ledger-prep-from-paste)
 ;; - Run appropriate clean function on each line (use macros)
 ;; - Run clean entries
 ;; - Run `tac' on the paragraphs
@@ -9,8 +9,9 @@
 ;; - whitespace-cleanup
 ;; - sort paragraphs on whole buffer
 ;; - undecorate-all
-;; Then paste into ledger file and use categorise-regulars/
-;; next-unknown to fill out details.
+;; - then paste into ledger file
+;; - check totals with ledger
+;; - use categorise-regulars/next-unknown to fill out details.
 ;;
 ;;
 (require 'dash)
@@ -37,7 +38,7 @@
       (backward-char)
       (kill-line)
       (beginning-of-line)
-      (insert "2018-" month "-")
+      (insert "2021-" month "-")
       (forward-char 2)
       (let ((beg (point)))
         (search-forward "	")
@@ -55,7 +56,7 @@
       (kill-whole-line)
       (previous-line)
       (beginning-of-line)
-      (insert "2019-" month "-")
+      (insert "2020-" month "-")
       (forward-char 2)
       (kill-line)
       (delete-indentation 4)
@@ -74,11 +75,11 @@
     (search-forward-regexp "-?\\$")
     (goto-char (match-beginning 0))
     (newline)
-    (ledger-magic-tab)
+    (indent-for-tab-command)
     (insert acct "  ")
     (end-of-line)
     (newline)
-    (ledger-magic-tab)
+    (indent-for-tab-command)
     (insert "???")
     (let ((end (point)))
       (newline)
@@ -113,7 +114,7 @@
 
   (defun edd/ledger-undecorate-all ()
     (beginning-of-buffer)
-    (while (re-search-forward "\\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\) [[:digit:]]\\{6\\}")
+    (while (re-search-forward "\\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\) [[:digit:]]\\{7\\}")
       (replace-match "\\1")))
 
 
@@ -147,16 +148,27 @@
     (save-excursion
       (mapcar
        (lambda (pair)
-         (let ((term (car pair))
-               (cat (cdr pair)))
-           (while (search-forward term nil 't)
-             (save-excursion
-               (next-line 2)
-               (beginning-of-line)
-               (kill-line)
-               (ledger-magic-tab)
-               (insert cat)))))
+         (save-excursion
+           (let ((term (car pair))
+                 (cat (cdr pair)))
+             (message "term/cat: %s/%s" term cat)
+             (while (search-forward term nil 't)
+               (save-excursion
+                 (next-line 2)
+                 (beginning-of-line)
+                 (kill-line)
+                 (indent-for-tab-command)
+                 (insert cat))))))
        edd/ledger-regulars)))
-  )
+
+  (defun edd/ledger-prep-from-paste ()
+    (interactive)
+    (save-excursion
+      (delete-matching-lines "exchange rate")
+      (delete-matching-lines "exchange amount")
+      (delete-matching-lines "foreign currency")
+      )
+    )
+)
 
 (provide 'edd-ledger)
