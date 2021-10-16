@@ -14,6 +14,9 @@
   (global-set-key (kbd "<mouse-4>") 'isearch-forward)
   (global-set-key (kbd "<mouse-5>") 'isearch-backward)
 
+  (global-set-key (kbd "s-_") (lambda () (interactive) (insert "—")))
+  (global-set-key (kbd "s--") (lambda () (interactive) (insert "–")))
+
   (eval-after-load "isearch"
     '(progn
       (define-key isearch-mode-map (kbd "<mouse-4>") 'isearch-repeat-forward)
