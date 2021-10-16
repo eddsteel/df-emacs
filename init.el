@@ -524,11 +524,25 @@
 
 (use-package kotlin-mode
   :mode ("build.gradle.kts" . kotlin-mode)
+  :bind
+  ("C-c i" . edd-kt/sort-imports)
   :config
   (setq kotlin-tab-width 4)
   (setq gradle-use-gradlew t)
   (defhydra+ hydra-project nil "Project"
     ("m" gradle-execute "execute gradle task"))
+  (defun edd-kt/sort-imports ()
+    (interactive)
+    (let
+        ((macro [?\M-< ?\C-s ?i ?m ?p ?o ?r ?t return ?\C-a ?\M-h
+          ?\C-n ?\M-% ?i ?m ?p ?o ?r ?t ? ?j ?a ?v ?a return ?i
+          ?m ?p ?\[ ?o ?r ?t backspace backspace backspace
+          backspace ?o ?r ?t ? ?z ?z ?z ?j ?a ?v ?a return ?!
+          ?\M-h ?\C-n ?\C-x ?\C-m ?s ?o ?r ?t ? ?l ?i ?n ?e ?s
+          return ?\M-h ?\C-n ?\M-% ?z ?z ?z ?j ?a ?v ?a return ?j
+          ?a ?v ?a return ?! ?\C-n]))
+      (execute-kbd-macro macro)))
+
   :init
   (add-to-list
    'compilation-error-regexp-alist
