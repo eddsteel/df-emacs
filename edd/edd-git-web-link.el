@@ -98,6 +98,11 @@
   (interactive)
   (edd-git-web-link-commit-at-point "-o" "-d"))
 
+(defun edd-git-web-link-browse ()
+  "Open the current project in the web provider"
+  (interactive)
+  (edd-git-web-link-capture "-o"))
+
 (defun edd-git-review ()
   (interactive)
   (git-gutter:set-start-revision "origin/master"))
@@ -128,6 +133,10 @@
 (transient-insert-suffix
   'magit-dispatch "%"
   '("@" "PRs" edd-magit-prs))
+
+(transient-insert-suffix
+  'magit-dispatch "%"
+  '("x" "browse" edd-git-web-link-browse))
 
 ;; TODO: move to hydra
 (defhydra hydra-edd-git-web-link (:exit nil :columns 3)
