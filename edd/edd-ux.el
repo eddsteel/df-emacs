@@ -72,7 +72,7 @@
               (progn
                 ;; fade when inactive
                 (set-frame-parameter (selected-frame) 'alpha '(100 80))
-                (set-frame-font "-*-Fira Code Retina-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1" 't)
+                (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" 't)
                 (put 'default-frame-alist 'alpha '(100 80)))
             (progn
               (set-face-attribute 'default nil :font "Fira Code-13")
