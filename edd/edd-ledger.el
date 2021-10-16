@@ -5,6 +5,7 @@
 ;; - Run clean entries
 ;; - Run `tac' on the paragraphs
 ;; - Initialize counter (using function)
+;; - M-x ledger-mode
 ;; - Convert each line to a decorated item using function
 ;; - whitespace-cleanup
 ;; - sort paragraphs on whole buffer
