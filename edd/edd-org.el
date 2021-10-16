@@ -6,7 +6,13 @@
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
   :hook ((org-mode . #'turn-on-visual-line-mode)
          (org-mode . (lambda () (org-bullets-mode 1)))
-         (org-mode . (lambda () (org-display-inline-images t t))))
+         (org-mode . (lambda () (org-display-inline-images t t)))
+         (org-mode . (lambda ()
+                       "Beautify Org Checkbox Symbol"
+                       (push '("[ ]" . "☐") prettify-symbols-alist)
+                       (push '("[X]" . "☑" ) prettify-symbols-alist)
+                       (push '("[-]" . "❍" ) prettify-symbols-alist)
+                       (prettify-symbols-mode))))
   :commands (org-confluence-export-as-confluence edd-ox-confluence)
   :init
   (when (eq 'darwin system-type)
@@ -37,7 +43,13 @@
     (interactive)
     (let ((ticket (edd/parse-jira-ticket-near-point)))
       (edd/create-ticket-notes (car ticket) (cdr ticket))))
-  
+
+  (font-lock-add-keywords
+   'org-mode
+   `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
+      1 'org-checkbox-done-text prepend))
+   'append)
+
   :bind
   (("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
@@ -52,7 +64,9 @@
   (org-verbatim ((nil :inherit font-lock-keyword-face)))
   (org-block-begin-line ((nil :background "#444444")))
   (org-block-end-line ((nil :background "#444444")))
-  (org-block ((nil :background "#444444"))))
+  (org-block ((nil :background "#444444")))
+  (org-checkbox-done-text ((t (:foreground "#71696A" :strike-through t)))))
+
 
 (use-package weather-metno
   :commands weather-metno-forecast
