@@ -363,13 +363,26 @@
         (emms-playlist-current-select-previous))
     (emms-start))
 
+  (defun edd/emms-info-track-description (track)
+    "Return a description of TRACK."
+    (let ((artist (emms-track-get track 'info-artist))
+          (title  (emms-track-get track 'info-title)))
+      (cond
+       ((and artist title)
+        (concat artist " — " title))
+       (title
+        title)
+       (t
+        (emms-track-simple-description track)))))
+  (setq emms-track-description-function #'edd/emms-info-track-description)
+
   ;; This is like (emms-show) but doesn't display or insert, just returns the string
   (defun edd/emms-now-playing ()
     (if emms-player-playing-p
                     (format emms-show-format
                             (emms-track-description
                              (emms-playlist-current-selected-track)))
-                  "Nothing playing right now"))
+      ""))
 
   (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
   :bind (("<f8>" . emms-pause)
