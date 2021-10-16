@@ -3,6 +3,7 @@
 (defun org-plus-contrib ())
 
 (use-package org-plus-contrib
+  :defer
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
   :hook ((org-mode . #'turn-on-visual-line-mode)
          (org-mode . (lambda () (org-bullets-mode 1)))
@@ -13,6 +14,7 @@
                        (push '("[X]" . "☑" ) prettify-symbols-alist)
                        (push '("[-]" . "❍" ) prettify-symbols-alist)
                        (prettify-symbols-mode))))
+
   :commands (org-confluence-export-as-confluence edd-ox-confluence)
   :init
   (when (eq 'darwin system-type)
@@ -20,6 +22,7 @@
   ;;  (add-to-list 'org-modules 'ox-confluence)
   (load-file (locate-user-emacs-file "edd/edd-org-options.el"))
   :config
+  (require 'ob-async)
   (setq org-bullets-bullet-list
         '("​" "​" "​" "​" "​" "​" "​" "​"))
 
