@@ -48,6 +48,22 @@
   (defun edd-proj/modeline ()
     (format " 🏉%s" (projectile-project-name)))
 
+  (defun edd-proj/git-ssh-stub ()
+    (let ((output (shell-command-to-string "git remote get-url origin")))
+      (string-match
+       "[a-z]*@[a-z.]*:\\([-_a-z0-9]*/[-_a-z0-9]*\\)\\(.git\\)?"
+       output
+       )
+      (match-string 1 output)))
+
+  (defun edd-proj/browse-ci ()
+    "Browse current git project/branch in circle CI"
+    (interactive)
+    (let ((stub (edd-proj/git-ssh-stub))
+          (branch (magit-get-current-branch)))
+      (browse-url
+       (format "https://app.circleci.com/pipelines/github/%s?branch=%s" stub branch))))
+
   (setq projectile--mode-line " 🏉")
   (setq projectile-mode-line-function #'edd-proj/modeline)
 
@@ -55,14 +71,11 @@
   (plist-put (alist-get 'gradlew projectile-project-types) 'run-command "./gradlew run")
   (plist-put (alist-get 'gradlew projectile-project-types) 'compile-command "./gradlew compile")
 
-
-
-
-  
   (defhydra+ hydra-project nil "Project"
     ("!"   projectile-run-command-in-root "command")
     ("&"   projectile-run-async-shell-command-in-root "async command")
     ("A"   projectile-grep "grep")
+    ("C"   edd-proj/browse-ci "Browse CI")
     ("E"   project-find-regexp "find regexp (any file under root)")
     ("F"   projectile-find-file-other-window "find file other window")
     ("K"   projectile-kill-buffers "kill buffers")
