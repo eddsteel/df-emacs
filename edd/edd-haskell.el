@@ -11,7 +11,7 @@
   (haskell-mode . turn-on-hi2)
   (haskell-mode . haskell-indentation-mode)
   (haskell-mode . haskell-decl-scan-mode)
-  (haskell-mode . edd-haskell/prettify)
+;;  (haskell-mode . edd-haskell/prettify)
   :init
   (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
@@ -175,7 +175,7 @@
    ("C-c DEL" . haskell-hoogle)))
 
 
-(use-package intero
+'(use-package intero
   :commands (intero-mode intero-mode-blacklist)
   :delight " ‽"
   :hook
