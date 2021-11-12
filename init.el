@@ -631,6 +631,8 @@
 
 (use-package sml-mode)
 
+(use-package nix-mode)
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
