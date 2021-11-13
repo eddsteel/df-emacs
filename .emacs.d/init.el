@@ -105,7 +105,7 @@
   :commands (edd/go-home)
   :bind
   (("C-c w" . edd/go-to-work)))
-(use-package edd-mail :straight nil)
+;(use-package edd-mail :straight nil)
 (use-package pdf-tools
   :init
   (pdf-tools-install))
@@ -142,6 +142,7 @@
 (use-package magit
   :demand t
   :delight with-editor-mode
+  :mode ("CODEOWNERS$" . gitignore-mode)  
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
   (setq magit-commit-arguments '("--gpg-sign")))
@@ -480,9 +481,6 @@
     (c-add-style
      "my-style"
      '((c-basic-offset . 2) (indent-tabs-mode . nil)))))
-
-(use-package gitignore-mode
-  :mode ("CODEOWNERS$" . gitignore-mode))
 
 (use-package hcl-mode
   :mode ("\\.tf$" . hcl-mode))
