@@ -1,6 +1,5 @@
 ;; Bootstrap use-package and straight.
 ;;
-
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -17,7 +16,7 @@
 (setq straight-use-package-by-default t)
 (straight-use-package 'use-package)
 
-(use-package delight :straight t)
+(use-package delight)
 (use-package bind-key)
 
 (defun edd/maybe-load-config (name)
@@ -26,13 +25,6 @@
 
 (defun edd/is-local-config (name)
   (file-exists-p (locate-user-emacs-file (format "edd/%s.el" name))))
-
-(defun edd/ensure-local-or-elpa (pkg args state)
-  (or
-   (when pkg (edd/is-local-config pkg))
-   (use-package-ensure-elpa pkg args state)))
-
-(setq use-package-ensure-function #'edd/ensure-local-or-elpa)
 
 (use-package exec-path-from-shell
   :config

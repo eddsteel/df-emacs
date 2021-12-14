@@ -1,7 +1,6 @@
 ;; Features -- tweaking of stuff that's built-in
 ;;
 ;;
-
 (use-package term
   :functions edd/term
   :hook
@@ -73,8 +72,6 @@
   :hook
   (after-save . executable-make-buffer-file-executable-if-script-p))
 
-(use-package hideshow :delight)
-(use-package yasnippet :delight 'yas-minor-mode)
 (use-package eldoc :delight " 📜")
 
 (use-package savehist
@@ -93,18 +90,6 @@
   :commands (goto-address-prog-mode
              goto-address-mode))
 
-;;(use-package tramp
-;;  :config
-;;  (setq tramp-terminal-type "dumb")
-;;  (setq tramp-default-method "scp")
-;;  (add-to-list 'tramp-methods '("vcsh"
-;;                                (tramp-login-program "vcsh")
-;;                                (tramp-login-args
-;;                                 (("enter")
-;;                                  ("%h")))
-;;                                (tramp-remote-shell "/bin/sh")
-;;                                (tramp-remote-shell-args
-;;                               ("-c")))))
 (use-package ispell
   :config
   ;; use english dictionary (there's no canadian or british one)
@@ -118,7 +103,6 @@
   :delight auto-revert-mode
   :config
   (global-auto-revert-mode))
-
 
 ;; colorize compilation buffers
 ;; From http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
@@ -174,7 +158,6 @@
         (concat initial-scratch-message
                 "\n(load-file user-init-file)"
                 "\n(progn (require \\='restart-emacs) (restart-emacs))"))
-
   :bind
   (("M-SPC" . cycle-spacing)
    ("M-=" . count-words)
@@ -185,28 +168,49 @@
    ("M-o" . other-window)
    ("C-c r" . comint-run)))
 
-(use-package winner
-  :config
-  (winner-mode))
-
-(use-package wdired
-  :config
-  (setq wdired-create-parent-directories t))
-
 (use-package smerge-mode
   :delight " ±")
 
 ;; Override _ in ctl-x 8 to provide vowels with macrons
 (use-package emacs
   :init
-  (with-eval-after-load 'iso-transl (progn
-				      (setcdr
-				       (assoc "_a" iso-transl-char-map) [?ā])
-				      (add-to-list 'iso-transl-char-map '("_i" . [?ī]))
-				      (add-to-list 'iso-transl-char-map '("_u" . [?ū]))
-				      (add-to-list 'iso-transl-char-map '("_e" . [?ē]))
-				      (setcdr
-				       (assoc "_o" iso-transl-char-map) [?ō])
-				      (iso-transl-define-keys iso-transl-char-map))))
+  (with-eval-after-load 'iso-transl
+    (progn
+      (setcdr (assoc "_a" iso-transl-char-map) [?ā])
+      (add-to-list 'iso-transl-char-map '("_i" . [?ī]))
+      (add-to-list 'iso-transl-char-map '("_u" . [?ū]))
+      (add-to-list 'iso-transl-char-map '("_e" . [?ē]))
+      (setcdr (assoc "_o" iso-transl-char-map) [?ō])
+      (iso-transl-define-keys iso-transl-char-map))))
+
+(use-package emacs
+  :hook
+  ((scheme-mode elisp-mode) . my-pretty-lambda)
+  :init
+  (global-prettify-symbols-mode 1)
+  :config
+  (defun my-pretty-lambda ()
+    "make some word or string show as pretty Unicode symbols"
+    (setq prettify-symbols-alist
+          '(("lambda" . 955)))))
+
+(use-package re-builder
+  :config
+  (setq reb-re-syntax 'string))
+
+(use-package wdired
+  :config
+  (setq wdired-create-parent-directories t))
+
+(use-package dired-collapse
+  :config
+  (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode 1))))
+
+(use-package peep-dired
+  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
+  :bind (:map dired-mode-map
+              ("P" . peep-dired)))
+
+(use-package restart-emacs)
 
 (provide 'edd-features)

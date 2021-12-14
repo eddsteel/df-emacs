@@ -12,7 +12,6 @@
       (find-file initial-buffer-choice)
     (switch-to-buffer "*scratch*")))
 
-
 (defun edd-hex-encode (start end)
   (interactive "r")
   "replace the region with a URL encoded version"
@@ -38,7 +37,6 @@
           (default-directory (projectile-project-root)))
       (display-buffer (process-buffer
      (start-process "exercism" "*exercism*" "exercism" "submit" file))))))
-
 
 ;; This is rad, copied from
 (defun edd-fill-or-unfill ()
@@ -114,9 +112,7 @@ From a program takes two point or marker arguments, BEG and END."
                (not (string-equal old-location new-location)))
       (delete-file old-location))))
 
-
 ;; From https://www.emacswiki.org/emacs/CamelCase
-
 (defun mapcar-head (fn-head fn-rest list)
       "Like MAPCAR, but applies a different function to the first element."
       (if list
@@ -148,13 +144,7 @@ From a program takes two point or marker arguments, BEG and END."
 (defvar edd/book nil "Relevant book (usually set in dir locals)")
 (defun edd/open-book ()
   (interactive)
-  (when edd/book (find-file-other-window edd/book))
-  )
-
-;; bind C-c ! to reload config (like org)
-(defun edd-config-reload ()
-  (interactive)
-  (load user-init-file))
+  (when edd/book (find-file-other-window edd/book)))
 
 ;; kill current buffer by default
 ;; http://irreal.org/blog/?p=5585
@@ -171,5 +161,12 @@ From a program takes two point or marker arguments, BEG and END."
     (save-excursion
       (beginning-of-buffer)
       (while (search-forward " -- " nil t) (replace-match " — "))))
+
+(defun edd-wibble-font ()
+  "Switch GUI font between different sizes (switching between laptop and monitor)"
+  (interactive)
+  (if (eq (face-attribute 'default :height) 90)
+      (set-face-attribute 'default (selected-frame) :height 70)
+    (set-face-attribute 'default (selected-frame) :height 90)))
 
 (provide 'edd-util)

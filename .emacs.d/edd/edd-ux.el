@@ -12,11 +12,8 @@
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
-  ;; don't yell.
-  (setq visible-bell nil) ;; The default
+  (setq visible-bell nil)
   (setq ring-bell-function 'ignore)
-
-  ;; don't insist.
   (defalias 'yes-or-no-p 'y-or-n-p)
   (column-number-mode t)
   (show-paren-mode t)
@@ -34,7 +31,6 @@
     "Mode line format for VC Mode.")
 
   (put 'edd-vc-mode-line 'risky-local-variable t)
-
 
   (make-face 'mode-line-major-mode-face)
   (make-face 'mode-line-minor-mode-face)
@@ -59,7 +55,6 @@
                   (:eval (propertize (format-mode-line minor-mode-alist) 'face 'mode-line-minor-mode-face))
                   mode-line-end-spaces))
 
-  ;; comfortable bindings
   ;; C-h for delete
   (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
   ;; C-z for help, in exchange
@@ -94,26 +89,22 @@
   (unicode-fonts-setup)
   (when (not (daemonp)) (edd-prep-frame (car (frame-list)))))
 
-(when (not (eq 'darwin system-type))
-  (use-package avoid
-    :config
-    (mouse-avoidance-mode 'jump)))
-
 (use-package hl-line
   :hook
   (prog-mode . hl-line-mode)
   :config
   ;; use when themes don't set hl-line
-  (defun edd-fix-hl-line-mode ()
-    (interactive)
-    (set-face-background 'hl-line (face-background 'highlight))))
+  ;;(defun edd-fix-hl-line-mode ()
+   ;;(interactive)
+  ;;(set-face-background 'hl-line (face-background 'highlight)))
+  )
 
 (use-package time
   :config
   ;; Mode line I like.
   (display-time-mode 1)
   (setq display-time-string-forms
-        '((propertize (concat "📆 " day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load)))))
+        '((propertize (concat day " " (substring monthname 0 3) " " 24-hours ":" minutes " " load)))))
 
 (use-package battery
   :config
@@ -121,18 +112,7 @@
   (setq battery-mode-line-format " %b%p%%"))
 
 (use-package nyan-mode
-  :demand t
-  :hook
-  (midnight . edd-ux/nyan-on-wednesdays)
-  :init
-  (midnight-mode)
   :config
-  ;; animate on Wednesdays
-  (defun edd-ux/nyan-on-wednesdays ()
-    (if (string-match-p "Wed.*" (current-time-string))
-        (nyan-start-animation)
-      (nyan-stop-animation)))
-  (edd-ux/nyan-on-wednesdays)
   (nyan-mode 1))
 
 (use-package basic-theme

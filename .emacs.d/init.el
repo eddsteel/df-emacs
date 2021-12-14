@@ -6,7 +6,7 @@
 
 ;; Do this stuff early to avoid flicker
 ;;
-(use-package edd-ux :straight nil)
+(use-package edd-ux :straight nil :if window-system :unless noninteractive)
 
 ;; built-in features
 ;;
@@ -15,16 +15,20 @@
 ;; org-mode, as good as built-in
 ;;
 (use-package edd-org :straight nil)
+(use-package edd-gtd
+  :straight nil
+  :commands (edd/go-home)
+  :bind
+  (("C-c w" . edd/go-to-work)))
 
 ;; System-specific stuff.
 ;;
-(use-package edd-mac :if (eq 'darwin system-type) :straight nil)
-(use-package edd-linux :if (not (eq 'darwin system-type)) :straight nil)
-(use-package restart-emacs)
+(use-package edd-mac :if (eq 'darwin system-type) :straight nil :unless noninteractive)
 
 ;; whitespace
 ;;
 (use-package whitespace
+  :unless noninteractive
   :delight whitespace-mode
   :hook
   (((prog-mode text-mode conf-mode) . whitespace-mode))
@@ -70,9 +74,11 @@
   (setq vertico-cycle t))
 
 ;; TODO do in :straight
-(add-to-list 'load-path (locate-user-emacs-file "straight/repos/vertico/extensions"))
+(add-to-list 'load-path
+             (locate-user-emacs-file "straight/repos/vertico/extensions"))
 (use-package vertico-directory
-  :after vertico    
+  :after vertico
+  :straight nil
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -231,40 +237,13 @@
   (("C-w" . kill-region-or-backward-kill-word)
    ("C-c M-p" . edd-jump-to-prev-url)
    ("C-c M-n" . edd-jump-to-next-url)
-   ("C-x k". edd-kill-a-buffer)
-   ("C-c !". edd-config-reload)))
-
-(use-package re-builder
-  :config
-  (setq reb-re-syntax 'string))
-
-(use-package emacs
-  :hook
-  ((scheme-mode elisp-mode) . my-pretty-lambda)
-  :init
-  (global-prettify-symbols-mode 1)
-  :config
-  (defun my-pretty-lambda ()
-    "make some word or string show as pretty Unicode symbols"
-    (setq prettify-symbols-alist
-          '(
-          ("lambda" . 955) ;; λ
-          ))))
+   ("C-x k". edd-kill-a-buffer)))
 
 ;; secret config -- used below.
 (use-package edd-secrets :commands edd-with-secrets :straight nil)
-(use-package edd-gtd
-  :straight nil
-  :commands (edd/go-home)
-  :bind
-  (("C-c w" . edd/go-to-work)))
 (use-package pdf-tools
   :init
   (pdf-tools-install))
-
-(use-package edd-scala :straight nil)
-(use-package edd-haskell :straight nil)
-(use-package edd-ruby :straight nil)
 
 (use-package flycheck
   :delight " 🛂"
@@ -306,8 +285,6 @@
   ((magit-mode-hook) . (lambda () (magit-delta-mode +1))))
 
 (use-package edd-ledger :straight nil)
-
-(use-package tea-time)
 
 (use-package markdown-mode+
   :mode ("\\.apib\\$" . markdown-mode))
@@ -368,22 +345,54 @@
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 
+(use-package edd-scala :straight nil)
+(use-package edd-haskell :straight nil)
+(use-package edd-ruby :straight nil)
 (use-package edd-rust :straight nil)
-
 (use-package edd-go :straight nil)
+(use-package edd-kotlin :straight nil)
 
-;;preview files in dired
-(use-package peep-dired
-  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("P" . peep-dired)))
+(use-package lua-mode)
+(use-package cc-mode
+  :hook
+  (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
+(use-package sml-mode)
+(use-package csv)
+(use-package groovy-mode)
+(use-package php-mode)
+(use-package python-mode)
+(use-package rjsx-mode
+  :config
+  (setq js2-strict-missing-semi-warning nil)
+  (setq js2-strict-trailing-comma-warning nil))
+(use-package less-css-mode)
+(use-package yaml-mode)
+(use-package idris-mode
+  :delight (idris-simple-indent-mode)
+  :config
+  (defun edd/idris-next-hole ()
+      (interactive)
+      (search-forward " ?" nil t))
+  :bind
+  (:map idris-mode-map
+        ("C-c C-j" . idris-pop-to-repl)
+        ("C-c C-f" . edd/idris-next-hole)))
+(use-package cider)
+(use-package protobuf-mode
+  :hook
+  (protobuf-mode . edd-protobuf/set-style)
+  :config
+  (defun edd-protobuf/set-style ()
+    (c-add-style
+     "my-style"
+     '((c-basic-offset . 2) (indent-tabs-mode . nil)))))
+(use-package hcl-mode
+  :mode ("\\.tf$" . hcl-mode))
 
 (use-package volatile-highlights
   :delight
   :config
   (volatile-highlights-mode t))
-
-(use-package multi-term)
 
 (use-package smartparens
   :delight " 🎷"
@@ -475,16 +484,9 @@
    ([remap xref-find-definitions] . dumb-jump-go)
    ([remap xref-pop-marker-stack] . dumb-jump-back)
    )
-  :config         
+  :config
   (setq dumb-jump-selector 'ivy))
 
-(use-package helm-make
-  :config
-  (setq helm-make-completion-method 'ivy)
-  (setq helm-make-comint 't))
-
-(use-package csv)
-(use-package elm-mode)
 (use-package gradle-mode
   :straight `(gradle-mode :type git :host github :repo "jacobono/emacs-gradle-mode"
                           :fork (:host github :repo "eddsteel/emacs-gradle-mode")))
@@ -527,6 +529,7 @@
 
 (use-package multiple-cursors)
 
+;; TODO straight this
 (use-package edd-sow
   :straight nil
   :config
@@ -546,47 +549,16 @@
         ("C-x C-q" . wgrep-change-to-wgrep-mode)
         ("C-c C-c" . wgrep-finish-edit)))
 
-(use-package ivy-lobsters)
 (use-package direnv
   :config
   (direnv-mode))
 
 (use-package browse-at-remote)
-(use-package atomic-chrome)
-(use-package gh)
-
-(use-package python-mode)
-(use-package virtualenvwrapper
-  :config
-  (venv-initialize-interactive-shells)
-  (setq venv-dirlookup-names '(".venv" "pyenv" ".virtual" ".env")))
 
 (use-package evil-numbers
   :bind
   ("C-c +" . 'evil-numbers/inc-at-pt)
   ("C-c -" . 'evil-numbers/dec-at-pt))
-
-(use-package deft
-  :bind
-  ("C-c d" . 'deft)
-  :config
-  (setq deft-directory "~/txt"
-        deft-text-mode 'org-mode
-        deft-extensions '("org" "txt" "md")
-        deft-recursive t
-        deft-new-file-format "%Y%m%d-"))
-
-(use-package engine-mode
-  :commands
-  (engine/search-github engine/search-google)
-  :config
-  (engine-mode 1)
-  (defengine google
-    "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-    :keybinding "g")
-  (defengine github
-    "https://github.com/search?ref=simplesearch&q=%s"
-    :keybinding "/"))
 
 (use-package edit-server
   :init
@@ -610,62 +582,10 @@
 (use-package make-mode
   :mode ("Makefile.inc" . makefile-mode))
 
-(use-package kotlin-mode
-  :mode ("build.gradle.kts" . kotlin-mode)
-  :bind
-  ("C-c i" . edd-kt/sort-imports)
-  :config
-  (setq kotlin-tab-width 4)  
-  (defhydra+ hydra-project nil "Project"
-    ("m" gradle-execute "execute gradle task"))
-  (defun edd-kt/sort-imports ()
-    (interactive)
-    (let
-        ((macro [?\M-< ?\C-s ?i ?m ?p ?o ?r ?t return ?\C-a ?\M-h
-          ?\C-n ?\M-% ?i ?m ?p ?o ?r ?t ? ?j ?a ?v ?a return ?i
-          ?m ?p ?\[ ?o ?r ?t backspace backspace backspace
-          backspace ?o ?r ?t ? ?z ?z ?z ?j ?a ?v ?a return ?!
-          ?\M-h ?\C-n ?\C-x ?\C-m ?s ?o ?r ?t ? ?l ?i ?n ?e ?s
-          return ?\M-h ?\C-n ?\M-% ?z ?z ?z ?j ?a ?v ?a return ?j
-          ?a ?v ?a return ?! ?\C-n]))
-      (execute-kbd-macro macro)))
-
-  :init
-  (add-to-list
-   'compilation-error-regexp-alist
-   'kotlin-gradle)
-  (add-to-list
-   'compilation-error-regexp-alist
-   'kotlin-lint)
-  (add-to-list
-   'compilation-error-regexp-alist-alist
-   '(kotlin-gradle
-     "^e: \\(.*\\): (\\([0-9]+\\), \\([0-9]+\\))" 1 2 3))
-  (add-to-list
-   'compilation-error-regexp-alist-alist
-   '(kotlin-lint
-     "^Lint error > \\(.*\\):\\([0-9]+\\):\\([0-9]+\\):" 1 2 3)))
-
-(use-package flycheck-kotlin
-  :commands flycheck-kotlin-setup
-  :after flycheck
-  :config
-  (flycheck-kotlin-setup))
-
-(use-package olivetti)
-(use-package lua-mode)
-
-(use-package cc-mode
-  :hook
-  (java-mode-hook . (lambda () (c-set-offset 'statement-cont '++))))
-
-(use-package nov)
-
-(use-package sml-mode)
-
 (use-package nix-mode
   :config
   (setenv "PATH" (concat (getenv "PATH") ":" "/nix/var/nix/profiles/default/bin")))
+(use-package olivetti)
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

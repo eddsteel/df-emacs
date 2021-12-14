@@ -25,3 +25,4 @@
 /.emacs.d/newsticker
 /.emacs.d/eln-cache
 /.emacs.d/straight/
+/.emacs.d/session.*

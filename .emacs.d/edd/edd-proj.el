@@ -3,6 +3,10 @@
 ;; https://emacs.stackexchange.com/questions/40553/projectile-run-project-without-prompt
 ;;
 (use-package projectile-ripgrep)
+(use-package helm-make
+  :config
+  (setq helm-make-completion-method 'ivy)
+  (setq helm-make-comint 't))
 (use-package projectile
   :demand t
   :hook

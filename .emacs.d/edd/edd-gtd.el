@@ -1,7 +1,6 @@
 (appt-activate 1)
 
 (require 'org)
-;(require 'org-protocol)
 
 ;; Log state changes
 (setq org-log-done t)
@@ -9,7 +8,6 @@
 (setq org-use-speed-commands t)
 (setq org-directory "~/txt/gtd")
 (setq org-ellipsis "…")
-
 
 ;; Action state changes
 (setq org-todo-keywords
@@ -20,49 +18,33 @@
 (setq org-tags-exclude-from-inheritance
       '("project"))
 
-;; Refilen
-;; - tickler (the only heading)
+;; Refile
 ;; - calendar (:inbox:)
 ;; - any project in projects
 ;; - back to the inbox
 ;;
 (setq org-refile-targets
       `((nil . (:level . 1)) ; current buffer headlines
-        ("tickler.org" . (:level . 1))
-        ("calendar.org" . (:tag . "inbox"))
         ("projects.org" . (:tag . "project"))
         ("projects.org" . (:tag . "inbox"))
         ("projects.org" . (:tag . "target"))
-        ("inbox.org" . (:tag . "inbox"))
         ("someday.org" . (:level . 1))))
 
-
-;; Capture to inbox or Read/Review
+;; Capture to inbox
 ;;
 (setq org-capture-templates
-      `(("t" "todo" entry (file+headline "inbox.org" "In")
-         "* TODO %?\n%a\n")
-        ("r" "retro item" plain (file "~/txt/work-notes/retro.org")
-         "* ")
-        ("u" "URL to read" plain (file "read-review.org")
-           "[[%i]] %t\n")
-
-        ("p" "Protocol" entry (file "read-review.org")
-         "* %^{description}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-        ("L" "Protocol Link" entry plain (file "read-review.org")
-         "* [[%u][%^{description}]]")))
+      `(("t" "todo" entry (file+headline "projects.org" "In")
+         "* TODO %?\n%a\n")))
 
 (setq org-agenda-files
       (mapcar (lambda (f) (concat org-directory "/" f))
-              '("calendar.org" "tickler.org" "projects.org" "birthdays.org")))
+              '("projects.org" "birthdays.org")))
 
 ;; Stuck unless
 ;; - there's a next action
 ;; - the next action has a date (STAY)
-;; - it's in the tickler
-;; - it's to pick something up while out
 (setq org-stuck-projects
-      '("+project/-tickler-maybe" ("NEXT" "STAY") ("tickler" "store") ""))
+      '("+project/-maybe" ("NEXT" "STAY") ""))
 
 ;; Thanks http://stackoverflow.com/questions/10074016/org-mode-filter-on-tag-in-agenda-view
 ;;
@@ -78,15 +60,6 @@
           next-headline))))
 
 (defun edd/go-to-work ()
-  (interactive)
-  (progn
-    (find-file "~/txt/gtd/projects.org")
-    (widen)
-    (beginning-of-buffer)
-    (search-forward-regexp "^* Work Projects")
-    (org-narrow-to-element)))
-
-(defun edd/go-home ()
   (interactive)
   (progn
     (find-file "~/txt/gtd/projects.org")
