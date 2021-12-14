@@ -1,10 +1,6 @@
-(straight-use-package '(org-plus-contrib :includes (org)))
-
-(defun org-plus-contrib ())
-
-(use-package org
+(use-package org-contrib
   :defer
-  :straight org-plus-contrib
+;  :straight (:type git :repo "https://git.sr.ht/~bzg/org-contrib")
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
   :hook ((org-mode . #'turn-on-visual-line-mode)
          (org-mode . (lambda () (org-bullets-mode 1)))
@@ -96,12 +92,6 @@
 (use-package interleave
   :config
   (setq interleave-org-notes-dir-list '("." "~/txt/notes")))
-
-(use-package org-journal
-  :config
-  (setq org-journal-dir "~/txt/journal")
-  (setq org-journal-date-format "%A, %d/%m")
-  (setq org-journal-file-format "%Y%m%d.org"))
 
 (use-package org-beautify-theme
   :init

@@ -1,4 +1,5 @@
 ;; org config that doesn't load packages
+(defun org-contrib ())
 (setq org-html-validation-link nil)
 (setq org-html-head-include-default-style nil)
 

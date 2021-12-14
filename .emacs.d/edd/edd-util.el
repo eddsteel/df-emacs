@@ -5,20 +5,6 @@
       (kill-region (region-beginning) (region-end))
     (backward-kill-word arg)))
 
-;; useful for goto-address-mode, will fail
-;; outside it.
-(defun edd-jump-to-next-url ()
-  (interactive)
-  (point-at-eol) ; so we don't jump to the end of current URL
-  (search-forward-regexp goto-address-url-regexp)
-  (backward-char))
-
-(defun edd-jump-to-prev-url ()
-  (interactive)
-  (point-at-bol)
-  (search-backward-regexp goto-address-url-regexp)
-  (forward-char))
-
 (defun edd-initial-file-or-scratch ()
   (interactive)
   "Finds the initial buffer choice file, or if that is nil, the scratch buffer"
@@ -159,14 +145,6 @@ From a program takes two point or marker arguments, BEG and END."
       (goto-char start)
       (insert camel))))
 
-
-(require 's)
-(require 'browse-url)
-
-(defun edd/browse-gwl-root ()
-  (interactive)
-  (browse-url (s-trim (shell-command-to-string "git web-link origin"))))
-
 (defvar edd/book nil "Relevant book (usually set in dir locals)")
 (defun edd/open-book ()
   (interactive)
@@ -187,17 +165,6 @@ From a program takes two point or marker arguments, BEG and END."
                             "Kill buffer: "
                             (mapcar #'buffer-name (buffer-list))))
     (kill-this-buffer)))
-
-
-(defun edd/upgrade-packages ()
-  (interactive)
-  (require 'package)
-  (save-excursion
-    (call-interactively #'list-packages)
-    (call-interactively #'package-menu-mark-upgrades)
-    (call-interactively #'package-menu-mark-obsolete-for-deletion)
-    (sleep-for 1)
-    (call-interactively #'package-menu-execute)))
 
 (defun edd/dashify ()
     (interactive)
