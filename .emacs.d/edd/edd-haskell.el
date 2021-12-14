@@ -164,7 +164,6 @@
 
   :bind
   (
-   ("C-c h h" . switch-to-haskell)
    :map haskell-mode-map
    ("C-c C-l" . haskell-process-load-or-reload)
    ("C-c C-z" . haskell-interactive-switch)

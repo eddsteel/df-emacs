@@ -9,7 +9,7 @@
   :hook
   (scala-mode . edd-scala/hook)
   :bind
-  (("C-c h s" . edd-run-scala)
+  (
    :map scala-mode-map
    ("C-c C-b a" . edd-sbt-assembly)
    ("C-c C-v C-l" . edd-sbt-test-only-last)

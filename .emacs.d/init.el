@@ -43,21 +43,184 @@
   :config
   (global-whitespace-cleanup-mode 1))
 
-(use-package ace-window
-  :bind
-  ("C-x o" . ace-window)
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-  (setq avi-keys '(?a ?s ?d ?e ?f ?h ?j ?k ?l ?n ?m ?v ?r ?u))
-  (setq aw-background t))
-
-(use-package which-key :config (which-key-mode))
-
 (use-package edd-hydra :demand t :straight nil)
 
 (use-package edd-proj :straight nil)
 
-(use-package edd-ivy :after projectile :straight nil)
+;;--
+(use-package corfu
+  :custom
+  (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)  ;; Enable auto completion
+  (corfu-quit-at-boundary t) ;; Automatically quit at word boundary
+  (corfu-quit-no-match t) ;; Automatically quit if there is no match
+  :init
+  (corfu-global-mode))
+
+;; A few more useful configurations...
+(use-package emacs
+  :init
+  (setq completion-cycle-threshold 3)
+  (setq tab-always-indent 'complete))
+
+(use-package vertico
+  :init
+  (vertico-mode)
+  :config
+  (setq vertico-cycle t))
+
+;; TODO do in :straight
+(add-to-list 'load-path (locate-user-emacs-file "straight/repos/vertico/extensions"))
+(use-package vertico-directory
+  :after vertico    
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word)
+              ("C-l" . vertico-directory-up))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package orderless
+  :init
+  (setq completion-styles '(substring orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package consult
+  ;; Replace bindings. Lazily loaded due by `use-package'.
+  :bind (;; C-c bindings (mode-specific-map)
+         ("C-c h" . consult-history)
+;;         ("C-c m" . consult-mode-command)         
+         ("C-c k" . consult-kmacro)
+         ;; C-x bindings (ctl-x-map)
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("C-M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ("<help> a" . consult-apropos)            ;; orig. apropos-command
+         ;; M-g bindings (goto-map)
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-i" . consult-imenu)                   ;; orig: imenu
+         ("C-c ," . consult-imenu-multi)
+         ;; M-s bindings (search-map)
+         ("M-s f" . consult-find)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("C-M-." . consult-line) ;; replace grep-or-swiper
+         ("M-s L" . consult-line-multi)
+         ("M-s m" . consult-multi-occur)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi))           ;; needed by consult-line to detect isearch
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI. You may want to also
+  ;; enable `consult-preview-at-point-mode` in Embark Collect buffers.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
+  ;; The :init configuration is always executed (Not lazy)
+  :init
+
+  ;; Optionally configure the register formatting. This improves the register
+  ;; preview for `consult-register', `consult-register-load',
+  ;; `consult-register-store' and the Emacs built-ins.
+  (setq register-preview-delay 0
+        register-preview-function #'consult-register-format)
+
+  ;; Optionally tweak the register preview window.
+  ;; This adds thin lines, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
+
+  ;; Optionally replace `completing-read-multiple' with an enhanced version.
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  ;; Configure other variables and modes in the :config section,
+  ;; after lazily loading the package.
+  :config
+
+  ;; Optionally configure preview. The default value
+  ;; is 'any, such that any key triggers the preview.
+  ;; (setq consult-preview-key 'any)
+  ;; (setq consult-preview-key (kbd "M-."))
+  ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
+  ;; For some commands and buffer sources it is useful to configure the
+  ;; :preview-key on a per-command basis using the `consult-customize' macro.
+  (consult-customize
+   consult-theme
+   :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
+   :preview-key (kbd "M-."))
+
+  ;; Optionally configure the narrowing key.
+  ;; Both < and C-+ work reasonably well.
+  (setq consult-narrow-key "<") ;; (kbd "C-+")
+
+  ;; Optionally make narrowing help available in the minibuffer.
+  ;; You may want to use `embark-prefix-help-command' or which-key instead.
+  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+  ;; Optionally configure a function which returns the project root directory.
+  ;; There are multiple reasonable alternatives to chose from.
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-root-function #'projectile-project-root)
+
+  (defhydra+ hydra-project nil "Project"
+    ("a" consult-ripgrep "rg")
+    ("b" consult-buffer "buffer"))
+  )
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)
+   ("M-." . embark-dwim)
+   ("<help> B" . embark-bindings))
+
+  :init
+
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+(use-package embark-consult
+  :after (embark consult)
+  :demand t
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+(use-package marginalia
+  :init
+  (marginalia-mode))
+;;--
 
 ;; utilities that are too small to live alone
 ;;
@@ -90,22 +253,11 @@
 
 ;; secret config -- used below.
 (use-package edd-secrets :commands edd-with-secrets :straight nil)
-
-(use-package edd-erc :straight nil)
-
-(use-package company
-  :commands (company-mode)
-  :demand
-  :delight
-  (company-search-mode)
-  (company-mode))
-
 (use-package edd-gtd
   :straight nil
   :commands (edd/go-home)
   :bind
   (("C-c w" . edd/go-to-work)))
-;(use-package edd-mail :straight nil)
 (use-package pdf-tools
   :init
   (pdf-tools-install))
@@ -313,122 +465,7 @@
   (("M-%" . anzu-query-replace)
    ("C-M-%" . anzu-query-replace-regexp)))
 
-(use-package emms
-  :load-path "../src/emms/lisp"
-  :hook
-  (emms-player-started . edd/emms-tell-consul)
-  :commands (emms-smart-browse emms-pause emms-browse-by-album)
-  :init
-  (setq default-major-mode 'fundamental-mode) ;; shim for emms to work
-  (require 'emms-setup)
-  (setq emms-source-file-default-directory (expand-file-name "~/media/music"))
-  (setq emms-playing-time-display-format " %s")
-  (setq emms-playing-time-display-short-p 1)
-
-  (require 'emms-tag-editor)
-  (require 'emms-info)
-
-  ;; Use only libtag for tagging.
-  (require 'emms-info-libtag)
-  (setq emms-info-functions '(emms-info-libtag))
-  (setq emms-info-libtag-program-name (expand-file-name "~/bin/emms-print-metadata"))
-  (setq emms-volume-change-function 'emms-volume-pulse-change)
-  (setq emms-show-format "%s")
-
-  :config
-  (emms-all)
-  (emms-default-players)
-  (require 'json)
-  ;;; Display album in playlist
-  (defun ambrevar/emms-artist-album-track-and-title-format (bdata fmt)
-    (concat
-     "%i"
-     (let ((artist (emms-browser-format-elem fmt "a")))
-       (if (not artist)
-           "%n"                    ; If unknown, display the filename.
-         (concat
-          "%a - "
-          (let ((album (emms-browser-format-elem fmt "A")))
-            (if album "%A - " ""))
-          (let ((disc (emms-browser-format-elem fmt "D")))
-            (if (and disc (not (string= disc ""))) "%D/" ""))
-          (let ((track (emms-browser-format-elem fmt "T")))
-            (if (and track (not (string= track "0")))
-                "%T. "
-              ""))
-          "%t [%d]")))))
-  (setq emms-browser-playlist-info-title-format 'ambrevar/emms-artist-album-track-and-title-format)
-
-;; Display disc number in browser
-(defun ambrevar/emms-browser-track-artist-and-title-format (bdata fmt)
-  (concat
-   "%i"
-   (let ((disc (emms-browser-format-elem fmt "D")))
-     (if (and disc (not (string= disc "")))
-         "%D/"))
-   (let ((track (emms-browser-format-elem fmt "T")))
-     (if (and track (not (string= track "0")))
-         "%T. "
-       ""))
-   "%n"))
-(setq emms-browser-info-title-format 'ambrevar/emms-browser-track-artist-and-title-format)
-  (defun edd/emms-modeline ()
-    (concat " 🎶 "
-            (let ((s (emms-track-get (emms-playlist-current-selected-track) 'info-title
-                                     (emms-mode-line-playlist-current))))
-              (substring s
-                         0 (min 20 (length s))))))
-
-  (defun edd/emms-tell-consul ()
-    (when edd/emms-consul-p
-      (let*
-          ((artist (emms-track-get (emms-playlist-current-selected-track) 'info-artist))
-           (title (emms-track-get (emms-playlist-current-selected-track) 'info-title))
-           (album (emms-track-get (emms-playlist-current-selected-track) 'info-album))
-           (time (string-to-number (format-time-string "%s000")))
-           (json (json-encode-alist
-                  (list (cons :artist artist)
-                        (cons :title title)
-                        (cons :album album)
-                        (cons :time time)))))
-        (start-process "np" "*tell-consul*" "b" "np" "set" json))))
-
-  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
-  (defun edd/emms-start-or-previous ()
-    (interactive)
-    (when emms-player-playing-p
-      (emms-stop))
-    (when (< emms-playing-time 10)
-        (emms-playlist-current-select-previous))
-    (emms-start))
-
-  (defun edd/emms-info-track-description (track)
-    "Return a description of TRACK."
-    (let ((artist (emms-track-get track 'info-artist))
-          (title  (emms-track-get track 'info-title)))
-      (cond
-       ((and artist title)
-        (concat artist " — " title))
-       (title
-        title)
-       (t
-        (emms-track-simple-description track)))))
-  (setq emms-track-description-function #'edd/emms-info-track-description)
-
-  ;; This is like (emms-show) but doesn't display or insert, just returns the string
-  (defun edd/emms-now-playing ()
-    (if emms-player-playing-p
-                    (format emms-show-format
-                            (emms-track-description
-                             (emms-playlist-current-selected-track)))
-      ""))
-
-  (setq emms-mode-line-mode-line-function 'edd/emms-modeline)
-  :bind (("<f8>" . emms-pause)
-         ("<f7>" . edd/emms-start-or-previous)
-         ("<f9>" . emms-next)
-         ("C-M-s-p" . emms-playlist-mode-switch-buffer)
-         ("C-M-s-n" . emms-browse-by-album)))
+(use-package edd-emms :straight nil)
 
 (use-package dumb-jump
   :bind
@@ -449,9 +486,8 @@
 (use-package csv)
 (use-package elm-mode)
 (use-package gradle-mode
-  :init
-  (setq gradle-gradlew-executable (expand-file-name "gradlew" (projectile-project-root))))
-
+  :straight `(gradle-mode :type git :host github :repo "jacobono/emacs-gradle-mode"
+                          :fork (:host github :repo "eddsteel/emacs-gradle-mode")))
 (use-package groovy-mode)
 (use-package php-mode)
 (use-package play-routes-mode)
@@ -579,9 +615,7 @@
   :bind
   ("C-c i" . edd-kt/sort-imports)
   :config
-  (setq kotlin-tab-width 4)
-  (setq gradle-use-gradlew t)
-  (setq gradle-gradlew-executable (expand-file-name "gradlew" (projectile-project-root)))
+  (setq kotlin-tab-width 4)  
   (defhydra+ hydra-project nil "Project"
     ("m" gradle-execute "execute gradle task"))
   (defun edd-kt/sort-imports ()
@@ -629,7 +663,9 @@
 
 (use-package sml-mode)
 
-(use-package nix-mode)
+(use-package nix-mode
+  :config
+  (setenv "PATH" (concat (getenv "PATH") ":" "/nix/var/nix/profiles/default/bin")))
 
 (edd/maybe-load-config "local.el")
 ;; acknowledgements

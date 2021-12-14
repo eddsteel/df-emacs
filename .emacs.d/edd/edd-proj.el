@@ -77,6 +77,8 @@
     ("A"   projectile-grep "grep")
     ("C"   edd-proj/browse-ci "Browse CI")
     ("E"   project-find-regexp "find regexp (any file under root)")
+    ("d"   projectile-find-dir "find directory")
+    ("f"   projectile-find-file "find file")
     ("F"   projectile-find-file-other-window "find file other window")
     ("K"   projectile-kill-buffers "kill buffers")
     ("L"   projectile-find-file-dwim-other-window "find-file DWIM other window")
