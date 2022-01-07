@@ -146,6 +146,10 @@ the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
 (use-package browse-url
   :init
   (setq browse-url-firefox-program "open")
-  (setq browse-url-firefox-arguments '("-a" "Firefox")))
+  (setq browse-url-firefox-arguments '("-a" "Firefox" "--args")))
+
+(use-package server
+  :init
+  (setq server-socket-dir (format "/tmp/emacs%d" (user-uid))))
 
 (provide 'edd-mac)

@@ -77,7 +77,8 @@
 (add-to-list 'load-path
              (locate-user-emacs-file "straight/repos/vertico/extensions"))
 (use-package vertico-directory
-  :after vertico
+  :demand t
+  :ensure nil
   :straight nil
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
@@ -164,6 +165,11 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
+  (defhydra+ hydra-project nil "Project"
+    ("a" consult-ripgrep "rg")
+    ("b" consult-buffer "buffer"))
+
+
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
   :config
@@ -195,10 +201,6 @@
   ;; There are multiple reasonable alternatives to chose from.
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-root-function #'projectile-project-root)
-
-  (defhydra+ hydra-project nil "Project"
-    ("a" consult-ripgrep "rg")
-    ("b" consult-buffer "buffer"))
   )
 
 (use-package embark
@@ -309,14 +311,6 @@
         scroll-preserve-screen-position t
         auto-window-vscroll nil
         scroll-margin 5))
-
-(use-package company
-  :config
-  (global-company-mode))
-
-(use-package company-emoji
-  :config
-  (add-to-list 'company-backends 'company-emoji))
 
 (use-package quickrun
   :bind

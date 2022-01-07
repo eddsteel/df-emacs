@@ -11,14 +11,12 @@
   (haskell-mode . turn-on-hi2)
   (haskell-mode . haskell-indentation-mode)
   (haskell-mode . haskell-decl-scan-mode)
-;;  (haskell-mode . edd-haskell/prettify)
+
   :init
   (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
     (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
     (add-to-list 'exec-path my-cabal-path))
   :config
-  (add-to-list 'company-backends 'company-ghc)
-  (custom-set-variables '(company-ghc-show-info t))
   (setq
    haskell-tags-on-save t
    haskell-process-suggest-remove-import-lines t

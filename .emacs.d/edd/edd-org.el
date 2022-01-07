@@ -1,7 +1,6 @@
 (defun org-plus-contrib ())
 
-(use-package org
-  :defer  
+(use-package org  
   :mode ("\\.(org\\|org.txt)\\'" . org-mode)
   :hook ((org-mode . #'turn-on-visual-line-mode)
          (org-mode . (lambda () (org-bullets-mode 1)))
@@ -14,10 +13,7 @@
                        (prettify-symbols-mode))))
 
   :commands (org-confluence-export-as-confluence edd-ox-confluence)
-  :init
-  (when (eq 'darwin system-type)
-    (add-to-list 'org-modules 'org-mac-iCal))  
-
+  
   :config
   (setq org-html-validation-link nil)
   (setq org-html-head-include-default-style nil)

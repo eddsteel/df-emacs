@@ -28,12 +28,6 @@
         ("M-." . godef-jump)
         ("C-M-." . godef-jump-other-window)))
 
-(use-package company-go
-  :init
-  (add-hook 'go-mode-hook (lambda ()
-                            (set (make-local-variable 'company-backends) '(company-go))
-                            (company-mode))))
-
 (use-package go-projectile)
 
 (provide 'edd-go)
