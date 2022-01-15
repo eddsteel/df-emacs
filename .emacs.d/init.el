@@ -1,5 +1,6 @@
 ;;(toggle-debug-on-error)
 (add-to-list 'load-path (locate-user-emacs-file "edd"))
+(add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
 (require 'edd-bootstrap)
 (edd/maybe-load-config "local-pre.el")
 (defvar edd/emms-consul-p t "Whether to do consul stuff with emms")
@@ -553,6 +554,10 @@
   :bind
   ("C-c +" . 'evil-numbers/inc-at-pt)
   ("C-c -" . 'evil-numbers/dec-at-pt))
+
+(use-package server
+  :init
+  (setq server-socket-dir (expand-file-name "~/run/emacs")))
 
 (use-package edit-server
   :init
