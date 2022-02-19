@@ -278,7 +278,7 @@
   :delight with-editor-mode
   :mode ("CODEOWNERS$" . gitignore-mode)  
   :config
-  (setq magit-completing-read-function 'ivy-completing-read)
+  (setq magit-completing-read-function 'completing-read-default)
   (setq magit-commit-arguments '("--gpg-sign")))
 
 (use-package magit-filenotify :demand t)

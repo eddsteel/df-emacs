@@ -22,14 +22,9 @@
       (define-key isearch-mode-map (kbd "<mouse-4>") 'isearch-repeat-forward)
       (define-key isearch-mode-map (kbd "<mouse-5>") 'isearch-repeat-backward)))
 
-  ;; use coreutils ls
-  (let ((gls "/usr/local/bin/gls"))
-    (if (file-exists-p gls) (setq insert-directory-program gls)))
-
   (when (executable-find "gpg2")
     (setq epg-gpg-program "gpg2"))
 
-  (setq sendmail-program "/usr/local/bin/msmtp")
   (setq ns-use-srgb-colorspace t)
   (defun edd-wibble-font ()
     "Switch GUI font between different sizes (switching between laptop and monitor)"
@@ -41,17 +36,6 @@
   ;; ligatures
   (mac-auto-operator-composition-mode))
 
-(use-package flycheck
-  :defer t
-  :config
-  (setq flycheck-scalastyle-jar "/usr/local/Cellar/scalastyle/0.8.0/libexec/scalastyle_2.11-0.8.0-batch.jar"))
-
-;; Use mdfind not locate
-;;
-(use-package ivy
-  :defer t
-  :config
-  (setq counsel-locate-command "mdfind"))
 
 (use-package emms
   :defer t
@@ -146,6 +130,6 @@ the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
 (use-package browse-url
   :init
   (setq browse-url-firefox-program "open")
-  (setq browse-url-firefox-arguments '("-a" "Firefox" "--args")))
+  (setq browse-url-firefox-arguments '())) ;; Just use open
 
 (provide 'edd-mac)

@@ -7,6 +7,7 @@
 (use-package emacs
   :hook
   (after-make-frame-functions . edd-prep-frame)
+  (after-init . edd-frame-hook)
   :config
   (tooltip-mode -1)
   (menu-bar-mode -1)
@@ -18,8 +19,8 @@
   (column-number-mode t)
   (show-paren-mode t)
 
-  (add-to-list 'default-frame-alist '(height . 124))
-  (add-to-list 'default-frame-alist '(width . 82))
+  (add-to-list 'default-frame-alist '(height . 63))
+  (add-to-list 'default-frame-alist '(width . 120))
   ;; Modeline
   ;;
   (defvar edd-vc-mode-line
@@ -59,6 +60,8 @@
   (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
   ;; C-z for help, in exchange
   (define-key key-translation-map (kbd "C-z") (kbd "<help>"))
+
+  (defun edd-frame-hook () (edd-prep-frame (car (frame-list))))
   (defun edd-prep-frame (frame)
     (with-selected-frame frame
       (when (display-graphic-p)
@@ -80,8 +83,6 @@
               (set-fontset-font (frame-parameter nil 'font) charset
                                 (font-spec :family "Noto Sans CJK JP"))))))))
 
-  ;; if we're loading non-daemon set up initial frame. Otherwise the hook will get it.
-  (when (not (daemonp)) (edd-prep-frame (car (frame-list))))
   (setq custom-safe-themes '("4639288d273cbd3dc880992e6032f9c817f17c4a91f00f3872009a099f5b3f84" default)))
 
 (use-package unicode-fonts
