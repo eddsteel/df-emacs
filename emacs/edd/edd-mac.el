@@ -129,7 +129,7 @@ the the Emacs diary (hacked to support latest version, from org-mac-iCal)"
 
 (use-package browse-url
   :init
-  (setq browse-url-firefox-program "open")
+  (setq browse-url-firefox-program (expand-file-name "~/Applications/Home Manager/Firefox.app/Contents/MacOS/firefox"))
   (setq browse-url-firefox-arguments '())) ;; Just use open
 
 (provide 'edd-mac)
