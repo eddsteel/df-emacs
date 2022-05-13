@@ -207,6 +207,7 @@
 (use-package embark
   :bind
   (("C-." . embark-act)
+   ("C-c C-o" . embark-export)
    ("M-." . embark-dwim)
    ("<help> B" . embark-bindings))
 
