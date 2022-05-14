@@ -18,7 +18,6 @@
 (use-package edd-org :straight nil)
 (use-package edd-gtd
   :straight nil
-  :commands (edd/go-home)
   :bind
   (("C-c w" . edd/go-to-work)))
 
@@ -587,6 +586,46 @@
   (setenv "PATH" (concat (getenv "PATH") ":" "/nix/var/nix/profiles/default/bin")))
 (use-package olivetti)
 
+(use-package ligature
+  :straight `(ligature :type git :host github :repo "mickeynp/ligature.el")
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t)
+  )
+
+
+;; Emacs 28
+(use-package emacs
+  :bind
+  ("<Multi_key>" . edd/transient-compose)
+  :config
+  (defun edd/transient-compose ()
+    (interactive)
+    (let ((old-im default-transient-input-method))
+      (setq default-transient-input-method "compose")
+      (activate-transient-input-method)
+      (setq default-transient-input-method old-im))))
+
 (edd/maybe-load-config "local.el")
 ;; acknowledgements
 ;;
@@ -601,4 +640,5 @@
 ;; http://pragmaticemacs.com/emacs/wrap-text-in-custom-characters/
 ;; http://lists.madduck.net/pipermail/vcs-home/2013-August/000880.html
 ;; http://anbasile.github.io/2016/12/02/org-babel-is-cool/
+;; https://masteringemacs.org/article/whats-new-in-emacs-28-1
 (defun org())

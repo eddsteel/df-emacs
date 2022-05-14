@@ -27,8 +27,8 @@
   ;;
   (defun edd-term-hook ()
     (goto-address-mode)
-    (define-key term-raw-map (kbd "C-y") 'edd-term-paste)
-    (define-key term-raw-map (kbd "C-c C-r") 'rename-buffer))
+    (define-key term-raw-map (kbd "C-c SPC") 'hydra-music/body)
+    (define-key term-raw-map (kbd "C-y") 'edd-term-paste))
 
   ;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term
   ;; with an addition: strip space/newlines from the end.

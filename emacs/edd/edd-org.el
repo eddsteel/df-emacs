@@ -46,7 +46,7 @@
      (emacs-lisp . t)
      (haskell . t)
      (js . t)
-     (ledger . t)
+;;     (ledger . t)
      (plantuml . t)
      (python . t)
      (ruby . t)
