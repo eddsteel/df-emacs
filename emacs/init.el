@@ -472,15 +472,14 @@
 (use-package edd-emms :straight nil)
 
 (use-package dumb-jump
-  :bind
-  (("M-g o" . dumb-jump-go-other-window)
-   ("M-g j" . dumb-jump-go)
-   ("M-g q" . dumb-jump-quick-look)
-   ([remap xref-find-definitions] . dumb-jump-go)
-   ([remap xref-pop-marker-stack] . dumb-jump-back)
-   )
+  :init
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
   :config
-  (setq dumb-jump-selector 'ivy))
+  (setq dumb-jump-default-project "~/src")
+  ;; to tackle `fatal: --untracked not supported with --recurse-submodules'
+  (setq dumb-jump-force-searcher 'rg))
+
 
 (use-package gradle-mode
   :straight `(gradle-mode :type git :host github :repo "jacobono/emacs-gradle-mode"
@@ -612,7 +611,6 @@
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t)
   )
-
 
 ;; Emacs 28
 (use-package emacs

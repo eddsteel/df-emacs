@@ -26,3 +26,5 @@
 /emacs/eln-cache
 /emacs/straight/
 /emacs/session.*
+/emacs/projects
+/emacs/kkcrc
