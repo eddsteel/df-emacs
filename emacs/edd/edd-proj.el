@@ -7,23 +7,18 @@
   :config
   (setq helm-make-completion-method 'ivy)
   (setq helm-make-comint 't))
+
 (use-package projectile
   :demand t
-  :hook
-  ((text-mode prog-mode) . projectile-mode)
   :init
-  ;; counsel-projectile will die without this
-  (setq projectile-keymap-prefix (kbd "C-x p"))
-
-  (defun edd-proj/run-comint ()
-    (interactive)
-    (projectile-with-default-dir (projectile-project-root)
-      (call-interactively 'comint-run)))
 
   (defun edd-proj/magit-and-fetch ()
     (interactive)
-    (progn (magit-status)(call-interactively #'magit-fetch-from-upstream)))
+    (progn
+      (call-interactively #'magit-project-status)
+      (call-interactively #'magit-fetch-from-upstream)))
 
+  ;; TODO
   (defun edd-proj/term ()
     (interactive)
     (projectile-run-term "/bin/bash"))
@@ -102,7 +97,6 @@
     ("m"   edd-proj/make-or-compile "run Make target or compile command")
     ("o"   projectile-find-other-file "find other file")
     ("p"   projectile-switch-project "switch project >>")
-    ("R"   edd-proj/run-comint "run in comint")
     ("t"   edd-proj/test-no-prompt "test project")
     ("x"   projectile-run-shell "shell"))
 
